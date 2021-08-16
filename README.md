@@ -1,104 +1,198 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Arts by Bela
 
-Welcome USER_NAME,
+![Arts by Bela Website](# "Arts by Bela")
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. The last update to this file was: **July 2, 2021**
+[Demo of Website](#)
 
-## Gitpod Reminders
+Arts by Bela is the website for the digital illustrator Bela where users can request commissions, interact, pay and leave reviews for the artist.
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+## UX
 
-`python3 -m http.server`
+### User stories
 
-A blue button should appear to click: _Make Public_,
+As a new visitor to the website,
 
-Another blue button should appear to click: _Open Browser_.
+1. I want to know more about the artist.
+2. I want to see previous completed artworks.
+3. I want to read reviews from previous costumers.
+4. I want to find instructions on how to commission an artwork.
+5. I want to calculate a quote for the commission.
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+As a registered user,
 
-A blue button should appear to click: _Make Public_,
+1. I want to request a new commission.
+2. I want to pay for the new commission.
+3. I want to be notified as my commission is in progress.
+4. I want to request changes to the artwork, if necessary.
+5. I want to accept and download my completed art work.
+6. I want access to previous artwork commissions I have ordered, if any.
 
-Another blue button should appear to click: _Open Browser_.
+As the artist,
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+1. I want to be notified as commissions are requested, accepted or rejected.
+2. I want to upload the artworks and submit for acceptance or comments.
 
-To log into the Heroku toolbelt CLI:
+### Strategy 
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+The main user goal for the client is to order, pay for and receive completed art concepts as requested.
+The main user goal to the artist is to have an easy platform to communicate with the clients and automatically update its own portfolio.
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
 
-------
+### Scope
 
-## Release History
+The main features for the website is a landing home page with simple *About me* and information on how to commission a concept/illustration and a quote calculator, a *Art Showcase* and a *Register / Login* pages.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+For Registered users, the landing page is the *Profile* where it will have options to see the previous and current orders as well as make new ones.
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+The Artist will have it's own *Profile* page with view of all completed and current orders.
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+**Future scope**:
+	- Booking system to avoid having to many open commissions at one given time, causing delay and frustration to clients.
+	- A live message chat for each open commission.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+### Structure
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+The website will have a responsive grid system applied through the pages with a side nav-bar.
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+The *Showcase* page will display all completed commissions that will expand on mouse hover. On mobile, the page will be a carousel.
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+#### Apps Structure
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+The website will be broken in 4 different apps:
+	- Home: the app will handle the home page and quote calculator.
+	- Showcase: the app will handle the showcase page. It will communicate with the Commissions app models.
+	- Commissions: the app will handle all new, active and completed commissions.
+	- Payment: the app will handle payment for new commissions.
+	- Profiles: the app will handle all profiles.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+### Skeleton
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+- [Wireframes](wireframes.jpg "Arts by Bela Wireframes")
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+  #### Deviation from layout
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+### Surface
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+#### Colour
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+The website will use a monochrome colours not to offset the existing artworks. 
 
-------
+#### Typography
 
-## FAQ about the uptime script
+The typography will be round and soft using the combinations of fonts Nunito and Montsserat .
 
-**Why have you added this script?**
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+## Features
 
-**How will this affect me?**
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+### Existing Features
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
 
-**So….?**
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+### Features left to implement
 
-**Can I opt out?**
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+## Technologies used
 
-**Anything more?**
+### Languages
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+- HTML | HTML5
+- CSS | CSS3
+- JavaScript | JS ES6
+- Python | Python3
 
----
+### Libraries, Frameworks & Programs
 
-Happy coding!
+- [Gitpod](https://gitpod.io/workspaces/):
+  The developer used Gitpod as the IDE for building the website.
+
+- [Heroku](https://www.heroku.com/):
+  Used for application deployment.
+
+- [Fonts Awesome v5.15](https://fontawesome.com/):
+  Used for several icons throughout the project.
+
+- [Typora](https://typora.io/#):
+  Used for Markdown editing of README and TESTING files.
+
+- [Clip Studio Paint](https://www.clipstudio.net/en/):
+  Used for logo editing.
+
+- [AutoPrefixer](https://autoprefixer.github.io):
+  Used on CSS to ensure functionality across browsers.
+
+- [jQuery API](https://api.jquery.com/):
+  Used for custom JavaScript code.
+
+## Testing
+
+Refer to [TESTING.md](TESTING.md) file for testing details.
+
+## Deployment
+
+This project was developed using the Gitpod IDE, committed to git and pushed to GitHub.
+
+### Deploy to Heroku from GitHub Repository:
+
+- Log in to [Heroku](https://id.heroku.com/login).
+- Create a new application with unique name and setting the region.
+- Under Deploy tab, select GitHub as the Deployment Method.
+- Search for the GitHub repository and click Connect.
+- Under Settings tab, click "Reveal Config Vars"
+- Include the environment  private variables and values:
+  - 
+
+- Under Deploy tab, choose the branch and click Enable Automatic Deploys in the Automatic Deploys section.
+
+Note: ensure you have a Procfile and requirements.txt indicating language and packs required to run the application on your repository.
+
+### Download project to local IDE:
+
+- Navigate to [GitHub Repository](#).
+- Click in Code and choose the local download method:
+  - ZIP file - unpack - run on local IDE
+  - Copy Git URL - open IDE terminal - run git clone
+- A clone of the project is now available on your machine.
+
+Note: ensure you have the configuration variables defined in the IDE environment for the project and the you install the requirements for the application.
+
+`- pip install -r requirements.txt`
+
+### Fork project:
+
+- Navigate to [GitHub Repository](#).
+- Click in Fork. A duplicate repo will be created for your user.
+
+Further information on [GitHub Docs](https://docs.github.com/en).
+
+## Credit
+
+### Content
+
+All content was created by the developer.
+
+### Media
+
+All original media was created by the developer with [Clip Studio Paint](https://www.clipstudio.net/en/) as recreational art.
+
+References media used on orders to demonstrate features listed below:
+
+### Code
+
+Favicon added as per ["Add A Favicon to A Website in HTML | Learn HTML and CSS | HTML Tutorial | HTML for Beginners"](https://www.youtube.com/watch?v=kEf1xSwX5D8) by Dani Krossing
+
+https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/)
+
+[W3Schools](https://www.w3schools.com/) was referenced throughout the project for HTML, CSS and Python references.
+
+[jQuery Documentation](https://api.jquery.com/) was referenced throughout the project for jQuery references.
+
+### Acknowledgment
+
+I would like to thank my mentor Gerry McBride for insightful tips and suggestions. 
+
+## Disclaimer
+
+This project purpose is only educational.
