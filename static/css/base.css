@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Nunito:wght@200;300;400&display=swap');
 
+/* -----  General  ----- */
 html {
     font-family: 'Montserrat', sans-serif;
 }
@@ -9,6 +10,7 @@ html {
     font-weight: 200;
 }
 
+/* -----  Navigation  ----- */
 #artist-signature {
     display: inline-block;
     height: 40px;
@@ -42,4 +44,12 @@ html {
     bottom: 0px;
     width: 100vw;
     padding: 8px 0px 6px 10px;
+}
+
+
+/* -----  Media queries  ----- */
+@media only screen and (min-width: 993px) {
+    main {
+        padding-left: 300px;
+    }
 }
