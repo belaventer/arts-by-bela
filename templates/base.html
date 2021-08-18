@@ -12,20 +12,40 @@
 
     {% block core_css %}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% endblock %}
 
     {% block core_js %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
             integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     {% endblock %}
 
     <title>Arts by Bela | {% block extra_title %}{% endblock %}</title>
 </head>
 <body>
     <header>
+        <!-- Navigation links -->
+        <ul id="slide-out" class="sidenav sidenav-fixed black">
+            <li><a href="#!"><img class="responsive-img" src="{{ MEDIA_URL }}logo-white.png" alt="Arts by Bela logo"></a></li>
+            <li><a href="#!" class="white-text bold">Home</a></li>
+            <li><a href="#!" class="white-text bold">Showcase</a></li>
+            <li><a href="#!" class="white-text bold">Login</a></li>
+            <li><a href="#!" class="white-text bold">Register</a></li>
+            <li class="white-text copyright-text hide-on-med-and-down">© 2021 Bela, All rights reserved.</li>
+        </ul>
+        <!-- Tablet / mobile navigation -->
+        <nav class="hide-on-large-only black">
+            <div class="nav-wrapper">
+              <a href="#" class="brand-logo center title-font valign-wrapper">Arts by <img id="artist-signature" src="{{ MEDIA_URL }}artist-signature-white.png" alt="Bela"></a>
+              <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            </div>
+        </nav>
+        
+             
         {% block header %}
+
         {% endblock %}
     </header>
 
@@ -34,7 +54,17 @@
         {% endblock %}
     </main>
 
+    <!-- Tablet / mobile footer -->
+    <footer class="copyright-text-mobile hide-on-large-only black white-text">
+        © 2021 Bela, All rights reserved.
+    </footer>
+
     {% block postload_js %}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.sidenav').sidenav();
+            });
+        </script>
     {% endblock %}
 
 </body>

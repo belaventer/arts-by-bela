@@ -1,5 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Nunito:wght@200;300;400&display=swap');
 
 html {
     font-family: 'Montserrat', sans-serif;
+}
+
+.title-font {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 200;
+}
+
+#artist-signature {
+    display: inline-block;
+    height: 40px;
+    position: relative;
+    top: 6px;
+}
+
+.sidenav li>a {
+    margin-bottom: 2vh;
+}
+
+.sidenav li:first-child>a {
+    height: auto;
+    margin-top: 2vh;
+    margin-bottom: 8vh;
+}
+
+.copyright-text, .copyright-text-mobile {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 200;
+    font-size: small;
+    position: fixed;
+}
+
+.copyright-text{
+    bottom: 50px;
+    left: 10px;
+}
+
+.copyright-text-mobile {
+    bottom: 0px;
+    width: 100vw;
+    padding: 8px 0px 6px 10px;
 }
