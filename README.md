@@ -111,8 +111,11 @@ The typography will be round and soft using the combinations of fonts Nunito and
 - [Heroku](https://www.heroku.com/):
   Used for application deployment.
 
-- [Fonts Awesome v5.15](https://fontawesome.com/):
-  Used for several icons throughout the project.
+- [Django](https://www.djangoproject.com/):
+  Used for application development.
+
+- [Materialize](https://materializecss.com/):
+  Used for general styling.
 
 - [Typora](https://typora.io/#):
   Used for Markdown editing of README and TESTING files.
@@ -188,6 +191,8 @@ https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/)
 [W3Schools](https://www.w3schools.com/) was referenced throughout the project for HTML, CSS and Python references.
 
 [jQuery Documentation](https://api.jquery.com/) was referenced throughout the project for jQuery references.
+
+[Django](https://docs.djangoproject.com/en/3.2/) documentation was referenced throughout the project for Django references.
 
 ### Acknowledgment
 

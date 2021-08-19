@@ -6,7 +6,18 @@
 {% endblock %}
 
 {% block header %}
-    <h1>Welcome!</h1>
+    <h1 class="row"><img class="col s10 offset-s1 m4 offset-m4 responsive-img" src="{{ MEDIA_URL }}logo.png" alt="Arts by Bela logo"></h1>
+    <p class="row flow-text">
+        Hi, I'm Bela!</br>
+        I'm a self-taught concept artist and illustrator.</br>
+        You can see some of my artwork by clicking <a href="#!" class="black-text">HERE!</a></br>
+        Below you will discover how easy it is to bring your ideas to life.</br>
+        <div class="col s4 offset-s4 l2 offset-l5"> 
+            <i class="medium material-icons floating-animation">expand_more</i>
+            <div id="float-shadow"></div>
+        </div>
+    </p>
+    
 {% endblock %}
 
 {% block content %}

@@ -46,10 +46,38 @@ html {
     padding: 8px 0px 6px 10px;
 }
 
+/* -----  Home Page  ----- */
+.floating-animation {
+    position: relative;
+    animation: floating 2s infinite;
+}
+
+#float-shadow {
+    height: 20px;
+    width: 100%;
+    background-image: radial-gradient(#bdbdbd, #eeeeee 40% );
+    border-radius: 50%;
+}
+
+a.black-text {
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+a.black-text:hover, a.black-text:focus {
+    cursor: pointer;
+}
 
 /* -----  Media queries  ----- */
 @media only screen and (min-width: 993px) {
     main {
         padding-left: 300px;
     }
+}
+
+/* -----  Keyframes  ----- */
+@keyframes floating {
+    0% {bottom: 10px;}
+    50% {bottom: 0px;}
+    100% {bottom: 10px;}
 }
