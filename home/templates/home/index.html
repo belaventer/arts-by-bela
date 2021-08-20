@@ -62,7 +62,46 @@
     </div>
 
     <!-- Quote Calculator -->
-    <div class="row">
-        <h1>Caculator TBD</h1>
+    <div class="row amber accent-3">
+        <h5 class="col s12 center-align">Prices starting from: <strong id="lowest-price"></strong></h5>
+        
+        <div class="input-field col s12 m4">
+            <select>
+                <option value="" disabled selected>Choose your option</option>
+                {% for size in sizes %}
+                    <option value="{{ size.size }}">{{ size.size }}</option>
+                {% endfor %}
+            </select>
+            <label>Size</label>
+        </div>
+        <div class="input-field col s12 m4">
+            <select>
+                <option value="" disabled selected>Choose your option</option>
+                {% for resolution in resolutions %}
+                    <option value="{{ resolution.resolution }}">{{ resolution.resolution }}</option>
+                {% endfor %}
+            </select>
+            <label>Resolution</label>
+        </div>
     </div>
+{% endblock %}
+
+{% block postload_js %}
+{{ block.super }}
+
+    {{ resolutions_json|json_script:"resolutions-choices" }}
+    {{ sizes_json|json_script:"sizes-choices" }}
+
+    <script type="text/javascript">
+        const resolutionsChoices = JSON.parse($('#resolutions-choices').text());
+        const sizesChoices = JSON.parse($('#sizes-choices').text());
+        $(document).ready(function(){
+            $('select').formSelect();
+            $('#lowest-price').text(
+                `$ ${(5*resolutionsChoices[0].price_factor*sizesChoices[0].price_factor).toFixed(2)}!!`
+            );
+        });
+      
+    </script>
+
 {% endblock %}
