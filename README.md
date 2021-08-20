@@ -58,12 +58,16 @@ The *Showcase* page will display all completed commissions that will expand on m
 
 #### Apps Structure
 
-The website will be broken in 4 different apps:
+The website will be broken in 5 different apps:
 	- Home: the app will handle the home page and quote calculator.
 	- Showcase: the app will handle the showcase page. It will communicate with the Commissions app models.
 	- Commissions: the app will handle all new, active and completed commissions.
 	- Payment: the app will handle payment for new commissions.
 	- Profiles: the app will handle all profiles.
+
+#### Database Structure
+
+The entity relational diagram and overall workflow can be found in [ERD](ERD.pdf "Arts by Bela ERD").
 
 ### Skeleton
 
