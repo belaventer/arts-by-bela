@@ -79,6 +79,18 @@ blockquote.right-align {
     padding: 0 21px 0 0;
 }
 
+/* -----  Calculator form  ----- */
+.dropdown-content li>span, ::placeholder {
+    color: #000 !important;
+    opacity: 1 !important;
+}
+
+#resolution-selector:focus, 
+#size-selector:focus, #no-characters:focus {
+    border-bottom: 1px solid #000;
+    box-shadow: 0 1px 0 0 #000;
+  }
+
 /* -----  Media queries  ----- */
 @media only screen and (min-width: 993px) {
     main {

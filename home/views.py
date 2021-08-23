@@ -8,9 +8,11 @@ def index(request):
     sizes = models.Size.objects.all()
     context = {
         'resolutions': resolutions,
-        'resolutions_json': list(resolutions.values()),
         'sizes': sizes,
-        'sizes_json': list(sizes.values()),
+        'json_data': {
+            'resolutions': list(resolutions.values()),
+            'sizes': list(sizes.values())
+        },
     }
 
     return render(request, 'home/index.html', context)

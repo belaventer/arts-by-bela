@@ -64,24 +64,32 @@
     <!-- Quote Calculator -->
     <div class="row amber accent-3">
         <h5 class="col s12 center-align">Prices starting from: <strong id="lowest-price"></strong></h5>
-        
-        <div class="input-field col s12 m4">
-            <select>
-                <option value="" disabled selected>Choose your option</option>
-                {% for size in sizes %}
-                    <option value="{{ size.size }}">{{ size.size }}</option>
-                {% endfor %}
-            </select>
-            <label>Size</label>
-        </div>
-        <div class="input-field col s12 m4">
-            <select>
-                <option value="" disabled selected>Choose your option</option>
-                {% for resolution in resolutions %}
-                    <option value="{{ resolution.resolution }}">{{ resolution.resolution }}</option>
-                {% endfor %}
-            </select>
-            <label>Resolution</label>
+        <div id="calculator-select">
+            <h6 class="col s12">
+                Update your specifications below. </br>
+                Your current quote: <strong id="your-quote"></strong>
+            </h6>
+            <div class="col s12 m4 input-field">
+                <select id="size-select">
+                    {% for size in sizes %}
+                        <option value="{{ size.size }}">{{ size.size }}</option>
+                    {% endfor %}
+                </select>
+                <label for="size-select" class="black-text">Size</label>
+            </div>
+            <div class="col s12 m4 input-field">
+                <select id="resolution-select">
+                    {% for resolution in resolutions %}
+                        <option value="{{ resolution.resolution }}">{{ resolution.resolution }}</option>
+                    {% endfor %}
+                </select>
+                <label for="resolution-select" class="black-text">Resolution</label>
+            </div>
+            <div class="col s12 m4 input-field">
+                <input placeholder="0" id="no-characters" type="number" min="0" max="6">
+                <label for="no-characters" class="black-text">Number of Characters</label>
+                <span class="helper-text">Up to 6 characters</span>
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -89,19 +97,51 @@
 {% block postload_js %}
 {{ block.super }}
 
-    {{ resolutions_json|json_script:"resolutions-choices" }}
-    {{ sizes_json|json_script:"sizes-choices" }}
+    {{ json_data|json_script:"json-data" }}
 
     <script type="text/javascript">
-        const resolutionsChoices = JSON.parse($('#resolutions-choices').text());
-        const sizesChoices = JSON.parse($('#sizes-choices').text());
+    // Script to dynamically calculate quote price from selected specifications.
+        const data = JSON.parse($('#json-data').text());
+        var res_price = 0.0;
+        var size_price = 0.0;
+
         $(document).ready(function(){
             $('select').formSelect();
             $('#lowest-price').text(
-                `$ ${(5*resolutionsChoices[0].price_factor*sizesChoices[0].price_factor).toFixed(2)}!!`
+                `$ ${calculateQuote(
+                    data.resolutions[0].price_factor,data.sizes[0].price_factor,0)}!!`);
+            $('#your-quote').text(
+                `$ ${calculateQuote(
+                    data.resolutions[0].price_factor,data.sizes[0].price_factor,0)}!!`);
+            $('#calculator-select').children().change(function (){
+                res_price = getPriceFactor(
+                    data.resolutions, 'resolution', $('.selected').children().last().text());
+                size_price = getPriceFactor(
+                    data.sizes, 'size', $('.selected').children().first().text());
+                $('#your-quote').text(`$ ${calculateQuote(
+                    res_price,size_price,$('#no-characters').val())}`);
+                }
             );
         });
-      
+        
+        function calculateQuote(res, sizing, numberCharacters){
+            return (5*res*sizing+2*numberCharacters).toFixed(2)
+        }
+
+        function getPriceFactor(array, key, selection) {
+            // Function to get price factor from the JSON data
+            for (item in array) {
+                if (key === 'resolution') {
+                    if (array[item].resolution === selection) {
+                        return array[item].price_factor
+                    }
+                } else {
+                    if (array[item].size === selection) {
+                        return array[item].price_factor
+                    }
+                }
+            }
+        }
     </script>
 
 {% endblock %}
