@@ -22,31 +22,38 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     {% endblock %}
 
-    <title>Arts by Bela | {% block extra_title %}{% endblock %}</title>
+    <title>Arts by Bela | {% block extra_title %}{% endblock %} {% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
 </head>
+
 <body>
     <header>
         <!-- Navigation links -->
         <ul id="slide-out" class="sidenav sidenav-fixed black">
-            <li><a href="#!"><img class="responsive-img" src="{{ MEDIA_URL }}logo-white.png" alt="Arts by Bela logo"></a></li>
-            <li><a href="#!" class="white-text bold">Home</a></li>
+            <li><a href="{% url 'home' %}"><img class="responsive-img" src="{{ MEDIA_URL }}logo-white.png" alt="Arts by Bela logo"></a></li>
+            {% if not request.user.is_authenticated %}
+                <li><a href="{% url 'home' %}" class="white-text bold">Home</a></li>
+            {% endif %}
             <li><a href="#!" class="white-text bold">Showcase</a></li>
-            <li><a href="#!" class="white-text bold">Login</a></li>
-            <li><a href="#!" class="white-text bold">Register</a></li>
+            {% if request.user.is_authenticated %}
+                <li><a href="#!" class="white-text bold">Profile</a></li>
+                <li><a href="{% url 'account_logout' %}" class="white-text bold">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'account_login' %}" class="white-text bold">Login</a></li>
+                <li><a href="{% url 'account_signup' %}" class="white-text bold">Register</a></li>
+            {% endif %}
             <li class="white-text copyright-text hide-on-med-and-down">© 2021 Bela, All rights reserved.</li>
         </ul>
         <!-- Tablet / mobile navigation -->
         <div class="navbar-fixed hide-on-large-only">
             <nav class="black">
                 <div class="nav-wrapper">
-                  <a href="#" class="brand-logo center title-font valign-wrapper">Arts by <img id="artist-signature" src="{{ MEDIA_URL }}artist-signature-white.png" alt="Bela"></a>
+                  <a href="{% url 'home' %}" class="brand-logo center title-font valign-wrapper">Arts by <img id="artist-signature" src="{{ MEDIA_URL }}artist-signature-white.png" alt="Bela"></a>
                   <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 </div>
             </nav>
         </div>
-        
-        
-        
     </header>
 
     <main class="container-fluid">
@@ -77,5 +84,7 @@
         </script>
     {% endblock %}
 
+    {% block extra_body %}
+    {% endblock %}
 </body>
 </html>
