@@ -10,6 +10,10 @@ html {
     font-weight: 200;
 }
 
+main {
+    padding-bottom: 30px;
+}
+
 /* -----  Navigation  ----- */
 #artist-signature {
     display: inline-block;
@@ -91,10 +95,16 @@ blockquote.right-align {
     box-shadow: 0 1px 0 0 #000;
   }
 
+/* -----  Allauth input submit override  ----- */
+.waves-effect input[type="submit"]{
+    color: white;
+}
+
 /* -----  Media queries  ----- */
 @media only screen and (min-width: 993px) {
     main {
         padding-left: 300px;
+        padding-bottom: 0;
     }
 }
 

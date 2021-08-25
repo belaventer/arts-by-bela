@@ -1,2 +1,24 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block postload_js %}
+{{ block.super }}
+    <script type="text/javascript">
+    // Script to dinamically adjust all allauth templates to have Materialize formatting
+        $('main').children().first().remove(); // remove unused page header row
+        $('h1').contents().unwrap().wrap('<h4></h4>') // update h1 to h4
+        $('button').addClass('btn waves-effect waves-light black').css('margin', '2px'); //update buttons to black
+        $('input[type="submit"]').addClass('btn waves-effect waves-light black'); // update input type submit to match buttons
+
+        // Fix add Materialize validation to text inputs
+        $('input').not('[type="checkbox"], [type="submit"], [type="hidden"]').addClass('validate');
+        $('input[type!="checkbox"]').parent('p').wrap('<div class="input-field"></div>');
+        
+        // Fix checkbox to materialize format
+        $('input[type="checkbox"]').prev().contents().wrap('<span></span>');
+        $('input[type="checkbox"]').appendTo(
+            $('input[type="checkbox"]').prev()).addClass('filled-in');
+        $('input[type="checkbox"]').prev().insertAfter( $('input[type="checkbox"]'));
+        
+    </script>
+{% endblock %}
