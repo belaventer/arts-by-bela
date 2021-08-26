@@ -4,7 +4,7 @@
 {% block postload_js %}
 {{ block.super }}
     <script type="text/javascript">
-    // Script to dinamically adjust all allauth templates to have Materialize formatting
+    // Script to dynamically adjust all allauth templates to have Materialize formatting
         $('main').children().first().remove(); // remove unused page header row
         $('h1').contents().unwrap().wrap('<h4></h4>') // update h1 to h4
         $('button').addClass('btn waves-effect waves-light black').css('margin', '2px'); //update buttons to black

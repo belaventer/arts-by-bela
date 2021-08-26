@@ -37,7 +37,7 @@
             {% endif %}
             <li><a href="#!" class="white-text bold">Showcase</a></li>
             {% if request.user.is_authenticated %}
-                <li><a href="#!" class="white-text bold">Profile</a></li>
+                <li><a href="{% url 'profile' %}" class="white-text bold">Profile</a></li>
                 <li><a href="{% url 'account_logout' %}" class="white-text bold">Logout</a></li>
             {% else %}
                 <li><a href="{% url 'account_login' %}" class="white-text bold">Login</a></li>

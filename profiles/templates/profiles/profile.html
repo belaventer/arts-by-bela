@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}
+    Profile | {{ profile.user.username }}
+{% endblock %}
+
+{% block header %}
+    <h3>Hello {{ profile.user.username }}!</h3>
+{% endblock %}
+
+{% block content %}
+<ul class="collapsible">
+    <li>
+        <div class="collapsible-header"><i class="material-icons">account_circle</i>Your info</div>
+        <form class="collapsible-body">
+            <form class="col s12">
+                <div class="row">
+                  <div class="input-field col s12 m6">
+                    <input id="first_name" type="text" class="validate"
+                        {% if profile.first_name %}value="{{ profile.first_name }}"{% endif %}>
+                    <label for="first_name">First Name</label>
+                  </div>
+                  <div class="input-field col s12 m6">
+                    <input id="last_name" type="text" class="validate"
+                    {% if profile.last_name %}value="{{ profile.last_name }}"{% endif %}>
+                    <label for="last_name">Last Name</label>
+                  </div>
+                </div>
+                <button type="submit" class="btn waves-effect waves-light black"
+                        style="margin: 2px;">
+                    Update
+                </button>
+        </form>
+    </li>
+    <li class="active">
+        <div class="collapsible-header"><i class="material-icons">brush</i>Your commissions</div>
+        <span class="collapsible-body">You have no commissions</span>
+        <a type="submit" class="btn waves-effect waves-light black"
+                        style="margin: 2px;">
+            <i class="material-icons">add</i> New Commission
+        </a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block postload_js %}
+{{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.collapsible').collapsible();
+        });
+    </script>
+{% endblock %}
