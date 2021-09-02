@@ -88,6 +88,8 @@
             $(document).ready(function(){
                 var messages = $('.toast-div');
                 $('.sidenav').sidenav();
+                $('select').formSelect();
+
                 if (messages) {
                     for (var i=0; i < messages.length ; i++) {
                         M.toast({html: $(messages[i]).attr('data-message'),

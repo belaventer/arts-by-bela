@@ -18,11 +18,11 @@
                 <div class="row">
                   <div class="input-field col s12 m6">
                     {{ form.first_name }}
-                    <label for="first_name">First Name</label>
+                    <label for="id_first_name">First Name</label>
                   </div>
                   <div class="input-field col s12 m6">
                     {{ form.last_name }}
-                    <label for="last_name">Last Name</label>
+                    <label for="id_last_name">Last Name</label>
                   </div>
                 </div>
                 <button type="submit" class="btn waves-effect waves-light black"
@@ -33,7 +33,39 @@
     </li>
     <li class="active">
         <div class="collapsible-header"><i class="material-icons">brush</i>Your commissions</div>
-        <span class="collapsible-body">You have no commissions</span>
+        {% if commissions %}
+            <table class="highlight responsive-table">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Order Number</th>
+                        <th>Name</th>
+                        <th>Descripion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for commission in commissions %}
+                        <tr>
+                            <td>
+                                {% if commission.final_art %}
+                                    Completed
+                                {% elif commission.wip %}
+                                    In Progress
+                                {% else %}
+                                    New
+                                {% endif %}
+                            </td>
+                            <td>{{ commission.order_number }}</td>
+                            <td>{{ commission.name }}</td>
+                            <td>{{ commission.description }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        {% else %}
+            <span class="collapsible-body">You have no commissions</span>
+        {% endif %}
     </li>
 </ul>
 

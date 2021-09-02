@@ -1,6 +1,8 @@
 import uuid
 
 from django.db import models
+from django.core.validators import (
+    MaxValueValidator, MinValueValidator)
 
 from profiles.models import UserProfile
 
@@ -53,8 +55,10 @@ class Commission(models.Model):
     order_number = models.CharField(
         max_length=32, null=False, editable=False,
         unique=True)
-    user_profile = models.ForeignKey(UserProfile, on_delete=models.PROTECT,
-                                     null=False, blank=False)
+    user_profile = models.ForeignKey(
+        UserProfile, on_delete=models.PROTECT,
+        null=False, blank=False,
+        related_name="commissions")
     name = models.CharField(max_length=50, null=False, blank=False)
     description = models.TextField()
     resolution_price = models.ForeignKey(
@@ -66,7 +70,11 @@ class Commission(models.Model):
         null=False, blank=False,
     )
     number_characters = models.SmallIntegerField(
-        default=0, null=False, blank=False)
+        default=0, null=False, blank=False,
+        validators=[MaxValueValidator(
+            6, message='Please enter a number below 6'),
+            MinValueValidator(
+            0, message='Please enter a number above 0')])
     order_total = models.DecimalField(
         max_digits=10, decimal_places=2,
         null=False, default=0)

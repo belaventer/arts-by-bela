@@ -22,9 +22,12 @@ def profile(request):
     else:
         form = UserProfileForm(instance=profile)
 
+    commissions = profile.commissions.all()
+
     context = {
         'profile': profile,
         'form': form,
+        'commissions': commissions,
     }
 
     return render(request, 'profiles/profile.html', context)
