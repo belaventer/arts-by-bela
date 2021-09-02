@@ -13,17 +13,16 @@
 <ul class="collapsible">
     <li>
         <div class="collapsible-header"><i class="material-icons">account_circle</i>Your info</div>
-        <form class="collapsible-body">
+        <form class="collapsible-body" method="POST" action="{% url 'profile' %}">
+            {% csrf_token %}
             <form class="col s12">
                 <div class="row">
                   <div class="input-field col s12 m6">
-                    <input id="first_name" type="text" class="validate"
-                        {% if profile.first_name %}value="{{ profile.first_name }}"{% endif %}>
+                    {{ form.first_name }}
                     <label for="first_name">First Name</label>
                   </div>
                   <div class="input-field col s12 m6">
-                    <input id="last_name" type="text" class="validate"
-                    {% if profile.last_name %}value="{{ profile.last_name }}"{% endif %}>
+                    {{ form.last_name }}
                     <label for="last_name">Last Name</label>
                   </div>
                 </div>
