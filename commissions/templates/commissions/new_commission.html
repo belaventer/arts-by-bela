@@ -12,31 +12,76 @@
 {% block content %}
     <form method="" action="">
         {% csrf_token %}
-        <div class="row">
-            <div class="input-field col s12 m4">
-              {{ form.name }}
-              <label for="id_name">Name</label>
+        <div class="col s12 xl6">
+            <h5>Illustration requirements:</h5>
+            <div class="row">
+                <div class="input-field col s12 m4">
+                  {{ form.name }}
+                  <label for="id_name">Name</label>
+                </div>
+                <div class="input-field col s12 m8">
+                    {{ form.description }}
+                    <label for="id_description">Description</label>
+                </div>
             </div>
-            <div class="input-field col s12 m8">
-                {{ form.description }}
-                <label for="id_description">Description</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6 m4">
-                {{ form.resolution_price }}
-                <label for="id_resolution_price">Resolution</label>
-            </div>
-            <div class="input-field col s6 m4">
-                {{ form.size_price }}
-                <label for="id_size_price">Size</label>
-            </div>
-            <div class="input-field col s6 m4">
-                {{ form.number_characters }}
-                <label for="id_number_characters">Number of Characters</label>
-                <span class="helper-text">Up to 6 characters</span>
+            <div class="row">
+                <div class="input-field col s6 m4">
+                    {{ form.resolution_price }}
+                    <label for="id_resolution_price">Resolution</label>
+                </div>
+                <div class="input-field col s6 m4">
+                    {{ form.size_price }}
+                    <label for="id_size_price">Size</label>
+                </div>
+                <div class="input-field col s6 m4">
+                    {{ form.number_characters }}
+                    <label for="id_number_characters">Number of Characters</label>
+                    <span class="helper-text">Up to 6 characters</span>
+                </div>
             </div>
         </div>
         
+        <!-- Mood Board -->
+        <div class="col s12 xl6">
+            <div class="card-panel grey">
+                <h5>Mood board: </h5>
+                <div class="row">
+                    {% for field in form %}
+                        {% if field.widget_type == 'clearablefile'%}
+                        <span class="btn-floating btn-large waves-effect waves-light black right mood-board-button"><i class="material-icons">add</i>{{ field }}</span>
+                        <div class="col s6 xl4">
+                            <div class="mood-board-image">  
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                
+            </div>
+        </div>
     </form>
 {% endblock%}
+
+{% block postload_js %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $('input[type="file"]:gt(0)').parent().addClass('hide');
+        $('.mood-board-image').addClass('hide');
+
+        $('input[type="file"]').change(function() {
+            var fileCount = $('input[type="file"]').index(this);
+
+            // Create URL for file preview found in https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded
+            var file = $(this)[0].files[0];
+            var file_url = URL.createObjectURL(file);
+            
+            $(`.mood-board-image:eq(${fileCount})`).html(
+                `<img src="${file_url}">`
+            ).removeClass('hide');
+
+            $(this).parent().addClass('hide');
+            $(`input[type="file"]:eq(${fileCount + 1})`).parent().removeClass('hide');
+        });
+
+    </script>
+{% endblock %}

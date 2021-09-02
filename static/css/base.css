@@ -109,6 +109,30 @@ blockquote.right-align {
     color: white;
 }
 
+/* -----  Mood Board  ----- */
+.mood-board-button {
+    position: relative;
+}
+
+.mood-board-image img{
+    height: 106px;
+    width: fit-content;
+    overflow: hidden;
+}
+
+.mood-board-button input {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+
+}
+
 /* -----  Media queries  ----- */
 @media only screen and (min-width: 993px) {
     main {

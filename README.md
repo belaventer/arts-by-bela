@@ -190,7 +190,7 @@ References media used on orders to demonstrate features listed below:
 
 Favicon added as per ["Add A Favicon to A Website in HTML | Learn HTML and CSS | HTML Tutorial | HTML for Beginners"](https://www.youtube.com/watch?v=kEf1xSwX5D8) by Dani Krossing
 
-https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/)
+Create file preview from file input solution found in [StackOverflow](https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded)
 
 [W3Schools](https://www.w3schools.com/) was referenced throughout the project for HTML, CSS and Python references.
 
