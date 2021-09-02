@@ -10,3 +10,12 @@ class PriceAdmin(admin.ModelAdmin):
     )
 
     ordering = ('price_factor',)
+
+
+@admin.register(models.Commission)
+class CommissionAdmin(admin.ModelAdmin):
+    list_display = (
+        '__str__',
+        'description',
+        'order_total'
+    )
