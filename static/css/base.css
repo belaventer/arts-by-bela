@@ -18,6 +18,11 @@ main {
     display: none;
 }
 
+a > span {
+    position: relative;
+    bottom: 4px;
+}
+
 /* -----  Navigation  ----- */
 #artist-signature {
     display: inline-block;
