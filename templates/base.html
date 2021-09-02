@@ -75,11 +75,25 @@
     <footer class="copyright-text-mobile hide-on-large-only black white-text">
         © 2021 Bela, All rights reserved.
     </footer>
+    
+    <!-- Toast for messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="toast-div" data-message="{{ message }}"></div>
+        {% endfor %}
+    {% endif %}
 
     {% block postload_js %}
         <script type="text/javascript">
             $(document).ready(function(){
+                var messages = $('.toast-div');
                 $('.sidenav').sidenav();
+                if (messages) {
+                    for (var i=0; i < messages.length ; i++) {
+                        M.toast({html: $(messages[i]).attr('data-message'),
+                                        displayLength: 1000});
+                    }
+                }
             });
         </script>
     {% endblock %}
