@@ -115,9 +115,8 @@ blockquote.right-align {
 }
 
 .mood-board-image img{
-    height: 106px;
-    width: fit-content;
-    overflow: hidden;
+    width: 50%;
+    height: max-content;
 }
 
 .mood-board-button input {

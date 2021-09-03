@@ -12,51 +12,66 @@
 {% block content %}
     <form method="" action="">
         {% csrf_token %}
-        <div class="col s12 xl6">
-            <h5>Illustration requirements:</h5>
-            <div class="row">
-                <div class="input-field col s12 m4">
-                  {{ form.name }}
-                  <label for="id_name">Name</label>
+        <div class="row">
+            <div class="col s12 xl6">
+                <h5>Illustration requirements:</h5>
+                <div class="row">
+                    <div class="input-field col s12 m4">
+                    {{ form.name }}
+                    <label for="id_name">Name</label>
+                    </div>
+                    <div class="input-field col s12 m8">
+                        {{ form.description }}
+                        <label for="id_description">Description</label>
+                    </div>
                 </div>
-                <div class="input-field col s12 m8">
-                    {{ form.description }}
-                    <label for="id_description">Description</label>
+                <div class="row">
+                    <div class="input-field col s6 m4">
+                        {{ form.resolution_price }}
+                        <label for="id_resolution_price">Resolution</label>
+                    </div>
+                    <div class="input-field col s6 m4">
+                        {{ form.size_price }}
+                        <label for="id_size_price">Size</label>
+                    </div>
+                    <div class="input-field col s6 m4">
+                        {{ form.number_characters }}
+                        <label for="id_number_characters">Number of Characters</label>
+                        <span class="helper-text">Up to 6 characters</span>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="input-field col s6 m4">
-                    {{ form.resolution_price }}
-                    <label for="id_resolution_price">Resolution</label>
-                </div>
-                <div class="input-field col s6 m4">
-                    {{ form.size_price }}
-                    <label for="id_size_price">Size</label>
-                </div>
-                <div class="input-field col s6 m4">
-                    {{ form.number_characters }}
-                    <label for="id_number_characters">Number of Characters</label>
-                    <span class="helper-text">Up to 6 characters</span>
+            
+            <!-- Mood Board -->
+            <div class="col s12 xl6">
+                <div class="card-panel grey">
+                    <h5>Mood board: </h5>
+                    <div class="row">
+                        {% for field in form %}
+                            {% if field.widget_type == 'clearablefile'%}
+                            <div class="col s6 xl4">
+                                <div class="btn-floating btn-large waves-effect waves-light black mood-board-button"><i class="material-icons">add</i>{{ field }}</div>
+                                <div class="mood-board-image">
+                                    <img src="" alt="{{ field.name }}">
+                                    <p></p>
+                                    <p><strong class="red-text waves-effect waves-black btn-flat">Remove</strong></p>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    
                 </div>
             </div>
         </div>
         
-        <!-- Mood Board -->
-        <div class="col s12 xl6">
-            <div class="card-panel grey">
-                <h5>Mood board: </h5>
-                <div class="row">
-                    {% for field in form %}
-                        {% if field.widget_type == 'clearablefile'%}
-                        <span class="btn-floating btn-large waves-effect waves-light black right mood-board-button"><i class="material-icons">add</i>{{ field }}</span>
-                        <div class="col s6 xl4">
-                            <div class="mood-board-image">  
-                            </div>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                
+        <div class="row">
+            <div class="col s12 xl6">
+                <a href="{% url 'profile' %}" class="btn waves-effect waves-light red" style="margin: 2px;">Cancel</a>
+                <button type="submit" class="btn waves-effect waves-light black"
+                        style="margin: 2px;">
+                    Proceed to payment
+                </button>
             </div>
         </div>
     </form>
@@ -68,6 +83,9 @@
         $('input[type="file"]:gt(0)').parent().addClass('hide');
         $('.mood-board-image').addClass('hide');
 
+        $('#id_description').val('');
+            M.textareaAutoResize($('#id_description'));
+
         $('input[type="file"]').change(function() {
             var fileCount = $('input[type="file"]').index(this);
 
@@ -75,13 +93,29 @@
             var file = $(this)[0].files[0];
             var file_url = URL.createObjectURL(file);
             
-            $(`.mood-board-image:eq(${fileCount})`).html(
-                `<img src="${file_url}">`
-            ).removeClass('hide');
+            $(`.mood-board-image:eq(${fileCount}) > img`).attr('src', file_url);
+            $(`.mood-board-image:eq(${fileCount}) > p:first`).text(`File name: ${file.name}`);
+            $(`.mood-board-image:eq(${fileCount})`).removeClass('hide');
 
             $(this).parent().addClass('hide');
-            $(`input[type="file"]:eq(${fileCount + 1})`).parent().removeClass('hide');
+            for (var i = fileCount + 1; i < $('input[type="file"]').length; i++) {
+                if ($(`.mood-board-image:eq(${i}) > img`).attr('src') === "") {
+                    $(`input[type="file"]:eq(${i})`).parent().removeClass('hide');
+                    return
+                }
+            }
         });
 
+        $('.mood-board-image .btn-flat').click(function() {
+            var fileNumber = $('.mood-board-image .btn-flat').index(this);
+            
+            $(`input[type="file"]:eq(${fileNumber})`).val("");
+            $(`.mood-board-image:eq(${fileNumber}) > img`).attr('src', "");
+            $(`.mood-board-image:eq(${fileNumber}) > p:first`).text(`File name: `);
+            $(`.mood-board-image:eq(${fileNumber})`).addClass('hide');
+
+            $(`input[type="file"]:gt(${fileNumber + 1})`).parent().addClass('hide');
+            $(`input[type="file"]:eq(${fileNumber})`).parent().removeClass('hide');
+        });
     </script>
 {% endblock %}
