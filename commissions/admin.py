@@ -19,3 +19,5 @@ class CommissionAdmin(admin.ModelAdmin):
         'description',
         'order_total'
     )
+
+    readonly_fields = ('user_profile', 'order_total',)

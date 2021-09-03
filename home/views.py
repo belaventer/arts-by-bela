@@ -9,10 +9,6 @@ def index(request):
     context = {
         'resolutions': resolutions,
         'sizes': sizes,
-        'json_data': {
-            'resolutions': list(resolutions.values()),
-            'sizes': list(sizes.values())
-        },
     }
 
     return render(request, 'home/index.html', context)
