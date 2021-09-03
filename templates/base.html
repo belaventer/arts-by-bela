@@ -32,9 +32,7 @@
         <!-- Navigation links -->
         <ul id="slide-out" class="sidenav sidenav-fixed black">
             <li><a href="{% url 'home' %}"><img class="responsive-img" src="{{ MEDIA_URL }}logo-white.png" alt="Arts by Bela logo"></a></li>
-            {% if not request.user.is_authenticated %}
-                <li><a href="{% url 'home' %}" class="white-text bold">Home</a></li>
-            {% endif %}
+            <li><a href="{% url 'home' %}" class="white-text bold">Home</a></li>
             <li><a href="#!" class="white-text bold">Showcase</a></li>
             {% if request.user.is_authenticated %}
                 <li><a href="{% url 'profile' %}" class="white-text bold">Profile</a></li>

@@ -73,7 +73,9 @@ The entity relational diagram and overall workflow can be found in [ERD](ERD.pdf
 
 - [Wireframes](wireframes.jpg "Arts by Bela Wireframes")
 
-  #### Deviation from layout
+#### Deviation from layout
+
+- The Home button will be available for authenticated users as the instructions and quote calculator are referred on the  home page.
 
 ### Surface
 
@@ -88,11 +90,19 @@ The typography will be round and soft using the combinations of fonts Nunito and
 
 ## Features
 
+The website is consistent of:
 
+- **Base layout:** responsive layout that holds the navigation links and copyright.
+- **Home page:** Simple page with static information about the artist and how to commission an artwork. On the bottom of the page, there is a interactive calculator for quoting the commission price, given the requirements.
+- **User Authentication:** The user authentication is given by [django-allauth](https://django-allauth.readthedocs.io/en/latest/index.html). The form fields are dynamically updated to match the rest of the website layout.
 
 ### Existing Features
 
+**Navigation Bar**: The responsive navigation bar is fixed to the right of the screen on desktop views and collapsed static at the top of the screen for tablet/mobile. The navigation links depend on user authentication.
 
+**Quote Calculator:** Simple script that returns the quote value given the Size, Resolution and Number of Characters specified. The quote is update on the change of each value.
+
+**User Authentication Layout:** All django-allauth templates are update with materialize classes as the document loads to match website layout.
 
 ### Features left to implement
 
@@ -188,9 +198,9 @@ References media used on orders to demonstrate features listed below:
 
 ### Code
 
-Favicon added as per ["Add A Favicon to A Website in HTML | Learn HTML and CSS | HTML Tutorial | HTML for Beginners"](https://www.youtube.com/watch?v=kEf1xSwX5D8) by Dani Krossing
+Favicon added as per ["Add A Favicon to A Website in HTML | Learn HTML and CSS | HTML Tutorial | HTML for Beginners"](https://www.youtube.com/watch?v=kEf1xSwX5D8) by Dani Krossing.
 
-Create file preview from file input solution found in [StackOverflow](https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded)
+Create file preview from file input solution found in [StackOverflow](https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded).
 
 [W3Schools](https://www.w3schools.com/) was referenced throughout the project for HTML, CSS and Python references.
 
