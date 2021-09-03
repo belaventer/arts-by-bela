@@ -2,7 +2,7 @@ from django import forms
 from . import models
 
 
-class CommisionForm(forms.ModelForm):
+class CommissionForm(forms.ModelForm):
     class Meta:
         model = models.Commission
         exclude = ('user_profile', 'order_number', 'order_total')

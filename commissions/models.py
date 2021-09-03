@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.conf import settings
 from django.core.validators import (
     MaxValueValidator, MinValueValidator)
 
@@ -98,6 +99,18 @@ class Commission(models.Model):
             5*self.resolution_price.price_factor*self.size_price.price_factor
             + 2*self.number_characters)
 
+    def _define_file_name(self):
+        self.reference_image_one.name = (
+            f'{self.order_number}/reference_one')
+        self.reference_image_two.name = (
+            f'{self.order_number}/reference_two')
+        self.reference_image_three.name = (
+            f'{self.order_number}/reference_three')
+        self.reference_image_four.name = (
+            f'{self.order_number}/reference_four')
+        self.reference_image_five.name = (
+            f'{self.order_number}/reference_five')
+
     def save(self, *args, **kwargs):
         """
         Override the original save method to set the order number
@@ -105,6 +118,7 @@ class Commission(models.Model):
         """
         if not self.order_number:
             self.order_number = self._generate_order_number()
+        self._define_file_name()
         self._calculate_order_total()
         super().save(*args, **kwargs)
 
