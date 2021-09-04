@@ -16,7 +16,7 @@ def new_commission(request):
             commission.user_profile = UserProfile.objects.get(
                 user=request.user)
             commission.save()
-            return redirect(reverse('profile'))
+            return redirect(reverse('payment', args=[commission.id]))
         else:
             messages.error(
                 request, 'Please ensure the form is valid.')

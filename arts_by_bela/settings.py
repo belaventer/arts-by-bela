@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'home',
     'commissions',
     'profiles',
+    'payments',
 ]
 
 MIDDLEWARE = [

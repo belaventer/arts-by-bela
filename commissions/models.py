@@ -1,7 +1,6 @@
 import uuid
 
 from django.db import models
-from django.conf import settings
 from django.core.validators import (
     MaxValueValidator, MinValueValidator)
 
@@ -9,6 +8,10 @@ from profiles.models import UserProfile
 
 
 class Resolution(models.Model):
+    """
+    A Resolution model for maintaining the
+    resolution options of a illustration.
+    """
 
     class ResolutionsChoices(models.TextChoices):
         LOW = '72 dpi'
@@ -30,6 +33,10 @@ class Resolution(models.Model):
 
 
 class Size(models.Model):
+    """
+    A Size model for maintaining the
+    size options of a illustration.
+    """
 
     class SizesChoices(models.TextChoices):
         A4 = 'A4 210 x 297 mm'
@@ -52,6 +59,10 @@ class Size(models.Model):
 
 
 class Commission(models.Model):
+    """
+    A Commission model for maintaining the
+    new illustration request information.
+    """
 
     order_number = models.CharField(
         max_length=32, null=False, editable=False,
@@ -101,15 +112,15 @@ class Commission(models.Model):
 
     def _define_file_name(self):
         self.reference_image_one.name = (
-            f'{self.order_number}/reference_one')
+            f'{self.order_number}/{self.reference_image_one.name}')
         self.reference_image_two.name = (
-            f'{self.order_number}/reference_two')
+            f'{self.order_number}/{self.reference_image_two.name}')
         self.reference_image_three.name = (
-            f'{self.order_number}/reference_three')
+            f'{self.order_number}/{self.reference_image_three.name}')
         self.reference_image_four.name = (
-            f'{self.order_number}/reference_four')
+            f'{self.order_number}/{self.reference_image_four.name}')
         self.reference_image_five.name = (
-            f'{self.order_number}/reference_five')
+            f'{self.order_number}/{self.reference_image_five.name}')
 
     def save(self, *args, **kwargs):
         """
@@ -124,3 +135,19 @@ class Commission(models.Model):
 
     def __str__(self):
         return f'{self.order_number}: {self.name}'
+
+
+class WIP(models.Model):
+    """
+    A Work in Progress (WIP) model
+    to link to the Commission once paid
+    and hold the WIP illustration and client comment
+    """
+    commission = models.OneToOneField(
+        Commission, on_delete=models.CASCADE,
+        related_name="wip")
+    client_comment = models.TextField(null=True, blank=True)
+    wip_illustration = models.ImageField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.commission.order_number}: {self.commission.name}'

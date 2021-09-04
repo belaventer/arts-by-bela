@@ -21,3 +21,11 @@ class CommissionAdmin(admin.ModelAdmin):
     )
 
     readonly_fields = ('user_profile', 'order_total',)
+
+
+@admin.register(models.WIP)
+class WIPAdmin(admin.ModelAdmin):
+    list_display = (
+        '__str__',
+        'client_comment',
+    )
