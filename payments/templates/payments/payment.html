@@ -1,16 +1,95 @@
 {% extends "base.html" %}
 {% load static %}
+{% load split_filter %}
 
 {% block extra_title %}
     Payment | {{ commission.order_number}}
 {% endblock %}
 
 {% block header %}
-    <h3>Payment</h3>
+    <h3>Review & Pay</h3>
 {% endblock %}
 
 {% block content %}
-
+    <div class="row">
+        <div class="col s12 xl6">
+            <p>Order Number: {{ commission.order_number }}</p>
+            <table class="highlight responsive-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Size</th>
+                        <th>Resolution</th>
+                        <th>Number of Characters</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td>{{ commission.name }}</td>
+                            <td>{{ commission.description }}</td>
+                            <td>{{ commission.size_price.size }}</td>
+                            <td>{{ commission.resolution_price.resolution }}</td>
+                            <td>{{ commission.number_characters }}</td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col s12 xl6">
+            <div class="card-panel grey">
+                <h5>Mood board: </h5>
+                <div class="row">
+                    {% if commission.reference_image_one.name|split:'/'|last != "None" %}
+                        <div class="col s6 xl4">
+                            <div class="mood-board-image">
+                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_one.name }}" alt="{{ commission.reference_image_one.name }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if commission.reference_image_two.name|split:'/'|last != "None" %}
+                        <div class="col s6 xl4">
+                            <div class="mood-board-image">
+                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_two.name }}" alt="{{ commission.reference_image_two.name }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if commission.reference_image_three.name|split:'/'|last != "None" %}
+                        <div class="col s6 xl4">
+                            <div class="mood-board-image">
+                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_three.name }}" alt="{{ commission.reference_image_three.name }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if commission.reference_image_four.name|split:'/'|last != "None" %}
+                        <div class="col s6 xl4">
+                            <div class="mood-board-image">
+                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_four.name }}" alt="{{ commission.reference_image_four.name }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if commission.reference_image_five.name|split:"/"|last != "None" %}
+                        <div class="col s6 xl4">
+                            <div class="mood-board-image">
+                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_five.name }}" alt="{{ commission.reference_image_five.name }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h5 class="col s12">Total: {{ commission.order_total }}</h5>
+    </div>
+    <div class="row">
+        <div class="col s12 xl6">
+            <a href="{% url 'profile' %}" class="btn waves-effect waves-light red" style="margin: 2px;">Return</a>
+            <button type="" class="btn waves-effect waves-light black right"
+                    style="margin: 2px;">
+                Pay
+            </button>
+        </div>
+    </div>
 {% endblock%}
 
 {% block postload_js %}

@@ -57,6 +57,7 @@ a > span {
     bottom: 0px;
     width: 100vw;
     padding: 8px 0px 6px 10px;
+    z-index: 9999;
 }
 
 /* -----  Home Page  ----- */

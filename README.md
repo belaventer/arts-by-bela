@@ -202,6 +202,8 @@ Favicon added as per ["Add A Favicon to A Website in HTML | Learn HTML and CSS |
 
 Create file preview from file input solution found in [StackOverflow](https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded).
 
+Custom Split Filter from [StackOverflow](https://stackoverflow.com/questions/41932634/how-to-split-the-string-in-django-template).
+
 [W3Schools](https://www.w3schools.com/) was referenced throughout the project for HTML, CSS and Python references.
 
 [jQuery Documentation](https://api.jquery.com/) was referenced throughout the project for jQuery references.
