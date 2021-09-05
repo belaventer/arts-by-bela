@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
 from profiles.models import UserProfile
-from commissions.models import Commission
+from commissions.models import Commission, WIP
 
 import stripe
 
@@ -33,17 +33,46 @@ def payment(request, commission_id):
             request, 'This commission is already paid')
         return redirect(reverse('profile'))
 
-    stripe_total = round(commission.order_total*100)
-    stripe.api_key = stripe_secret_key
-    intent = stripe.PaymentIntent.create(
-        amount=stripe_total,
-        currency=settings.STRIPE_CURRENCY,
-    )
+    if request.method == 'POST':
+        WIP.objects.create(commission=commission)
+
+        return redirect(reverse(
+            'payment_success', args=[commission.id]))
+
+    else:
+        stripe_total = round(commission.order_total*100)
+        stripe.api_key = stripe_secret_key
+        intent = stripe.PaymentIntent.create(
+            amount=stripe_total,
+            currency=settings.STRIPE_CURRENCY,
+        )
+
+        context = {
+            'commission': commission,
+            'stripe_public_key': stripe_public_key,
+            'client_secret': intent.client_secret,
+        }
+
+        return render(request, 'payments/payment.html', context)
+
+
+@login_required
+def payment_success(request, commission_id):
+    """
+    A view to return the payment success page
+    """
+
+    profile = get_object_or_404(UserProfile, user=request.user)
+    commission = get_object_or_404(Commission, pk=commission_id)
+
+    if commission.user_profile != profile:
+        messages.error(
+            request, 'Sorry, this commission is not yours')
+        return redirect(reverse('profile'))
 
     context = {
-        'commission': commission,
-        'stripe_public_key': stripe_public_key,
-        'client_secret': intent.client_secret,
-    }
+            'profile': profile,
+            'commission': commission,
+        }
 
-    return render(request, 'payments/payment.html', context)
+    return render(request, 'payments/payment_success.html', context)

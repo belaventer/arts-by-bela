@@ -15,94 +15,111 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col s12 xl6">
-            <p>Order Number: {{ commission.order_number }}</p>
-            <table class="highlight responsive-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Size</th>
-                        <th>Resolution</th>
-                        <th>Number of Characters</th>
-                    </tr>
-                </thead>
-                <tbody>
+    <div id="payment-content">
+        <div class="row">
+            <div class="col s12 xl6">
+                <p>Order Number: {{ commission.order_number }}</p>
+                <table class="highlight responsive-table">
+                    <thead>
                         <tr>
-                            <td>{{ commission.name }}</td>
-                            <td>{{ commission.description }}</td>
-                            <td>{{ commission.size_price.size }}</td>
-                            <td>{{ commission.resolution_price.resolution }}</td>
-                            <td>{{ commission.number_characters }}</td>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Size</th>
+                            <th>Resolution</th>
+                            <th>Number of Characters</th>
                         </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col s12 xl6">
-            <div class="card-panel grey">
-                <h5>Mood board: </h5>
-                <div class="row">
-                    {% if commission.reference_image_one.name|split:'/'|last != "None" %}
-                        <div class="col s6 xl4">
-                            <div class="mood-board-image">
-                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_one.name }}" alt="{{ commission.reference_image_one.name }}">
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>{{ commission.name }}</td>
+                                <td>{{ commission.description }}</td>
+                                <td>{{ commission.size_price.size }}</td>
+                                <td>{{ commission.resolution_price.resolution }}</td>
+                                <td>{{ commission.number_characters }}</td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col s12 xl6">
+                <div class="card-panel grey">
+                    <h5>Mood board: </h5>
+                    <div class="row">
+                        {% if commission.reference_image_one.name|split:'/'|last != "None" %}
+                            <div class="col s6 xl4">
+                                <div class="mood-board-image">
+                                    <img src="{{ MEDIA_URL }}{{ commission.reference_image_one.name }}" alt="{{ commission.reference_image_one.name }}">
+                                </div>
                             </div>
-                        </div>
-                    {% endif %}
-                    {% if commission.reference_image_two.name|split:'/'|last != "None" %}
-                        <div class="col s6 xl4">
-                            <div class="mood-board-image">
-                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_two.name }}" alt="{{ commission.reference_image_two.name }}">
+                        {% endif %}
+                        {% if commission.reference_image_two.name|split:'/'|last != "None" %}
+                            <div class="col s6 xl4">
+                                <div class="mood-board-image">
+                                    <img src="{{ MEDIA_URL }}{{ commission.reference_image_two.name }}" alt="{{ commission.reference_image_two.name }}">
+                                </div>
                             </div>
-                        </div>
-                    {% endif %}
-                    {% if commission.reference_image_three.name|split:'/'|last != "None" %}
-                        <div class="col s6 xl4">
-                            <div class="mood-board-image">
-                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_three.name }}" alt="{{ commission.reference_image_three.name }}">
+                        {% endif %}
+                        {% if commission.reference_image_three.name|split:'/'|last != "None" %}
+                            <div class="col s6 xl4">
+                                <div class="mood-board-image">
+                                    <img src="{{ MEDIA_URL }}{{ commission.reference_image_three.name }}" alt="{{ commission.reference_image_three.name }}">
+                                </div>
                             </div>
-                        </div>
-                    {% endif %}
-                    {% if commission.reference_image_four.name|split:'/'|last != "None" %}
-                        <div class="col s6 xl4">
-                            <div class="mood-board-image">
-                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_four.name }}" alt="{{ commission.reference_image_four.name }}">
+                        {% endif %}
+                        {% if commission.reference_image_four.name|split:'/'|last != "None" %}
+                            <div class="col s6 xl4">
+                                <div class="mood-board-image">
+                                    <img src="{{ MEDIA_URL }}{{ commission.reference_image_four.name }}" alt="{{ commission.reference_image_four.name }}">
+                                </div>
                             </div>
-                        </div>
-                    {% endif %}
-                    {% if commission.reference_image_five.name|split:"/"|last != "None" %}
-                        <div class="col s6 xl4">
-                            <div class="mood-board-image">
-                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_five.name }}" alt="{{ commission.reference_image_five.name }}">
+                        {% endif %}
+                        {% if commission.reference_image_five.name|split:"/"|last != "None" %}
+                            <div class="col s6 xl4">
+                                <div class="mood-board-image">
+                                    <img src="{{ MEDIA_URL }}{{ commission.reference_image_five.name }}" alt="{{ commission.reference_image_five.name }}">
+                                </div>
                             </div>
-                        </div>
-                    {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <h5 class="col s12">Total: {{ commission.order_total }}</h5>
-    </div>
-    <form action="" id="payment-form">
         <div class="row">
-            <div class="col s12 m6 xl4">
-                <div id="card-element"></div>
-                <div class="red-text" id="card-errors" role="alert"></div>
-            </div>
+            <h5 class="col s12">Total: {{ commission.order_total }}</h5>
         </div>
-        
-        <div class="row">
-            <div class="col s12 xl6">
-                <a href="{% url 'profile' %}" class="btn waves-effect waves-light red" style="margin: 2px;">Return</a>
-                <button id ="submit-button" type="" class="btn waves-effect waves-light black right"
-                        style="margin: 2px;">
-                    Pay
-                </button>
+        <form action="{% url 'payment' commission.id %}" method="POST" id="payment-form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col s12 m6 xl4">
+                    <div id="card-element"></div>
+                    <div class="red-text" id="card-errors" role="alert"></div>
+                </div>
             </div>
-        </div>
-    </form>
+            
+            <div class="row">
+                <div class="col s12 xl6">
+                    <a href="{% url 'profile' %}" class="btn waves-effect waves-light red" style="margin: 2px;">Return</a>
+                    <button id ="submit-button" type="" class="btn waves-effect waves-light black right"
+                            style="margin: 2px;">
+                        Pay
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div id="loader" class="valign-wrapper">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-red-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+    </div>
 {% endblock%}
 
 {% block postload_js %}

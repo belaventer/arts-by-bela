@@ -19,5 +19,20 @@
 }
 
 .StripeElement--webkit-autofill {
-  background-color: #fefde5 !important;
+    background-color: #fefde5 !important;
+}
+
+#loader {
+    display:none;
+    background-color: #0000005e;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+}
+
+#loader > div{
+    margin: 45vh 45vw;
 }

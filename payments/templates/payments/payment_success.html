@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% load split_filter %}
+
+{% block extra_title %}
+    Success | {{ commission.order_number}}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col s12">
+            <h5>Thank you for your request, {{ profile.user.username }}!</h5>
+            <p>A confirmation email will be sent to {{ profile.user.email }} with your commission information below: </p>
+        </div>
+        <div class="col s12">
+            <table class="highlight responsive-table">
+                <thead>
+                    <tr>
+                        <th>Order Number</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Size</th>
+                        <th>Resolution</th>
+                        <th>Number of Characters</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td>{{ commission.order_number }}</td>
+                            <td>{{ commission.name }}</td>
+                            <td>{{ commission.description }}</td>
+                            <td>{{ commission.size_price.size }}</td>
+                            <td>{{ commission.resolution_price.resolution }}</td>
+                            <td>{{ commission.number_characters }}</td>
+                            <td>$ {{ commission.order_total }}</td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col s12">
+            <div class="card-panel grey">
+                <h5>Mood board: </h5>
+                <div class="row">
+                    {% if commission.reference_image_one.name|split:'/'|last != "None" %}
+                        <div class="col s6 xl4">
+                            <div class="mood-board-image">
+                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_one.name }}" alt="{{ commission.reference_image_one.name }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if commission.reference_image_two.name|split:'/'|last != "None" %}
+                        <div class="col s6 xl4">
+                            <div class="mood-board-image">
+                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_two.name }}" alt="{{ commission.reference_image_two.name }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if commission.reference_image_three.name|split:'/'|last != "None" %}
+                        <div class="col s6 xl4">
+                            <div class="mood-board-image">
+                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_three.name }}" alt="{{ commission.reference_image_three.name }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if commission.reference_image_four.name|split:'/'|last != "None" %}
+                        <div class="col s6 xl4">
+                            <div class="mood-board-image">
+                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_four.name }}" alt="{{ commission.reference_image_four.name }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if commission.reference_image_five.name|split:"/"|last != "None" %}
+                        <div class="col s6 xl4">
+                            <div class="mood-board-image">
+                                <img src="{{ MEDIA_URL }}{{ commission.reference_image_five.name }}" alt="{{ commission.reference_image_five.name }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <a href="{% url 'profile' %}" class="btn waves-effect waves-light red" style="margin: 2px;">Return to Profile</a>
+        </div>
+    </div>
+{% endblock%}
