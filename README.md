@@ -159,7 +159,8 @@ This project was developed using the Gitpod IDE, committed to git and pushed to 
 - Search for the GitHub repository and click Connect.
 - Under Settings tab, click "Reveal Config Vars"
 - Include the environment  private variables and values:
-  - 
+  - STRIPE_SECRET_KEY
+  - STRIPE_PUBLIC_KEY
 
 - Under Deploy tab, choose the branch and click Enable Automatic Deploys in the Automatic Deploys section.
 
