@@ -71,6 +71,7 @@
         <div class="row">
             <div class="col s12 xl6">
                 <a href="{% url 'profile' %}" class="btn waves-effect waves-light red" style="margin: 2px;">Cancel</a>
+                <a href="#delete-confirm" class="modal-trigger btn waves-effect waves-light red" style="margin: 2px;">Delete</a>
                 <button type="submit" class="btn waves-effect waves-light black"
                         style="margin: 2px;">
                     Proceed to payment
@@ -78,6 +79,21 @@
             </div>
         </div>
     </form>
+
+  <!-- Modal Structure -->
+  <div id="delete-confirm" class="modal">
+    <div class="modal-content">
+        <h4 class="red-text title-font">WARNING!</h4>
+        <p>The commission order: "{{ commission.order_number }}" will be deleted. All info and files will be lost.</p>
+        <p>Are you sure you want to proceed?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#"
+        class="modal-close waves-effect waves-green btn red">Cancel</a>
+        <a href="{% url 'delete_commission' commission.id %}"
+        class="modal-close waves-effect waves-green btn red">Proceed</a>
+    </div>
+  </div>
 {% endblock%}
 
 {% block postload_js %}

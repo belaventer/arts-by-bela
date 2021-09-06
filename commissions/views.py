@@ -72,3 +72,31 @@ def edit_commission(request, commission_id):
     }
 
     return render(request, 'commissions/edit_commission.html', context)
+
+
+@login_required
+def delete_commission(request, commission_id):
+    """ A view to delete a non paid commission """
+
+    profile = get_object_or_404(UserProfile, user=request.user)
+    commission = get_object_or_404(Commission, pk=commission_id)
+
+    if commission.user_profile != profile:
+        messages.error(
+            request, 'Sorry, this commission is not yours')
+        return redirect(reverse('profile'))
+
+    if hasattr(commission, 'wip'):
+        messages.error(
+            request, 'This commission is already paid')
+        return redirect(reverse('profile'))
+
+    commission.reference_image_one.delete()
+    commission.reference_image_two.delete()
+    commission.reference_image_three.delete()
+    commission.reference_image_four.delete()
+    commission.reference_image_five.delete()
+
+    commission.delete()
+    messages.success(request, 'Commission request deleted!')
+    return redirect(reverse('profile'))
