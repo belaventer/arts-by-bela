@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_title %}
-    New Commission
+    Edit Commission | {{ commission.order_number }}
 {% endblock %}
 
 {% block header %}
@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-    <form method="POST" action="{% url 'new_commission' %}" enctype="multipart/form-data">
+    <form method="POST" action="{% url 'edit_commission' commission.id %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row">
             <div class="col s12 xl6">

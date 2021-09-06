@@ -9,7 +9,11 @@ $(document).ready(function(){
             data.resolutions[0].price_factor,data.sizes[0].price_factor,0)}!!`);
     $('#your-quote').text(
         `$ ${calculateQuote(
-            data.resolutions[0].price_factor,data.sizes[0].price_factor,0)}`);
+                getPriceFactor(
+                    data.resolutions, 'resolution', $('.selected').children().last().text()),
+                getPriceFactor(
+                    data.sizes, 'size', $('.selected').children().first().text()),
+                $('#id_number_characters').val())}`);
     $('#calculator-select').children().change(function (){
         res_price = getPriceFactor(
             data.resolutions, 'resolution', $('.selected').children().last().text());

@@ -110,17 +110,31 @@ class Commission(models.Model):
             5*self.resolution_price.price_factor*self.size_price.price_factor
             + 2*self.number_characters)
 
+    def _correct_path(self, path, name):
+        if name.split('/')[0] == path:
+            file_name = name.split('/')[-1]
+            return f'{path}/{file_name}'
+        else:
+            return f'{path}/{name}'
+
     def _define_file_name(self):
-        self.reference_image_one.name = (
-            f'{self.order_number}/{self.reference_image_one.name}')
-        self.reference_image_two.name = (
-            f'{self.order_number}/{self.reference_image_two.name}')
-        self.reference_image_three.name = (
-            f'{self.order_number}/{self.reference_image_three.name}')
-        self.reference_image_four.name = (
-            f'{self.order_number}/{self.reference_image_four.name}')
-        self.reference_image_five.name = (
-            f'{self.order_number}/{self.reference_image_five.name}')
+        path = f'{self.order_number}'
+
+        if self.reference_image_one:
+            self.reference_image_one.name = self._correct_path(
+                path, self.reference_image_one.name)
+        if self.reference_image_two:
+            self.reference_image_two.name = self._correct_path(
+                path, self.reference_image_two.name)
+        if self.reference_image_three:
+            self.reference_image_three.name = self._correct_path(
+                path, self.reference_image_three.name)
+        if self.reference_image_four:
+            self.reference_image_four.name = self._correct_path(
+                path, self.reference_image_four.name)
+        if self.reference_image_five:
+            self.reference_image_five.name = self._correct_path(
+                path, self.reference_image_five.name)
 
     def save(self, *args, **kwargs):
         """
