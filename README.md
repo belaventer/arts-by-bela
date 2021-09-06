@@ -205,6 +205,8 @@ Create file preview from file input solution found in [StackOverflow](https://st
 
 Custom Split Filter from [StackOverflow](https://stackoverflow.com/questions/41932634/how-to-split-the-string-in-django-template).
 
+Upload files for unit testing [StackOverflow](https://stackoverflow.com/questions/11170425/how-to-unit-test-file-upload-in-django).
+
 [W3Schools](https://www.w3schools.com/) was referenced throughout the project for HTML, CSS and Python references.
 
 [jQuery Documentation](https://api.jquery.com/) was referenced throughout the project for jQuery references.

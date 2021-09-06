@@ -22,6 +22,7 @@ def new_commission(request):
         else:
             messages.error(
                 request, 'Please ensure the form is valid.')
+            form = CommissionForm(request.POST, request.FILES)
 
     form = CommissionForm()
 
@@ -60,8 +61,10 @@ def edit_commission(request, commission_id):
         else:
             messages.error(
                 request, 'Please ensure the form is valid.')
-    else:
-        form = CommissionForm(instance=commission)
+            form = CommissionForm(
+                request.POST, request.FILES, instance=commission)
+
+    form = CommissionForm(instance=commission)
 
     context = {
         'commission': commission,
