@@ -139,3 +139,53 @@ class TestViews(TestCase):
             response, f'/payment/{test_commission.id}/')
 
         self.assertEqual(test_commission.name, 'Valid updated commission')
+
+    def test_delete_commission_no_login(self):
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        response = self.client.get(f'/commission/delete/{test_commission.id}/')
+        self.assertRedirects(
+            response,
+            f'/accounts/login/?next=/commission/delete/{test_commission.id}/')
+
+    def test_delete_wrong_user(self):
+        test_user_two = User.objects.create(
+            username="TestUser2", password="TestPass")
+        test_user_profile_two = UserProfile.objects.create(
+            user=test_user_two)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        self.client.force_login(user=test_user_two)
+        response = self.client.get(
+            f'/commission/delete/{test_commission.id}/')
+        self.assertRedirects(response, '/profile/')
+
+    def test_delete_payment_exists(self):
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(
+            commission=test_commission)
+        self.client.force_login(user=self.test_user)
+        response = self.client.get(
+            f'/commission/delete/{test_commission.id}/')
+        self.assertRedirects(response, '/profile/')
+        test_wip.delete()
+
+    def test_delete_success(self):
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        self.client.force_login(user=self.test_user)
+        response = self.client.get(
+            f'/commission/delete/{test_commission.id}/')
+        self.assertRedirects(response, '/profile/')
+        existing_commissions = models.Commission.objects.filter(
+            id=test_commission.id)
+        self.assertEqual(len(existing_commissions), 0)
