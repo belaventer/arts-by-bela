@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}
+    WIP | {{ commission.order_number}}
+{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet"
+        href="{% static 'commissions/css/mood_board_collapsible.css' %}">
+{% endblock %}
+
+{% block header %}
+    <h3>Commission in progress</h3>
+{% endblock %}
+
+{% block content %}
+    <!-- Commission content -->
+    <div class="row">
+        <div class="col s12">
+            <table class="highlight responsive-table">
+                <thead>
+                    <tr>
+                        <th>Order Number</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Size</th>
+                        <th>Resolution</th>
+                        <th>Number of Characters</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td>{{ commission.order_number }}</td>
+                            <td>{{ commission.name }}</td>
+                            <td>{{ commission.description }}</td>
+                            <td>{{ commission.size_price.size }}</td>
+                            <td>{{ commission.resolution_price.resolution }}</td>
+                            <td>{{ commission.number_characters }}</td>
+                            <td>$ {{ commission.order_total }}</td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col s12">
+            <div class="card-panel grey">
+                <ul class="collapsible">
+                    <li>
+                        <h5 class="collapsible-header">
+                            Mood board: <i class="material-icons">expand_more</i>
+                        </h5>
+                        <div class="collapsible-body row">
+                            {% if commission.reference_image_one %}
+                                <div class="col s6 xl4">
+                                    <div class="mood-board-image">
+                                        <img src="{{ MEDIA_URL }}{{ commission.reference_image_one.name }}" alt="{{ commission.reference_image_one.name }}">
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if commission.reference_image_two %}
+                                <div class="col s6 xl4">
+                                    <div class="mood-board-image">
+                                        <img src="{{ MEDIA_URL }}{{ commission.reference_image_two.name }}" alt="{{ commission.reference_image_two.name }}">
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if commission.reference_image_three %}
+                                <div class="col s6 xl4">
+                                    <div class="mood-board-image">
+                                        <img src="{{ MEDIA_URL }}{{ commission.reference_image_three.name }}" alt="{{ commission.reference_image_three.name }}">
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if commission.reference_image_four %}
+                                <div class="col s6 xl4">
+                                    <div class="mood-board-image">
+                                        <img src="{{ MEDIA_URL }}{{ commission.reference_image_four.name }}" alt="{{ commission.reference_image_four.name }}">
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if commission.reference_image_five %}
+                                <div class="col s6 xl4">
+                                    <div class="mood-board-image">
+                                        <img src="{{ MEDIA_URL }}{{ commission.reference_image_five.name }}" alt="{{ commission.reference_image_five.name }}">
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- WIP forms -->
+    <div class="row">
+        <div class="col s12">
+            {% if not commission.wip.wip_illustration %}
+                {% if request.user.is_superuser %}
+                    {% include 'includes/upload_illustration_form.html' %}
+                {% else %}
+                    <h5 class="title-font">
+                        <i class="material-icons">brush</i> The artist is working on your illustration. 
+                    </h5>
+                {% endif %}
+            {% else %}
+
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <a href="{% url 'profile' %}" class="btn waves-effect waves-light red" style="margin: 2px;">Return to Profile</a>
+        </div>
+    </div>
+{% endblock%}
+
+{% block postload_js %}
+{{ block.super }}  
+    <script src="{% static 'commissions/js/single_image_preview.js' %}"></script>
+{% endblock %}

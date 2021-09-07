@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Q
 from .models import UserProfile
 from .forms import UserProfileForm
+from commissions.models import Commission
 
 
 @login_required
@@ -22,7 +24,11 @@ def profile(request):
     else:
         form = UserProfileForm(instance=profile)
 
-    commissions = profile.commissions.all()
+    if request.user.is_superuser:
+        commissions = Commission.objects.filter(
+            Q(user_profile__exact=profile) | Q(wip__isnull=False))
+    else:
+        commissions = profile.commissions.all()
 
     context = {
         'profile': profile,

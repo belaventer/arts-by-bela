@@ -81,7 +81,7 @@ class TestViews(TestCase):
             f'/commission/edit/{test_commission.id}/')
         self.assertRedirects(response, '/profile/')
 
-    def test_edit_payment_exists(self):
+    def test_redirect_wip_exists(self):
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -91,7 +91,7 @@ class TestViews(TestCase):
         self.client.force_login(user=self.test_user)
         response = self.client.get(
             f'/commission/edit/{test_commission.id}/')
-        self.assertRedirects(response, '/profile/')
+        self.assertRedirects(response, f'/commission/wip/{test_commission.id}/')
         test_wip.delete()
 
     def test_edit_commission_login(self):

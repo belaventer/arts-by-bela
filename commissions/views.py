@@ -2,7 +2,7 @@ from django.shortcuts import (
     render, redirect, reverse, get_object_or_404)
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import CommissionForm
+from .forms import CommissionForm, WIPForm
 from .models import Commission
 from profiles.models import UserProfile
 
@@ -40,14 +40,12 @@ def edit_commission(request, commission_id):
     profile = get_object_or_404(UserProfile, user=request.user)
     commission = get_object_or_404(Commission, pk=commission_id)
 
+    if hasattr(commission, 'wip'):
+        return redirect(reverse('wip', args=[commission_id]))
+
     if commission.user_profile != profile:
         messages.error(
             request, 'Sorry, this commission is not yours')
-        return redirect(reverse('profile'))
-
-    if hasattr(commission, 'wip'):
-        messages.error(
-            request, 'This commission is already paid')
         return redirect(reverse('profile'))
 
     if request.method == 'POST':
@@ -100,3 +98,30 @@ def delete_commission(request, commission_id):
     commission.delete()
     messages.success(request, 'Commission request deleted!')
     return redirect(reverse('profile'))
+
+
+@login_required
+def wip(request, commission_id):
+    """ A view to return the WIP page """
+
+    profile = get_object_or_404(UserProfile, user=request.user)
+    commission = get_object_or_404(Commission, pk=commission_id)
+
+    if not hasattr(commission, 'wip'):
+        messages.error(
+            request, 'Please pay your commission request.')
+        return redirect(reverse('profile'))
+
+    if not request.user.is_superuser and commission.user_profile != profile:
+        messages.error(
+            request, 'Sorry, this commission is not yours')
+        return redirect(reverse('profile'))
+
+    form = WIPForm()
+
+    context = {
+        'commission': commission,
+        'form': form,
+    }
+
+    return render(request, 'commissions/wip_details.html', context)

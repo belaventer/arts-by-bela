@@ -9,4 +9,7 @@ urlpatterns = [
     path(
         'delete/<int:commission_id>/', views.delete_commission,
         name='delete_commission'),
+    path(
+        'wip/<int:commission_id>/', views.wip,
+        name='wip'),
 ]

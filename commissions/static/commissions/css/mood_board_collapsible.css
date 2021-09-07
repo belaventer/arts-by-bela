@@ -1,0 +1,23 @@
+.collapsible  {
+    border: none;
+    box-shadow: none;
+}
+
+.collapsible-header  {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+}
+
+.collapsible-header > i{
+    font-size: 2.5rem;
+}
+
+.collapsible-body  {
+    border: none;
+    padding: 0;
+}
+
+form img {
+    height: 400px;
+}
