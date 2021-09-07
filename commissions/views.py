@@ -3,7 +3,7 @@ from django.shortcuts import (
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import CommissionForm, WIPForm
-from .models import Commission, WIP
+from .models import Commission, WIP, Artwork
 from profiles.models import UserProfile
 
 
@@ -145,6 +145,8 @@ def wip(request, commission_id):
 
         if form.is_valid:
             form.save()
+            Artwork.objects.create(commission=commission)
+
             messages.success(
                 request, 'Comment submitted.')
             return redirect(reverse('profile'))

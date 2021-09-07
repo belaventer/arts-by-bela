@@ -41,6 +41,9 @@
                         <th>Order Number</th>
                         <th>Name</th>
                         <th>Description</th>
+                        {% if request.user.is_superuser %}
+                            <th>User</th>
+                        {% endif %}
                         <th>Details</th>
                     </tr>
                 </thead>
@@ -48,17 +51,28 @@
                     {% for commission in commissions %}
                         <tr>
                             <td>
-                                {% if commission.final_art %}
+                                {% if commission.artwork.final_illustration %}
                                     Completed
-                                {% elif commission.wip %}
+                                {% elif commission.wip.client_comment and not resquest.user.is_superuser %}
+                                    Final work in progress
+                                {% elif commission.wip.client_comment and resquest.user.is_superuser %}
+                                    <i class="material-icons amber-text">star</i> Comment submitted
+                                {% elif commission.wip.wip_illustration %}
+                                    <i class="material-icons red-text">priority_high</i> Waiting comment
+                                {% elif commission.wip and not resquest.user.is_superuser %}
                                     In Progress
+                                {% elif commission.wip and resquest.user.is_superuser %}
+                                    <i class="material-icons amber-text">star</i> New
                                 {% else %}
-                                    New
+                                    <i class="material-icons red-text">priority_high</i> Waiting payment
                                 {% endif %}
                             </td>
                             <td>{{ commission.order_number|truncatechars:12 }}</td>
                             <td>{{ commission.name|truncatechars:24 }}</td>
                             <td>{{ commission.description|truncatechars:24 }}</td>
+                            {% if request.user.is_superuser %}
+                                <td>{{ commission.user_profile.user.username|truncatechars:24 }}</td>
+                            {% endif %}
                             <td>
                                 <a href="{% url 'edit_commission' commission.id %}">
                                     <i id="details-symbol"class="material-icons">details</i>

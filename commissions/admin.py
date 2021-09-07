@@ -29,3 +29,12 @@ class WIPAdmin(admin.ModelAdmin):
         '__str__',
         'client_comment',
     )
+
+
+@admin.register(models.Artwork)
+class ArtworkAdmin(admin.ModelAdmin):
+    list_display = (
+        '__str__',
+        'final_illustration',
+        'client_review',
+    )
