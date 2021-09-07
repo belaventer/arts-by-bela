@@ -3,7 +3,7 @@ from django.shortcuts import (
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import CommissionForm, WIPForm
-from .models import Commission
+from .models import Commission, WIP
 from profiles.models import UserProfile
 
 
@@ -106,6 +106,7 @@ def wip(request, commission_id):
 
     profile = get_object_or_404(UserProfile, user=request.user)
     commission = get_object_or_404(Commission, pk=commission_id)
+    wip = get_object_or_404(WIP, commission=commission)
 
     if not hasattr(commission, 'wip'):
         messages.error(
@@ -117,10 +118,23 @@ def wip(request, commission_id):
             request, 'Sorry, this commission is not yours')
         return redirect(reverse('profile'))
 
+    if request.method == 'POST' and 'wip_illustration' in request.FILES:
+        if wip.wip_illustration:
+            messages.error(
+                request, 'This commission was already sent for comments.')
+
+        if request.FILES['wip_illustration'].is_valid:
+            wip.wip_illustration = request.FILES['wip_illustration']
+            wip.save()
+        else:
+            messages.error(
+                request, 'Please provide a valid file')
+
     form = WIPForm()
 
     context = {
         'commission': commission,
+        'wip': wip,
         'form': form,
     }
 

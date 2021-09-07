@@ -112,7 +112,7 @@ class TestModels(TestCase):
         self.assertEqual(
             test_commission.reference_image_one.name,
             f'{test_commission.order_number}/one.png')
-        
+
         test_commission.reference_image_one.delete(save=True)
 
     def test_wip_model(self):

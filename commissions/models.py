@@ -163,5 +163,22 @@ class WIP(models.Model):
     client_comment = models.TextField(null=True, blank=True)
     wip_illustration = models.ImageField(null=True, blank=True)
 
+    def _correct_path(self, path, name):
+        if name.split('/')[0] == path:
+            file_name = name.split('/')[-1]
+            return f'{path}/WIP/{file_name}'
+        else:
+            return f'{path}/WIP/{name}'
+
+    def save(self, *args, **kwargs):
+        """
+        Override the original save method to set uploaded file path
+        """
+        if self.wip_illustration:
+            self.wip_illustration.name = self._correct_path(
+                f'{self.commission.order_number}', self.wip_illustration.name)
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f'{self.commission.order_number}: {self.commission.name}'
