@@ -1,5 +1,6 @@
 $(document).ready(function(){
     $('.collapsible').collapsible();
+    M.textareaAutoResize($('#id_client_comment'));
 
     $('input[type="file"]').change(function() {
         var file = $(this)[0].files[0];

@@ -100,7 +100,7 @@
         <div class="col s12">
             {% if not commission.wip.wip_illustration %}
                 {% if request.user.is_superuser %}
-                    {% include 'includes/upload_illustration_form.html' %}
+                    {% include 'commissions/includes/upload_illustration_form.html' %}
                 {% else %}
                     <h5 class="title-font">
                         <i class="material-icons">brush</i> The artist is working on your illustration. 
@@ -111,10 +111,23 @@
                     <h5 class="title-font">Uploaded Illustration</h5>
                     <p>File Name: {{ wip.wip_illustration.name|split:"/"|last }} </p>
                     <img class="responsive-img" src="{{ MEDIA_URL }}{{ wip.wip_illustration.name }}" alt="{{ wip.wip_illustration.name }}">
+                    {% if not request.user.is_superuser %}
+                          <form class="row" method="POST" action="{% url 'wip' commission.id %}">
+                            {% csrf_token %}
+                            <h6>Include your comments below:</h6>
+                            <div class="input-field col s12 white z-depth-1">
+                                {{ form.client_comment }}
+                                <label for="id_client_comment">Comments</label>
+                            </div>
+                            <button type="submit" class="btn waves-effect waves-light black"
+                                style="margin: 2px;">
+                                Submit Comment
+                            </button>
+                        </form>  
+
+                        
+                    {% endif %}
                 </div>
-                {% if not request.user.is_superuser %}
-                    
-                {% endif %}
             {% endif %}
         </div>
     </div>

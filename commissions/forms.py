@@ -50,5 +50,5 @@ class WIPForm(forms.ModelForm):
             'materialize-textarea validate')
         self.fields['wip_illustration'].widget.attrs['hidden'] = True
         for field in self.fields:
-            self.fields[field].required
+            self.fields[field].required = True
             self.fields[field].label = False

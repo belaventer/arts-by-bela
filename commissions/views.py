@@ -122,13 +122,36 @@ def wip(request, commission_id):
         if wip.wip_illustration:
             messages.error(
                 request, 'This commission was already sent for comments.')
+            return redirect(reverse('wip', args=[commission.id]))
 
-        if request.FILES['wip_illustration'].is_valid:
-            wip.wip_illustration = request.FILES['wip_illustration']
-            wip.save()
+        form = WIPForm(request.POST, request.FILES, instance=wip)
+        if form.is_valid:
+            form.save()
+            messages.success(
+                request, 'Illustration submitted for comments.')
+            return redirect(reverse('wip', args=[commission.id]))
         else:
             messages.error(
-                request, 'Please provide a valid file')
+                request, 'Please submit valid image.')
+            form = WIPForm(request.POST, request.FILES)
+
+    if request.method == 'POST' and 'client_comment' in request.POST:
+        if wip.client_comment:
+            messages.error(
+                request, 'This commission already has a comment.')
+            return redirect(reverse('wip', args=[commission.id]))
+
+        form = WIPForm(request.POST, instance=wip)
+
+        if form.is_valid:
+            form.save()
+            messages.success(
+                request, 'Comment submitted.')
+            return redirect(reverse('profile'))
+        else:
+            messages.error(
+                request, 'Please submit valid comment.')
+            form = WIPForm(request.POST)
 
     form = WIPForm()
 

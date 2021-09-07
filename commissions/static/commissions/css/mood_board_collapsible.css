@@ -17,3 +17,7 @@
     border: none;
     padding: 0;
 }
+
+.input-field {
+    border-top: solid 1rem white;
+}
