@@ -3,7 +3,7 @@
 {% load split_filter %}
 
 {% block extra_title %}
-    WIP | {{ commission.order_number}}
+    Artwork | {{ commission.order_number}}
 {% endblock %}
 
 {% block extra_head %}
@@ -19,10 +19,13 @@
     <!-- Commission content -->
     {% include 'commissions/includes/commission_details.html' %}
 
-    <!-- WIP forms -->
+    <!-- WIP content -->
+    {% include 'commissions/includes/progress_details.html' %}
+
+    <!-- Artwork forms -->
     <div class="row">
         <div class="col s12">
-            {% if not commission.wip.wip_illustration %}
+            {% if not artwork.final_illustration %}
                 {% if request.user.is_superuser %}
                     {% include 'commissions/includes/upload_illustration_form.html' %}
                 {% else %}
@@ -33,21 +36,27 @@
             {% else %}
                 <div class="card-panel grey">
                     <h5 class="title-font">Uploaded Illustration</h5>
-                    <p>File Name: {{ wip.wip_illustration.name|split:"/"|last }} </p>
-                    <img class="responsive-img" src="{{ MEDIA_URL }}{{ wip.wip_illustration.name }}" alt="{{ wip.wip_illustration.name }}">
-                    {% if not request.user.is_superuser %}
-                          <form class="row" method="POST" action="{% url 'wip' commission.id %}">
+                    <p>File Name: {{ artwork.final_illustration.name|split:"/"|last }} </p>
+                    <img class="responsive-img" src="{{ MEDIA_URL }}{{ artwork.final_illustration.name }}" alt="{{ artwork.final_illustration.name }}">
+                    {% if not request.user.is_superuser and not artwork.client_review %}
+                          <form class="row" method="POST" action="{% url 'artwork' commission.id %}">
                             {% csrf_token %}
-                            <h6>Include your comments below:</h6>
+                            <p>I would love to hear what you think of my work. Please leave a review below.</p>
                             <div class="input-field col s12 white z-depth-1">
                                 {{ form_comment.comment }}
-                                <label for="id_comment">Comments</label>
+                                <label for="id_comment">Review</label>
                             </div>
                             <button type="submit" class="btn waves-effect waves-light black"
                                 style="margin: 2px;">
-                                Submit Comment
+                                Submit Review
                             </button>
-                        </form>  
+                        </form>
+                    {% elif artwork.client_review %}
+                        <h5>Client Review</h5>
+                        <blockquote>
+                            "{{ artwork.client_review }}" <br>
+                            <i>- {{ commission.user_profile.user }}</i>
+                        </blockquote>
                     {% endif %}
                 </div>
             {% endif %}

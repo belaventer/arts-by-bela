@@ -12,4 +12,7 @@ urlpatterns = [
     path(
         'wip/<int:commission_id>/', views.wip,
         name='wip'),
+    path(
+        'artwork/<int:commission_id>/', views.artwork,
+        name='artwork'),
 ]

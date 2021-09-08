@@ -1,0 +1,18 @@
+{% load split_filter %}
+
+<div class="card-panel grey">
+    <ul class="collapsible">
+        <li>
+            <h5 class="collapsible-header">WIP Illustration <i class="material-icons">expand_more</i></h5>
+            <div class="collapsible-body row">
+                <p>File Name: {{ wip.wip_illustration.name|split:"/"|last }} </p>
+                <img class="responsive-img" src="{{ MEDIA_URL }}{{ wip.wip_illustration.name }}" alt="{{ wip.wip_illustration.name }}">
+            </div>
+        </li>
+    </ul>
+    <h5 class="title-font">Client Comment</h5>
+    <blockquote>
+        "{{ wip.client_comment}}" <br>
+        <i>- {{ commission.user_profile.user }}</i>
+    </blockquote>
+</div>

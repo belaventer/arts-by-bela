@@ -34,21 +34,14 @@ class CommissionForm(forms.ModelForm):
             self.fields[field].label = False
 
 
-class WIPForm(forms.ModelForm):
-    class Meta:
-        model = models.WIP
-        exclude = ('commission',)
+class IllustrationForm(forms.Form):
+    illustration = forms.ImageField(
+        required=True, label=False)
 
-    def __init__(self, *args, **kwargs):
-        """
-        Remove labels, add validate class
-        and required attributes
-        """
-        super().__init__(*args, **kwargs)
+    illustration.widget.attrs.update({'hidden': True})
 
-        self.fields['client_comment'].widget.attrs['class'] = (
-            'materialize-textarea validate')
-        self.fields['wip_illustration'].widget.attrs['hidden'] = True
-        for field in self.fields:
-            self.fields[field].required = True
-            self.fields[field].label = False
+class CommentForm(forms.Form):
+    comment = forms.CharField(
+        widget=forms.Textarea, required=True, label=False)
+
+    comment.widget.attrs.update({'class': 'materialize-textarea validate'})

@@ -1,12 +1,14 @@
-<form class="card-panel grey" method="POST" action="{% url 'wip' commission.id %}" enctype="multipart/form-data">
+<form class="card-panel grey" method="POST"
+        action="{% if artwork %}{% url 'artwork' commission.id %}
+        {% else %}{% url 'wip' commission.id %}{% endif %}" enctype="multipart/form-data">
     {% csrf_token %}
     <h5 class="title-font">Upload Illustration</h5>
-    <label for="id_wip_illustration" class="btn waves-effect waves-light black">Choose File</label>
+    <label for="id_illustration" class="btn waves-effect waves-light black">Choose File</label>
     <button type="submit" class="hide btn waves-effect waves-light black right"
         style="margin: 2px;">
-        Send for comment
+        Send to client
     </button>
     <p></p>
-    <img class="hide responsive-img" src="" alt="{{ form.wip_illustration.name }}">
-    {{ form.wip_illustration }}
+    <img class="hide responsive-img" src="" alt="{{ form.wip_illustration.name }}{{ form.final_illustration.name }}">
+    {{ form_illustration }}
 </form>

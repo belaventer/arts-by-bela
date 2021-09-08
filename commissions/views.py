@@ -2,7 +2,7 @@ from django.shortcuts import (
     render, redirect, reverse, get_object_or_404)
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import CommissionForm, WIPForm
+from .forms import CommissionForm, IllustrationForm, CommentForm
 from .models import Commission, WIP, Artwork
 from profiles.models import UserProfile
 
@@ -39,6 +39,9 @@ def edit_commission(request, commission_id):
 
     profile = get_object_or_404(UserProfile, user=request.user)
     commission = get_object_or_404(Commission, pk=commission_id)
+
+    if hasattr(commission, 'artwork'):
+        return redirect(reverse('artwork', args=[commission_id]))
 
     if hasattr(commission, 'wip'):
         return redirect(reverse('wip', args=[commission_id]))
@@ -118,33 +121,36 @@ def wip(request, commission_id):
             request, 'Sorry, this commission is not yours')
         return redirect(reverse('profile'))
 
-    if request.method == 'POST' and 'wip_illustration' in request.FILES:
+    if request.method == 'POST' and 'illustration' in request.FILES:
         if wip.wip_illustration:
             messages.error(
                 request, 'This commission was already sent for comments.')
             return redirect(reverse('wip', args=[commission.id]))
 
-        form = WIPForm(request.POST, request.FILES, instance=wip)
-        if form.is_valid:
-            form.save()
+        form = IllustrationForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            wip.wip_illustration = form.cleaned_data['illustration']
+            wip.save()
             messages.success(
                 request, 'Illustration submitted for comments.')
             return redirect(reverse('wip', args=[commission.id]))
         else:
             messages.error(
-                request, 'Please submit valid image.')
-            form = WIPForm(request.POST, request.FILES)
+                request, "Provide a valid image")
+            form = IllustrationForm(request.POST, request.FILES)
 
-    if request.method == 'POST' and 'client_comment' in request.POST:
+    if request.method == 'POST' and 'comment' in request.POST:
         if wip.client_comment:
             messages.error(
                 request, 'This commission already has a comment.')
             return redirect(reverse('wip', args=[commission.id]))
 
-        form = WIPForm(request.POST, instance=wip)
+        form = CommentForm(request.POST)
 
-        if form.is_valid:
-            form.save()
+        if form.is_valid():
+            wip.client_comment = form.cleaned_data['comment']
+            wip.save()
             Artwork.objects.create(commission=commission)
 
             messages.success(
@@ -153,14 +159,93 @@ def wip(request, commission_id):
         else:
             messages.error(
                 request, 'Please submit valid comment.')
-            form = WIPForm(request.POST)
+            form = CommentForm(request.POST)
 
-    form = WIPForm()
+    form_illustration = IllustrationForm()
+    form_comment = CommentForm()
 
     context = {
         'commission': commission,
         'wip': wip,
-        'form': form,
+        'form_illustration': form_illustration,
+        'form_comment': form_comment,
     }
 
     return render(request, 'commissions/wip_details.html', context)
+
+
+@login_required
+def artwork(request, commission_id):
+    """ A view to return the completed artwork page """
+
+    profile = get_object_or_404(UserProfile, user=request.user)
+    commission = get_object_or_404(Commission, pk=commission_id)
+    wip = get_object_or_404(WIP, commission=commission)
+    artwork = get_object_or_404(Artwork, commission=commission)
+
+    if not hasattr(commission, 'wip'):
+        messages.error(
+            request, 'Please pay your commission request.')
+        return redirect(reverse('profile'))
+
+    if not hasattr(commission, 'artwork'):
+        messages.error(
+            request, 'Sorry, this commission is still in progress.')
+        return redirect(reverse('profile'))
+
+    if not request.user.is_superuser and commission.user_profile != profile:
+        messages.error(
+            request, 'Sorry, this commission is not yours')
+        return redirect(reverse('profile'))
+
+    if request.method == 'POST' and 'illustration' in request.FILES:
+        if artwork.final_illustration:
+            messages.error(
+                request, 'This commission is complete.')
+            return redirect(reverse('artwork', args=[commission.id]))
+
+        form = IllustrationForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            artwork.final_illustration = form.cleaned_data['illustration']
+            artwork.save()
+            messages.success(
+                request, 'Final illustration submitted')
+            return redirect(reverse('artwork', args=[commission.id]))
+        else:
+            messages.error(
+                request, "Provide a valid image")
+            form = IllustrationForm(request.POST, request.FILES)
+
+    if request.method == 'POST' and 'comment' in request.POST:
+        if artwork.client_review:
+            messages.error(
+                request, 'This commission already has a review.')
+            return redirect(reverse('artwork', args=[commission.id]))
+
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            artwork.client_review = form.cleaned_data['comment']
+            artwork.save()
+
+            messages.success(
+                request, 'Review submitted.')
+            return redirect(reverse('profile'))
+        else:
+            messages.error(
+                request, 'Please submit valid review.')
+            form = CommentForm(request.POST)
+
+    form_illustration = IllustrationForm()
+    form_comment = CommentForm()
+
+    context = {
+        'commission': commission,
+        'wip': wip,
+        'artwork': artwork,
+        'form_illustration': form_illustration,
+        'form_comment': form_comment,
+    }
+
+    return render(request, 'commissions/artwork_details.html', context)

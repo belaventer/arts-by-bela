@@ -113,9 +113,9 @@ class Commission(models.Model):
     def _correct_path(self, path, name):
         if name.split('/')[0] == path:
             file_name = name.split('/')[-1]
-            return f'{path}/{file_name}'
+            return f'{path}/references/{file_name}'
         else:
-            return f'{path}/{name}'
+            return f'{path}/references/{name}'
 
     def _define_file_name(self):
         path = f'{self.order_number}'
@@ -186,7 +186,7 @@ class WIP(models.Model):
 
 class Artwork(models.Model):
     """
-    A Artwork (WIP) model
+    A Artwork model
     to link to the Commission once client comment is received
     and hold the final illustation and client review
     """
