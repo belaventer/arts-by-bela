@@ -167,9 +167,9 @@
     <p id="t113" class="run"><span class="n"><a href="#t113">113</a></span><span class="t">    <span class="key">def</span> <span class="nam">_correct_path</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">path</span><span class="op">,</span> <span class="nam">name</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t114" class="run"><span class="n"><a href="#t114">114</a></span><span class="t">        <span class="key">if</span> <span class="nam">name</span><span class="op">.</span><span class="nam">split</span><span class="op">(</span><span class="str">'/'</span><span class="op">)</span><span class="op">[</span><span class="num">0</span><span class="op">]</span> <span class="op">==</span> <span class="nam">path</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t115" class="run"><span class="n"><a href="#t115">115</a></span><span class="t">            <span class="nam">file_name</span> <span class="op">=</span> <span class="nam">name</span><span class="op">.</span><span class="nam">split</span><span class="op">(</span><span class="str">'/'</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="num">1</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t116" class="run"><span class="n"><a href="#t116">116</a></span><span class="t">            <span class="key">return</span> <span class="str">f'{path}/{file_name}'</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t116" class="run"><span class="n"><a href="#t116">116</a></span><span class="t">            <span class="key">return</span> <span class="str">f'{path}/references/{file_name}'</span>&nbsp;</span><span class="r"></span></p>
     <p id="t117" class="pln"><span class="n"><a href="#t117">117</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t118" class="run"><span class="n"><a href="#t118">118</a></span><span class="t">            <span class="key">return</span> <span class="str">f'{path}/{name}'</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t118" class="run"><span class="n"><a href="#t118">118</a></span><span class="t">            <span class="key">return</span> <span class="str">f'{path}/references/{name}'</span>&nbsp;</span><span class="r"></span></p>
     <p id="t119" class="pln"><span class="n"><a href="#t119">119</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t120" class="run"><span class="n"><a href="#t120">120</a></span><span class="t">    <span class="key">def</span> <span class="nam">_define_file_name</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t121" class="run"><span class="n"><a href="#t121">121</a></span><span class="t">        <span class="nam">path</span> <span class="op">=</span> <span class="str">f'{self.order_number}'</span>&nbsp;</span><span class="r"></span></p>
@@ -240,7 +240,7 @@
     <p id="t186" class="pln"><span class="n"><a href="#t186">186</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t187" class="run"><span class="n"><a href="#t187">187</a></span><span class="t"><span class="key">class</span> <span class="nam">Artwork</span><span class="op">(</span><span class="nam">models</span><span class="op">.</span><span class="nam">Model</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t188" class="pln"><span class="n"><a href="#t188">188</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t189" class="pln"><span class="n"><a href="#t189">189</a></span><span class="t"><span class="str">    A Artwork (WIP) model</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t189" class="pln"><span class="n"><a href="#t189">189</a></span><span class="t"><span class="str">    A Artwork model</span>&nbsp;</span><span class="r"></span></p>
     <p id="t190" class="pln"><span class="n"><a href="#t190">190</a></span><span class="t"><span class="str">    to link to the Commission once client comment is received</span>&nbsp;</span><span class="r"></span></p>
     <p id="t191" class="pln"><span class="n"><a href="#t191">191</a></span><span class="t"><span class="str">    and hold the final illustation and client review</span>&nbsp;</span><span class="r"></span></p>
     <p id="t192" class="pln"><span class="n"><a href="#t192">192</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
@@ -274,7 +274,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2021-09-08 09:56 +0000
+            created at 2021-09-08 15:49 +0000
         </p>
     </div>
 </div>

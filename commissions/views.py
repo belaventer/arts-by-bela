@@ -109,17 +109,23 @@ def wip(request, commission_id):
 
     profile = get_object_or_404(UserProfile, user=request.user)
     commission = get_object_or_404(Commission, pk=commission_id)
-    wip = get_object_or_404(WIP, commission=commission)
 
     if not hasattr(commission, 'wip'):
         messages.error(
             request, 'Please pay your commission request.')
         return redirect(reverse('profile'))
 
+    if hasattr(commission, 'artwork'):
+        messages.error(
+            request, 'This commission has been commented on.')
+        return redirect(reverse('profile'))
+
     if not request.user.is_superuser and commission.user_profile != profile:
         messages.error(
             request, 'Sorry, this commission is not yours')
         return redirect(reverse('profile'))
+
+    wip = get_object_or_404(WIP, commission=commission)
 
     if request.method == 'POST' and 'illustration' in request.FILES:
         if wip.wip_illustration:
@@ -180,8 +186,6 @@ def artwork(request, commission_id):
 
     profile = get_object_or_404(UserProfile, user=request.user)
     commission = get_object_or_404(Commission, pk=commission_id)
-    wip = get_object_or_404(WIP, commission=commission)
-    artwork = get_object_or_404(Artwork, commission=commission)
 
     if not hasattr(commission, 'wip'):
         messages.error(
@@ -197,6 +201,9 @@ def artwork(request, commission_id):
         messages.error(
             request, 'Sorry, this commission is not yours')
         return redirect(reverse('profile'))
+
+    wip = get_object_or_404(WIP, commission=commission)
+    artwork = get_object_or_404(Artwork, commission=commission)
 
     if request.method == 'POST' and 'illustration' in request.FILES:
         if artwork.final_illustration:

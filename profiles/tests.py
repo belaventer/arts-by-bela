@@ -19,6 +19,17 @@ class TestViews(TestCase):
         test_user.delete()
         test_user_profile.delete()
 
+    def test_profile_login_superuser(self):
+        test_user = User.objects.create(
+            username="TestUser", password="TestPass", is_superuser=True)
+        test_user_profile = UserProfile.objects.create(user=test_user)
+        self.client.force_login(user=test_user)
+        response = self.client.get('/profile/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'profiles/profile.html')
+        test_user.delete()
+        test_user_profile.delete()
+
     def test_profile_update(self):
         test_user = User.objects.create(username="TestUser", password="TestPass")
         test_user_profile = UserProfile.objects.create(user=test_user)

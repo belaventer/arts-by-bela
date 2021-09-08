@@ -65,19 +65,19 @@ class TestModels(TestCase):
 
         self.assertEqual(
             test_commission.reference_image_one.name,
-            f'{test_commission.order_number}/one.png')
+            f'{test_commission.order_number}/references/one.png')
         self.assertEqual(
             test_commission.reference_image_two.name,
-            f'{test_commission.order_number}/two.png')
+            f'{test_commission.order_number}/references/two.png')
         self.assertEqual(
             test_commission.reference_image_three.name,
-            f'{test_commission.order_number}/three.png')
+            f'{test_commission.order_number}/references/three.png')
         self.assertEqual(
             test_commission.reference_image_four.name,
-            f'{test_commission.order_number}/four.png')
+            f'{test_commission.order_number}/references/four.png')
         self.assertEqual(
             test_commission.reference_image_five.name,
-            f'{test_commission.order_number}/five.png')
+            f'{test_commission.order_number}/references/five.png')
 
         test_commission.reference_image_one.delete(save=True)
         test_commission.reference_image_two.delete(save=True)
@@ -111,7 +111,7 @@ class TestModels(TestCase):
 
         self.assertEqual(
             test_commission.reference_image_one.name,
-            f'{test_commission.order_number}/one.png')
+            f'{test_commission.order_number}/references/one.png')
 
         test_commission.reference_image_one.delete(save=True)
 
@@ -128,8 +128,59 @@ class TestModels(TestCase):
             user_profile=test_user_profile, name='Test',
             description='Test', resolution_price=test_res,
             size_price=test_size, number_characters=2)
-        wip = models.WIP.objects.create(commission=test_commission)
+        image_one = SimpleUploadedFile(
+            'one.png', b'file_content',
+            content_type='image/png')
+        wip = models.WIP.objects.create(
+            commission=test_commission, wip_illustration=image_one)
 
         self.assertEqual(
             str(wip),
             f'{wip.commission.order_number}: {wip.commission.name}')
+
+        self.assertEqual(
+            wip.wip_illustration.name,
+            f'{test_commission.order_number}/WIP/one.png')
+
+        wip.wip_illustration = wip.wip_illustration
+        wip.save()
+
+        self.assertEqual(
+            wip.wip_illustration.name,
+            f'{test_commission.order_number}/WIP/one.png')
+        wip.wip_illustration.delete()
+
+    def test_artwork_model(self):
+        test_res = models.Resolution.objects.create(
+            resolution='72 dpi', price_factor=1)
+        test_size = models.Size.objects.create(
+            size='A7 74 x 105 mm', price_factor=1)
+        test_user = User.objects.create(
+            username='TestUser', password='TestPass')
+        test_user_profile = UserProfile.objects.create(
+            user=test_user)
+        test_commission = models.Commission.objects.create(
+            user_profile=test_user_profile, name='Test',
+            description='Test', resolution_price=test_res,
+            size_price=test_size, number_characters=2)
+        image_one = SimpleUploadedFile(
+            'one.png', b'file_content',
+            content_type='image/png')
+        artwork = models.Artwork.objects.create(
+            commission=test_commission, final_illustration=image_one)
+
+        self.assertEqual(
+            str(artwork),
+            f'{artwork.commission.order_number}: {artwork.commission.name}')
+
+        self.assertEqual(
+            artwork.final_illustration.name,
+            f'{test_commission.order_number}/one.png')
+
+        artwork.final_illustration = artwork.final_illustration
+        artwork.save()
+
+        self.assertEqual(
+            artwork.final_illustration.name,
+            f'{test_commission.order_number}/one.png')
+        artwork.final_illustration.delete()
