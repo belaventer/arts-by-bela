@@ -330,3 +330,140 @@ class TestViews(TestCase):
             test_wip.wip_illustration.name,
             f'{test_commission.order_number}/WIP/{self.test_image.name}')
         test_wip.wip_illustration.delete()
+
+# Artwork commission view
+    def test_artwork_no_login(self):
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_artwork = models.Artwork.objects.create(commission=test_commission)
+        response = self.client.get(f'/commission/artwork/{test_commission.id}/')
+        self.assertRedirects(
+            response,
+            f'/accounts/login/?next=/commission/artwork/{test_commission.id}/')
+
+    def test_artwork_wrong_user(self):
+        test_user_two = User.objects.create(
+            username="TestUser2", password="TestPass")
+        test_user_profile_two = UserProfile.objects.create(
+            user=test_user_two)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(
+            commission=test_commission, wip_illustration=self.test_image)
+        test_artwork = models.Artwork.objects.create(commission=test_commission)
+        self.client.force_login(user=test_user_two)
+        response = self.client.get(
+            f'/commission/artwork/{test_commission.id}/')
+        self.assertRedirects(response, '/profile/')
+        test_wip.wip_illustration.delete()
+
+    def test_artwork_redirect_no_wip(self):
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        self.client.force_login(user=self.test_user)
+        response = self.client.get(
+            f'/commission/artwork/{test_commission.id}/')
+        self.assertRedirects(response, '/profile/')
+
+    def test_redirect_no_artwork(self):
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(
+            commission=test_commission, wip_illustration=self.test_image)
+        self.client.force_login(user=self.test_user)
+        response = self.client.get(
+            f'/commission/artwork/{test_commission.id}/')
+        self.assertRedirects(response, '/profile/')
+        test_wip.wip_illustration.delete()
+
+    def test_artwork_login(self):
+        self.client.force_login(user=self.test_user)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(
+            commission=test_commission, wip_illustration=self.test_image)
+        test_artwork = models.Artwork.objects.create(
+            commission=test_commission)
+        response = self.client.get(f'/commission/artwork/{test_commission.id}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'commissions/artwork_details.html')
+        test_wip.wip_illustration.delete()
+
+    def test_artwork_login_superuser(self):
+        test_user_two = User.objects.create(
+            username="TestUser2", password="TestPass", is_superuser=True)
+        test_user_profile_two = UserProfile.objects.create(
+            user=test_user_two)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(
+            commission=test_commission, wip_illustration=self.test_image)
+        test_artwork = models.Artwork.objects.create(
+            commission=test_commission)
+        self.client.force_login(user=test_user_two)
+        response = self.client.get(f'/commission/artwork/{test_commission.id}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'commissions/artwork_details.html')
+        test_wip.wip_illustration.delete()
+
+    def test_artwork_illustration_invalid(self):
+        self.client.force_login(user=self.test_user)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(
+            commission=test_commission, wip_illustration=self.test_image)
+        test_artwork = models.Artwork.objects.create(
+            commission=test_commission)
+        image_one = SimpleUploadedFile(
+            'one.png', b'',
+            content_type='image/png')
+        response = self.client.post(f'/commission/artwork/{test_commission.id}/', {
+            'illustration': image_one})
+        self.assertEqual(response.status_code, 200)
+        updated_commission = get_object_or_404(
+            models.Artwork, pk=test_commission.id)
+
+        self.assertEqual(test_artwork, updated_commission)
+        test_wip.wip_illustration.delete()
+
+    def test_artwork_illustration_valid(self):
+        self.client.force_login(user=self.test_user)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(
+            commission=test_commission, wip_illustration=self.test_image)
+        test_artwork = models.Artwork.objects.create(
+            commission=test_commission)
+        test_image = SimpleUploadedFile(
+            'logo.png',
+            content=open(f'./{settings.MEDIA_URL}logo.png', 'rb').read(),
+            content_type='image/png')
+        response = self.client.post(
+            f'/commission/artwork/{test_commission.id}/', {
+                'illustration': test_image})
+
+        test_artwork.refresh_from_db()
+        self.assertRedirects(
+            response, f'/commission/artwork/{test_commission.id}/')
+
+        self.assertEqual(
+            test_artwork.final_illustration.name,
+            f'{test_commission.order_number}/{self.test_image.name}')
+        test_wip.wip_illustration.delete()
+        test_artwork.final_illustration.delete()
