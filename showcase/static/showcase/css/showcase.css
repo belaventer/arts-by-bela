@@ -2,6 +2,15 @@
     display: none;
 }
 
+.carousel {
+    height: 90vh;
+}
+
+.carousel .carousel-item>img {
+    height: 50%;
+    width: auto;
+}
+
 /* -----  Media queries  ----- */
 
 @media only screen and (min-width: 993px) {

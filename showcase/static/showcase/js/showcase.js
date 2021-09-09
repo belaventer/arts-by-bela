@@ -1,5 +1,8 @@
 let clickCount = 1;
 
+$('.carousel.carousel-slider').carousel({
+});
+
 $( ".showcase-item" ).click( function() {
     var windowHeight = $( window ).height();
     var windowWidth = $( window ).width();
