@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}
+    Showcase
+{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet"
+        href="{% static 'showcase/css/showcase.css' %}">
+{% endblock %}
+
+{% block header %}
+    <h3 class="title-font">Showcase</h3>
+{% endblock %}
+
+{% block content %}
+    {% if not artworks %}
+        <h5 class="title-font">
+            <i class="material-icons">brush</i> Sorry, the artist is still working on illustrations.
+        </h5>
+    {% else %}
+        <div id="showcase-container">
+        {% for artwork in artworks %}
+            <div class="showcase-item">
+                <img class="responsive-img" src="{{ MEDIA_URL }}{{ artwork.final_illustration.name }}" alt="{{ artwork.final_illustration.name }}">
+                <blockquote class="white">
+                    {{artwork.commission.name}}
+                </blockquote>
+                {% if artwork.client_review %}
+                    <blockquote class="white">
+                        "{{ artwork.client_review }}" <br>
+                        <i>- {{ artwork.commission.user_profile.user }}</i>
+                    </blockquote>
+                {% endif %}
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block postload_js %}
+    {{ block.super }}
+    <script src="{% static 'showcase/js/showcase.js' %}"></script>
+{% endblock %}

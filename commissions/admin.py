@@ -20,7 +20,7 @@ class CommissionAdmin(admin.ModelAdmin):
         'order_total'
     )
 
-    readonly_fields = ('user_profile', 'order_total',)
+    readonly_fields = ('order_total',)
 
 
 @admin.register(models.WIP)

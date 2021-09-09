@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'commissions',
     'profiles',
     'payments',
+    'showcase',
 ]
 
 MIDDLEWARE = [

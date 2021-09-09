@@ -1,0 +1,31 @@
+#showcase-container {
+    display: none;
+}
+
+/* -----  Media queries  ----- */
+
+@media only screen and (min-width: 993px) {
+
+    #showcase-container {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+    }
+    
+    .showcase-item {
+        margin: 2px 0;
+        flex: 0 0 30%;
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+
+    .showcase-item > blockquote {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1201px) {
+    .showcase-item {
+        flex: 0 0 22%;
+    }
+}
