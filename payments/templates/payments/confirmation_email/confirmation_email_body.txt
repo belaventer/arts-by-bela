@@ -1,0 +1,14 @@
+Thank you for your request {{ commission.user_profile.user.username }}!
+
+The artist will work on the illustration with the following specification:
+
+Name: {{ commission.name }}
+Description: {{ commission.description }}
+Size: {{ commission.size_price.size }}
+Resolution: {{ commission.resolution_price.resolution }}
+Number of Characters: {{ commission.number_characters }}
+
+You will be notified again once the Artist uploads the work in progress illustration.
+
+Regards,
+Arts by Bela.

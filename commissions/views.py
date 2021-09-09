@@ -2,9 +2,43 @@ from django.shortcuts import (
     render, redirect, reverse, get_object_or_404)
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.contrib.auth.models import User
+
 from .forms import CommissionForm, IllustrationForm, CommentForm
 from .models import Commission, WIP, Artwork
 from profiles.models import UserProfile
+
+
+def send_workflow_emails(client_email, template_name, context):
+    """
+    Helper function to send alert emails during art workflow
+    """
+
+    artist_users = User.objects.filter(is_superuser=True)
+    if client_email:
+        emails_list = [client_email]
+    else:
+        emails_list = []
+
+    for artist in artist_users:
+        emails_list.append(artist.email)
+
+    subject = render_to_string(
+        f'commissions/workflow_emails/{template_name}_email_subject.txt',
+        context)
+    body = render_to_string(
+        f'commissions/workflow_emails/{template_name}_email_body.txt',
+        context)
+
+    send_mail(
+        subject,
+        body,
+        settings.DEFAULT_FROM_EMAIL,
+        emails_list
+    )
 
 
 @login_required
@@ -138,6 +172,12 @@ def wip(request, commission_id):
         if form.is_valid():
             wip.wip_illustration = form.cleaned_data['illustration']
             wip.save()
+
+            send_workflow_emails(
+                commission.user_profile.user.email,
+                'wip_illustration', {
+                    'commission': commission})
+
             messages.success(
                 request, 'Illustration submitted for comments.')
             return redirect(reverse('wip', args=[commission.id]))
@@ -157,7 +197,13 @@ def wip(request, commission_id):
         if form.is_valid():
             wip.client_comment = form.cleaned_data['comment']
             wip.save()
+            wip.refresh_from_db()
             Artwork.objects.create(commission=commission)
+
+            send_workflow_emails(
+                None, 'wip_comment', {
+                    'commission': commission,
+                    'wip': wip})
 
             messages.success(
                 request, 'Comment submitted.')
@@ -216,6 +262,12 @@ def artwork(request, commission_id):
         if form.is_valid():
             artwork.final_illustration = form.cleaned_data['illustration']
             artwork.save()
+
+            send_workflow_emails(
+                commission.user_profile.user.email,
+                'artwork_illustration', {
+                    'commission': commission})
+
             messages.success(
                 request, 'Final illustration submitted')
             return redirect(reverse('artwork', args=[commission.id]))
@@ -235,6 +287,12 @@ def artwork(request, commission_id):
         if form.is_valid():
             artwork.client_review = form.cleaned_data['comment']
             artwork.save()
+            artwork.refresh_from_db()
+
+            send_workflow_emails(
+                None, 'artwork_review', {
+                    'commission': commission,
+                    'artwork': artwork})
 
             messages.success(
                 request, 'Review submitted.')

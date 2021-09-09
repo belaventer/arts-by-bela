@@ -3,6 +3,9 @@ from django.shortcuts import (
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.contrib.auth.models import User
 
 from profiles.models import UserProfile
 from commissions.models import Commission, WIP
@@ -35,6 +38,26 @@ def payment(request, commission_id):
 
     if request.method == 'POST':
         WIP.objects.create(commission=commission)
+
+        artist_users = User.objects.filter(is_superuser=True)
+
+        emails_list = [commission.user_profile.user.email]
+        for artist in artist_users:
+            emails_list.append(artist.email)
+
+        subject = render_to_string(
+            'payments/confirmation_email/confirmation_email_subject.txt',
+            {'commission': commission})
+        body = render_to_string(
+            'payments/confirmation_email/confirmation_email_body.txt',
+            {'commission': commission})
+
+        send_mail(
+            subject,
+            body,
+            settings.DEFAULT_FROM_EMAIL,
+            emails_list
+        )
 
         return redirect(reverse(
             'payment_success', args=[commission.id]))

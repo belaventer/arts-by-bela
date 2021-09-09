@@ -1,0 +1,10 @@
+Hello Astists,
+
+The Client {{ commission.user_profile.user.username }} has added a review on the illustration.
+
+Review: "{{ artwork.client_review }}"
+
+Please navigate to your profile to see the illustration details and comment.
+
+Regards,
+Arts by Bela

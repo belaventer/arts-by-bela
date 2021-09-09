@@ -1,0 +1,10 @@
+Hello Astists,
+
+The Client {{ commission.user_profile.user.username }} has added comments on the illustration.
+
+Comment: "{{ wip.client_comment }}"
+
+Please navigate to your profile to see the illustration details and comment.
+
+Regards,
+Arts by Bela

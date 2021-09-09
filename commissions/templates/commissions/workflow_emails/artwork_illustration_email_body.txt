@@ -1,0 +1,10 @@
+Hello {{ commission.user_profile.user.username }},
+
+The Artist has uploaded the final illustration.
+
+Please navigate to your profile to see the illustration details.
+
+If you wish, please leave the Artist a review.
+
+Regards,
+Arts by Bela
