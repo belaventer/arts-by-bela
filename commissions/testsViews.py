@@ -64,6 +64,7 @@ class TestViews(TestCase):
             response, f'/payment/{test_commission.id}/')
 
         self.assertEqual(test_commission.user_profile, self.test_user_profile)
+        test_commission.delete()
 
 # Edit commission view
     def test_edit_commission_no_login(self):
@@ -75,6 +76,7 @@ class TestViews(TestCase):
         self.assertRedirects(
             response,
             f'/accounts/login/?next=/commission/edit/{test_commission.id}/')
+        test_commission.delete()
 
     def test_edit_wrong_user(self):
         test_user_two = User.objects.create(
@@ -89,6 +91,9 @@ class TestViews(TestCase):
         response = self.client.get(
             f'/commission/edit/{test_commission.id}/')
         self.assertRedirects(response, '/profile/')
+        test_user_two.delete()
+        test_user_profile_two.delete()
+        test_commission.delete()
 
     def test_redirect_wip_exists(self):
         test_commission = models.Commission.objects.create(
@@ -100,7 +105,9 @@ class TestViews(TestCase):
         self.client.force_login(user=self.test_user)
         response = self.client.get(
             f'/commission/edit/{test_commission.id}/')
-        self.assertRedirects(response, f'/commission/wip/{test_commission.id}/')
+        self.assertRedirects(
+            response, f'/commission/wip/{test_commission.id}/')
+        test_commission.delete()
         test_wip.delete()
 
     def test_redirect_artwork_exists(self):
@@ -115,9 +122,12 @@ class TestViews(TestCase):
         self.client.force_login(user=self.test_user)
         response = self.client.get(
             f'/commission/edit/{test_commission.id}/')
-        self.assertRedirects(response, f'/commission/artwork/{test_commission.id}/')
+        self.assertRedirects(
+            response, f'/commission/artwork/{test_commission.id}/')
         test_wip.wip_illustration.delete()
+        test_wip.delete()
         test_artwork.delete()
+        test_commission.delete()
 
     def test_edit_commission_login(self):
         self.client.force_login(user=self.test_user)
@@ -128,6 +138,7 @@ class TestViews(TestCase):
         response = self.client.get(f'/commission/edit/{test_commission.id}/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'commissions/edit_commission.html')
+        test_commission.delete()
 
     def test_edit_commission_invalid(self):
         self.client.force_login(user=self.test_user)
@@ -135,17 +146,19 @@ class TestViews(TestCase):
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
             size_price=self.test_size, number_characters=2)
-        response = self.client.post(f'/commission/edit/{test_commission.id}/', {
-            'name': 'Edit commission with invalid form inputs \
-                and verify it is not accepted',
-            'description': 'Test commission edited',
-            'resolution_price': self.test_res,
-            'size_price': self.test_size, 'number_characters': 2})
+        response = self.client.post(
+            f'/commission/edit/{test_commission.id}/', {
+                'name': 'Edit commission with invalid form inputs \
+                    and verify it is not accepted',
+                'description': 'Test commission edited',
+                'resolution_price': self.test_res,
+                'size_price': self.test_size, 'number_characters': 2})
         self.assertEqual(response.status_code, 200)
         updated_commission = get_object_or_404(
             models.Commission, pk=test_commission.id)
 
         self.assertEqual(updated_commission.name, test_commission.name)
+        test_commission.delete()
 
     def test_edit_commission_valid(self):
         self.client.force_login(user=self.test_user)
@@ -153,17 +166,19 @@ class TestViews(TestCase):
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
             size_price=self.test_size, number_characters=2)
-        response = self.client.post(f'/commission/edit/{test_commission.id}/', {
-            'name': 'Valid updated commission',
-            'description': 'Test commission created',
-            'resolution_price': self.test_res,
-            'size_price': self.test_size, 'number_characters': 2})
+        response = self.client.post(
+            f'/commission/edit/{test_commission.id}/', {
+                'name': 'Valid updated commission',
+                'description': 'Test commission created',
+                'resolution_price': self.test_res,
+                'size_price': self.test_size, 'number_characters': 2})
 
         test_commission.refresh_from_db()
         self.assertRedirects(
             response, f'/payment/{test_commission.id}/')
 
         self.assertEqual(test_commission.name, 'Valid updated commission')
+        test_commission.delete()
 
 # Delete commission view
     def test_delete_commission_no_login(self):
@@ -175,6 +190,7 @@ class TestViews(TestCase):
         self.assertRedirects(
             response,
             f'/accounts/login/?next=/commission/delete/{test_commission.id}/')
+        test_commission.delete()
 
     def test_delete_wrong_user(self):
         test_user_two = User.objects.create(
@@ -189,6 +205,9 @@ class TestViews(TestCase):
         response = self.client.get(
             f'/commission/delete/{test_commission.id}/')
         self.assertRedirects(response, '/profile/')
+        test_user_two.delete()
+        test_user_profile_two.delete()
+        test_commission.delete()
 
     def test_delete_payment_exists(self):
         test_commission = models.Commission.objects.create(
@@ -201,6 +220,7 @@ class TestViews(TestCase):
         response = self.client.get(
             f'/commission/delete/{test_commission.id}/')
         self.assertRedirects(response, '/profile/')
+        test_commission.delete()
         test_wip.delete()
 
     def test_delete_success(self):
@@ -215,6 +235,7 @@ class TestViews(TestCase):
         existing_commissions = models.Commission.objects.filter(
             id=test_commission.id)
         self.assertEqual(len(existing_commissions), 0)
+        test_commission.delete()
 
 # WIP commission view
     def test_wip_no_login(self):
@@ -227,6 +248,8 @@ class TestViews(TestCase):
         self.assertRedirects(
             response,
             f'/accounts/login/?next=/commission/wip/{test_commission.id}/')
+        test_commission.delete()
+        test_wip.delete()
 
     def test_wip_wrong_user(self):
         test_user_two = User.objects.create(
@@ -242,6 +265,10 @@ class TestViews(TestCase):
         response = self.client.get(
             f'/commission/wip/{test_commission.id}/')
         self.assertRedirects(response, '/profile/')
+        test_user_two.delete()
+        test_user_profile_two.delete()
+        test_commission.delete()
+        test_wip.delete()
 
     def test_redirect_no_wip(self):
         test_commission = models.Commission.objects.create(
@@ -252,6 +279,7 @@ class TestViews(TestCase):
         response = self.client.get(
             f'/commission/wip/{test_commission.id}/')
         self.assertRedirects(response, '/profile/')
+        test_commission.delete()
 
     def test_wip_redirect_artwork_exists(self):
         test_commission = models.Commission.objects.create(
@@ -266,8 +294,10 @@ class TestViews(TestCase):
         response = self.client.get(
             f'/commission/wip/{test_commission.id}/')
         self.assertRedirects(response, '/profile/')
+        test_wip.delete()
         test_wip.wip_illustration.delete()
         test_artwork.delete()
+        test_commission.delete()
 
     def test_wip_login(self):
         self.client.force_login(user=self.test_user)
@@ -279,6 +309,8 @@ class TestViews(TestCase):
         response = self.client.get(f'/commission/wip/{test_commission.id}/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'commissions/wip_details.html')
+        test_commission.delete()
+        test_wip.delete()
 
     def test_wip_login_superuser(self):
         test_user_two = User.objects.create(
@@ -294,6 +326,35 @@ class TestViews(TestCase):
         response = self.client.get(f'/commission/wip/{test_commission.id}/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'commissions/wip_details.html')
+        test_user_two.delete()
+        test_user_profile_two.delete()
+        test_commission.delete()
+        test_wip.delete()
+
+    def test_wip_illustration_exists(self):
+        self.client.force_login(user=self.test_user)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(
+            commission=test_commission, wip_illustration=self.test_image)
+        image_one = SimpleUploadedFile(
+            'one.png', b'',
+            content_type='image/png')
+        response = self.client.post(f'/commission/wip/{test_commission.id}/', {
+            'illustration': image_one})
+
+        self.assertRedirects(
+            response, f'/commission/wip/{test_commission.id}/')
+
+        updated_commission = get_object_or_404(
+            models.WIP, pk=test_commission.id)
+
+        self.assertEqual(test_wip, updated_commission)
+        test_wip.wip_illustration.delete()
+        test_wip.delete()
+        test_commission.delete()
 
     def test_wip_illustration_invalid(self):
         self.client.force_login(user=self.test_user)
@@ -312,6 +373,9 @@ class TestViews(TestCase):
             models.WIP, pk=test_commission.id)
 
         self.assertEqual(test_wip, updated_commission)
+        test_commission.delete()
+        test_wip.wip_illustration.delete()
+        test_wip.delete()
 
     def test_wip_illustration_valid(self):
         self.client.force_login(user=self.test_user)
@@ -324,12 +388,77 @@ class TestViews(TestCase):
             'illustration': self.test_image})
 
         test_wip.refresh_from_db()
-        self.assertRedirects(response, f'/commission/wip/{test_commission.id}/')
+        self.assertRedirects(
+            response, f'/commission/wip/{test_commission.id}/')
 
         self.assertEqual(
             test_wip.wip_illustration.name,
             f'{test_commission.order_number}/WIP/{self.test_image.name}')
+        test_commission.delete()
         test_wip.wip_illustration.delete()
+        test_wip.delete()
+
+    def test_wip_comment_exists(self):
+        self.client.force_login(user=self.test_user)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(
+            commission=test_commission, client_comment='client test comment')
+        response = self.client.post(f'/commission/wip/{test_commission.id}/', {
+            'comment': 'test comment'})
+
+        self.assertRedirects(
+            response, f'/commission/wip/{test_commission.id}/')
+
+        updated_commission = get_object_or_404(
+            models.WIP, pk=test_commission.id)
+
+        self.assertEqual(test_wip, updated_commission)
+        test_wip.delete()
+        test_commission.delete()
+
+    def test_wip_comment_invalid(self):
+        self.client.force_login(user=self.test_user)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(commission=test_commission)
+        response = self.client.post(f'/commission/wip/{test_commission.id}/', {
+            'comment': ''})
+        self.assertEqual(response.status_code, 200)
+        updated_commission = get_object_or_404(
+            models.WIP, pk=test_commission.id)
+
+        self.assertEqual(test_wip, updated_commission)
+        test_commission.delete()
+        test_wip.delete()
+
+    def test_wip_comment_valid(self):
+        self.client.force_login(user=self.test_user)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(commission=test_commission)
+        response = self.client.post(f'/commission/wip/{test_commission.id}/', {
+            'comment': 'updated comment text'})
+
+        test_wip.refresh_from_db()
+        self.assertRedirects(
+            response, '/profile/')
+
+        self.assertEqual(
+            test_wip.client_comment, 'updated comment text')
+
+        created_artwork = models.Artwork.objects.count()
+
+        self.assertEqual(
+            created_artwork, 1)
+        test_commission.delete()
+        test_wip.delete()
 
 # Artwork commission view
     def test_artwork_no_login(self):
@@ -337,11 +466,15 @@ class TestViews(TestCase):
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
             size_price=self.test_size, number_characters=2)
-        test_artwork = models.Artwork.objects.create(commission=test_commission)
-        response = self.client.get(f'/commission/artwork/{test_commission.id}/')
+        test_artwork = models.Artwork.objects.create(
+            commission=test_commission)
+        response = self.client.get(
+            f'/commission/artwork/{test_commission.id}/')
         self.assertRedirects(
             response,
             f'/accounts/login/?next=/commission/artwork/{test_commission.id}/')
+        test_artwork.delete()
+        test_commission.delete()
 
     def test_artwork_wrong_user(self):
         test_user_two = User.objects.create(
@@ -354,12 +487,18 @@ class TestViews(TestCase):
             size_price=self.test_size, number_characters=2)
         test_wip = models.WIP.objects.create(
             commission=test_commission, wip_illustration=self.test_image)
-        test_artwork = models.Artwork.objects.create(commission=test_commission)
+        test_artwork = models.Artwork.objects.create(
+            commission=test_commission)
         self.client.force_login(user=test_user_two)
         response = self.client.get(
             f'/commission/artwork/{test_commission.id}/')
         self.assertRedirects(response, '/profile/')
+        test_user_two.delete()
+        test_user_profile_two.delete()
         test_wip.wip_illustration.delete()
+        test_wip.delete()
+        test_artwork.delete()
+        test_commission.delete()
 
     def test_artwork_redirect_no_wip(self):
         test_commission = models.Commission.objects.create(
@@ -370,6 +509,7 @@ class TestViews(TestCase):
         response = self.client.get(
             f'/commission/artwork/{test_commission.id}/')
         self.assertRedirects(response, '/profile/')
+        test_commission.delete()
 
     def test_redirect_no_artwork(self):
         test_commission = models.Commission.objects.create(
@@ -383,6 +523,8 @@ class TestViews(TestCase):
             f'/commission/artwork/{test_commission.id}/')
         self.assertRedirects(response, '/profile/')
         test_wip.wip_illustration.delete()
+        test_wip.delete()
+        test_commission.delete()
 
     def test_artwork_login(self):
         self.client.force_login(user=self.test_user)
@@ -394,10 +536,14 @@ class TestViews(TestCase):
             commission=test_commission, wip_illustration=self.test_image)
         test_artwork = models.Artwork.objects.create(
             commission=test_commission)
-        response = self.client.get(f'/commission/artwork/{test_commission.id}/')
+        response = self.client.get(
+            f'/commission/artwork/{test_commission.id}/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'commissions/artwork_details.html')
         test_wip.wip_illustration.delete()
+        test_wip.delete()
+        test_artwork.delete()
+        test_commission.delete()
 
     def test_artwork_login_superuser(self):
         test_user_two = User.objects.create(
@@ -413,10 +559,48 @@ class TestViews(TestCase):
         test_artwork = models.Artwork.objects.create(
             commission=test_commission)
         self.client.force_login(user=test_user_two)
-        response = self.client.get(f'/commission/artwork/{test_commission.id}/')
+        response = self.client.get(
+            f'/commission/artwork/{test_commission.id}/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'commissions/artwork_details.html')
+        test_user_two.delete()
+        test_user_profile_two.delete()
         test_wip.wip_illustration.delete()
+        test_wip.delete()
+        test_artwork.delete()
+        test_commission.delete()
+
+    def test_artwork_illustration_exists(self):
+        self.client.force_login(user=self.test_user)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(
+            commission=test_commission, wip_illustration=self.test_image)
+        test_artwork = models.Artwork.objects.create(
+            commission=test_commission, final_illustration=self.test_image)
+        test_image = SimpleUploadedFile(
+            'logo.png',
+            content=open(f'./{settings.MEDIA_URL}logo.png', 'rb').read(),
+            content_type='image/png')
+        response = self.client.post(
+            f'/commission/artwork/{test_commission.id}/', {
+                'illustration': test_image})
+
+        test_artwork.refresh_from_db()
+        self.assertRedirects(
+            response, f'/commission/artwork/{test_commission.id}/')
+
+        updated_commission = get_object_or_404(
+            models.Artwork, pk=test_commission.id)
+
+        self.assertEqual(test_artwork, updated_commission)
+        test_wip.wip_illustration.delete()
+        test_wip.delete()
+        test_artwork.final_illustration.delete()
+        test_artwork.delete()
+        test_commission.delete()
 
     def test_artwork_illustration_invalid(self):
         self.client.force_login(user=self.test_user)
@@ -431,14 +615,18 @@ class TestViews(TestCase):
         image_one = SimpleUploadedFile(
             'one.png', b'',
             content_type='image/png')
-        response = self.client.post(f'/commission/artwork/{test_commission.id}/', {
-            'illustration': image_one})
+        response = self.client.post(
+            f'/commission/artwork/{test_commission.id}/', {
+                'illustration': image_one})
         self.assertEqual(response.status_code, 200)
         updated_commission = get_object_or_404(
             models.Artwork, pk=test_commission.id)
 
         self.assertEqual(test_artwork, updated_commission)
         test_wip.wip_illustration.delete()
+        test_wip.delete()
+        test_artwork.delete()
+        test_commission.delete()
 
     def test_artwork_illustration_valid(self):
         self.client.force_login(user=self.test_user)
@@ -466,4 +654,81 @@ class TestViews(TestCase):
             test_artwork.final_illustration.name,
             f'{test_commission.order_number}/{self.test_image.name}')
         test_wip.wip_illustration.delete()
+        test_wip.delete()
         test_artwork.final_illustration.delete()
+        test_artwork.delete()
+        test_commission.delete()
+
+    def test_artwork_comment_exists(self):
+        self.client.force_login(user=self.test_user)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(
+            commission=test_commission, wip_illustration=self.test_image)
+        test_artwork = models.Artwork.objects.create(
+            commission=test_commission, client_review="test review")
+        response = self.client.post(
+            f'/commission/artwork/{test_commission.id}/', {
+                'comment': 'test comment'})
+
+        self.assertRedirects(
+            response, f'/commission/artwork/{test_commission.id}/')
+
+        updated_commission = get_object_or_404(
+            models.Artwork, pk=test_commission.id)
+
+        self.assertEqual(test_artwork, updated_commission)
+        test_wip.wip_illustration.delete()
+        test_wip.delete()
+        test_artwork.delete()
+        test_commission.delete()
+
+    def test_artwork_comment_invalid(self):
+        self.client.force_login(user=self.test_user)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(
+            commission=test_commission, wip_illustration=self.test_image)
+        test_artwork = models.Artwork.objects.create(
+            commission=test_commission)
+        response = self.client.post(
+            f'/commission/artwork/{test_commission.id}/', {
+                'comment': ''})
+        self.assertEqual(response.status_code, 200)
+        updated_commission = get_object_or_404(
+            models.Artwork, pk=test_commission.id)
+
+        self.assertEqual(test_artwork, updated_commission)
+        test_wip.wip_illustration.delete()
+        test_wip.delete()
+        test_artwork.delete()
+        test_commission.delete()
+
+    def test_artwork_comment_valid(self):
+        self.client.force_login(user=self.test_user)
+        test_commission = models.Commission.objects.create(
+            user_profile=self.test_user_profile, name="Test",
+            description="Test", resolution_price=self.test_res,
+            size_price=self.test_size, number_characters=2)
+        test_wip = models.WIP.objects.create(
+            commission=test_commission, wip_illustration=self.test_image)
+        test_artwork = models.Artwork.objects.create(
+            commission=test_commission)
+        response = self.client.post(
+            f'/commission/artwork/{test_commission.id}/', {
+                'comment': 'updated review text'})
+
+        test_artwork.refresh_from_db()
+        self.assertRedirects(
+            response, '/profile/')
+
+        self.assertEqual(
+            test_artwork.client_review, 'updated review text')
+        test_wip.wip_illustration.delete()
+        test_wip.delete()
+        test_artwork.delete()
+        test_commission.delete()
