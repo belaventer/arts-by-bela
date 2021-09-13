@@ -16,6 +16,9 @@ class TestViews(TestCase):
             username="TestUser", password="TestPass")
         self.test_user_profile = UserProfile.objects.create(
             user=self.test_user)
+        self.test_superuser = User.objects.create(
+            username="TestSuperUser", password="TestPass",
+            email="testsupermail@someemail.com", is_superuser=True)
         self.test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -37,6 +40,8 @@ class TestViews(TestCase):
         response = self.client.get(
             f'/payment/{self.test_commission.id}/')
         self.assertRedirects(response, '/profile/')
+        test_user_profile_two.delete()
+        test_user_two.delete()
 
     def test_payment_exists(self):
         test_wip = models.WIP.objects.create(
@@ -71,6 +76,8 @@ class TestViews(TestCase):
         response = self.client.get(
             f'/payment/success/{self.test_commission.id}/')
         self.assertRedirects(response, '/profile/')
+        test_user_profile_two.delete()
+        test_user_two.delete()
 
     def test_payment_success_template(self):
         self.client.force_login(user=self.test_user)

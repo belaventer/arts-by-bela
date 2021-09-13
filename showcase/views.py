@@ -44,14 +44,16 @@ def personal_work(request):
         if form.is_valid():
             commission = models.Commission.objects.create(
                 user_profile=UserProfile.objects.get(user=request.user),
-                name=form.cleaned_data['name'], description=form.cleaned_data['description'],
+                name=form.cleaned_data['name'],
+                description=form.cleaned_data['description'],
                 resolution_price=resolution, size_price=size
             )
             commission.save()
             wip = models.WIP.objects.create(commission=commission)
             wip.save()
             artwork = models.Artwork.objects.create(
-                commission=commission, client_review=form.cleaned_data['description'],
+                commission=commission,
+                client_review=form.cleaned_data['description'],
                 final_illustration=form.cleaned_data['illustration'])
             artwork.save()
 

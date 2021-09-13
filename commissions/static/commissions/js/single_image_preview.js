@@ -1,6 +1,9 @@
 $(document).ready(function(){
     $('.collapsible').collapsible();
-    M.textareaAutoResize($('#id_client_comment'));
+    if ($('#id_client_comment').length > 0){
+       M.textareaAutoResize($('#id_client_comment')); 
+    }
+    
 
     $('input[type="file"]').change(function() {
         var file = $(this)[0].files[0];

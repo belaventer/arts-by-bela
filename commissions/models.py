@@ -160,7 +160,7 @@ class WIP(models.Model):
     commission = models.OneToOneField(
         Commission, on_delete=models.CASCADE,
         related_name="wip")
-    client_comment = models.TextField(null=True, blank=True)
+    client_comment = models.TextField(null=False, blank=True)
     wip_illustration = models.ImageField(null=True, blank=True)
 
     def _correct_path(self, path, name):
@@ -193,7 +193,7 @@ class Artwork(models.Model):
     commission = models.OneToOneField(
         Commission, on_delete=models.CASCADE,
         related_name="artwork")
-    client_review = models.TextField(null=True, blank=True)
+    client_review = models.TextField(null=False, blank=True)
     final_illustration = models.ImageField(null=True, blank=True)
 
     def _correct_path(self, path, name):
@@ -209,7 +209,8 @@ class Artwork(models.Model):
         """
         if self.final_illustration:
             self.final_illustration.name = self._correct_path(
-                f'{self.commission.order_number}', self.final_illustration.name)
+                f'{self.commission.order_number}',
+                self.final_illustration.name)
 
         super().save(*args, **kwargs)
 

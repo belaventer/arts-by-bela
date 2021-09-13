@@ -16,9 +16,13 @@ class TestViews(TestCase):
         self.test_size = models.Size.objects.create(
             size="A7 74 x 105 mm", price_factor=1)
         self.test_user = User.objects.create(
-            username="TestUser", password="TestPass")
+            username="TestUser", password="TestPass",
+            email="testmail@someemail.com")
         self.test_user_profile = UserProfile.objects.create(
             user=self.test_user)
+        self.test_superuser = User.objects.create(
+            username="TestSuperUser", password="TestPass",
+            email="testsupermail@someemail.com", is_superuser=True)
         image_path = f'./{settings.MEDIA_URL}logo.png'
         self.test_image = SimpleUploadedFile(
             'logo.png',

@@ -40,6 +40,7 @@ class IllustrationForm(forms.Form):
 
     illustration.widget.attrs.update({'hidden': True})
 
+
 class CommentForm(forms.Form):
     comment = forms.CharField(
         widget=forms.Textarea, required=True, label=False)

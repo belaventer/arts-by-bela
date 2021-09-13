@@ -10,7 +10,8 @@ class TestViews(TestCase):
         self.assertRedirects(response, '/accounts/login/?next=/profile/')
 
     def test_profile_login(self):
-        test_user = User.objects.create(username="TestUser", password="TestPass")
+        test_user = User.objects.create(
+            username="TestUser", password="TestPass")
         test_user_profile = UserProfile.objects.create(user=test_user)
         self.client.force_login(user=test_user)
         response = self.client.get('/profile/')
@@ -31,7 +32,8 @@ class TestViews(TestCase):
         test_user_profile.delete()
 
     def test_profile_update(self):
-        test_user = User.objects.create(username="TestUser", password="TestPass")
+        test_user = User.objects.create(
+            username="TestUser", password="TestPass")
         test_user_profile = UserProfile.objects.create(user=test_user)
         self.client.force_login(user=test_user)
         response = self.client.post('/profile/', {'first_name': 'Test Name'})
@@ -43,7 +45,8 @@ class TestViews(TestCase):
         updated_profile.delete()
 
     def test_profile_invalid(self):
-        test_user = User.objects.create(username="TestUser", password="TestPass")
+        test_user = User.objects.create(
+            username="TestUser", password="TestPass")
         test_user_profile = UserProfile.objects.create(user=test_user)
         self.client.force_login(user=test_user)
         response = self.client.post(
@@ -59,7 +62,8 @@ class TestViews(TestCase):
 class TestModels(TestCase):
 
     def test_userprofile_string_method_returns_username(self):
-        test_user = User.objects.create(username="TestUser", password="TestPass")
+        test_user = User.objects.create(
+            username="TestUser", password="TestPass")
         test_user_profile = UserProfile.objects.create(user=test_user)
         self.assertEqual(str(test_user_profile), test_user.username)
         test_user.delete()
