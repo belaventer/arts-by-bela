@@ -18,7 +18,7 @@ class TestViews(TestCase):
         self.test_user = User.objects.create(
             username="TestUser", password="TestPass",
             email="testmail@someemail.com")
-        self.test_user_profile = UserProfile.objects.create(
+        self.test_user_profile = UserProfile.objects.get(
             user=self.test_user)
         self.test_superuser = User.objects.create(
             username="TestSuperUser", password="TestPass",
@@ -85,7 +85,7 @@ class TestViews(TestCase):
     def test_edit_wrong_user(self):
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass")
-        test_user_profile_two = UserProfile.objects.create(
+        test_user_profile_two = UserProfile.objects.get(
             user=test_user_two)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -199,7 +199,7 @@ class TestViews(TestCase):
     def test_delete_wrong_user(self):
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass")
-        test_user_profile_two = UserProfile.objects.create(
+        test_user_profile_two = UserProfile.objects.get(
             user=test_user_two)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -258,7 +258,7 @@ class TestViews(TestCase):
     def test_wip_wrong_user(self):
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass")
-        test_user_profile_two = UserProfile.objects.create(
+        test_user_profile_two = UserProfile.objects.get(
             user=test_user_two)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -319,7 +319,7 @@ class TestViews(TestCase):
     def test_wip_login_superuser(self):
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass", is_superuser=True)
-        test_user_profile_two = UserProfile.objects.create(
+        test_user_profile_two = UserProfile.objects.get(
             user=test_user_two)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -483,7 +483,7 @@ class TestViews(TestCase):
     def test_artwork_wrong_user(self):
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass")
-        test_user_profile_two = UserProfile.objects.create(
+        test_user_profile_two = UserProfile.objects.get(
             user=test_user_two)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -552,7 +552,7 @@ class TestViews(TestCase):
     def test_artwork_login_superuser(self):
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass", is_superuser=True)
-        test_user_profile_two = UserProfile.objects.create(
+        test_user_profile_two = UserProfile.objects.get(
             user=test_user_two)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",

@@ -14,7 +14,7 @@ class TestViews(TestCase):
             size="A7 74 x 105 mm", price_factor=1)
         self.test_user = User.objects.create(
             username="TestUser", password="TestPass")
-        self.test_user_profile = UserProfile.objects.create(
+        self.test_user_profile = UserProfile.objects.get(
             user=self.test_user)
         self.test_superuser = User.objects.create(
             username="TestSuperUser", password="TestPass",
@@ -34,7 +34,7 @@ class TestViews(TestCase):
     def test_payment_wrong_user(self):
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass")
-        test_user_profile_two = UserProfile.objects.create(
+        test_user_profile_two = UserProfile.objects.get(
             user=test_user_two)
         self.client.force_login(user=test_user_two)
         response = self.client.get(
@@ -70,7 +70,7 @@ class TestViews(TestCase):
     def test_payment_success_wrong_user(self):
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass")
-        test_user_profile_two = UserProfile.objects.create(
+        test_user_profile_two = UserProfile.objects.get(
             user=test_user_two)
         self.client.force_login(user=test_user_two)
         response = self.client.get(

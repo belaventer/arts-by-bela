@@ -43,7 +43,7 @@ class TestModels(TestCase):
             size='A7 74 x 105 mm', price_factor=1)
         test_user = User.objects.create(
             username='TestUser', password='TestPass')
-        test_user_profile = UserProfile.objects.create(
+        test_user_profile = UserProfile.objects.get(
             user=test_user)
         test_commission = models.Commission.objects.create(
             user_profile=test_user_profile, name='Test',
@@ -96,7 +96,7 @@ class TestModels(TestCase):
             size='A7 74 x 105 mm', price_factor=1)
         test_user = User.objects.create(
             username='TestUser', password='TestPass')
-        test_user_profile = UserProfile.objects.create(
+        test_user_profile = UserProfile.objects.get(
             user=test_user)
         test_commission = models.Commission.objects.create(
             user_profile=test_user_profile, name='Test',
@@ -122,7 +122,7 @@ class TestModels(TestCase):
             size='A7 74 x 105 mm', price_factor=1)
         test_user = User.objects.create(
             username='TestUser', password='TestPass')
-        test_user_profile = UserProfile.objects.create(
+        test_user_profile = UserProfile.objects.get(
             user=test_user)
         test_commission = models.Commission.objects.create(
             user_profile=test_user_profile, name='Test',
@@ -157,7 +157,7 @@ class TestModels(TestCase):
             size='A7 74 x 105 mm', price_factor=1)
         test_user = User.objects.create(
             username='TestUser', password='TestPass')
-        test_user_profile = UserProfile.objects.create(
+        test_user_profile = UserProfile.objects.get(
             user=test_user)
         test_commission = models.Commission.objects.create(
             user_profile=test_user_profile, name='Test',

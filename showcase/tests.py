@@ -14,7 +14,7 @@ class TestViews(TestCase):
         self.test_user = User.objects.create(
             username="TestUser", password="TestPass",
             is_superuser=True)
-        self.test_user_profile = UserProfile.objects.create(
+        self.test_user_profile = UserProfile.objects.get(
             user=self.test_user)
         image_path = f'./{settings.MEDIA_URL}logo.png'
         self.test_image = SimpleUploadedFile(
@@ -35,7 +35,7 @@ class TestViews(TestCase):
     def test_add_personal_work_not_superuser(self):
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass")
-        test_user_profile_two = UserProfile.objects.create(
+        test_user_profile_two = UserProfile.objects.get(
             user=test_user_two)
         self.client.force_login(user=test_user_two)
         response = self.client.get('/showcase/add/')
