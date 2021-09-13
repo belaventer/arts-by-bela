@@ -41,6 +41,7 @@ The HTML templates wer tested by direct input of the rendered website. The error
 Custom test cases were written for each application. A total of 65 test were completed. Coverage of 100% was achieved for each application.
 
 ### Commissions
+```
 Name                                                      Stmts   Miss  Cover
 -----------------------------------------------------------------------------
 commissions/__init__.py                                       0      0   100%
@@ -69,8 +70,10 @@ commissions/urls.py                                           3      0   100%
 commissions/views.py                                        166      0   100%
 -----------------------------------------------------------------------------
 TOTAL                                                       852      0   100%
+```
 
 ### Home
+```
 Name                          Stmts   Miss  Cover
 -------------------------------------------------
 home/__init__.py                  0      0   100%
@@ -81,8 +84,10 @@ home/urls.py                      3      0   100%
 home/views.py                     7      0   100%
 -------------------------------------------------
 TOTAL                            20      0   100%
+```
 
 ### Payments
+```
 Name                              Stmts   Miss  Cover
 -----------------------------------------------------
 payments/__init__.py                  0      0   100%
@@ -93,8 +98,10 @@ payments/urls.py                      3      0   100%
 payments/views.py                    46      0   100%
 -----------------------------------------------------
 TOTAL                               106      0   100%
+```
 
 ### Profiles
+```
 Name                                             Stmts   Miss  Cover
 --------------------------------------------------------------------
 profiles/__init__.py                                 0      0   100%
@@ -110,8 +117,10 @@ profiles/urls.py                                     3      0   100%
 profiles/views.py                                   22      0   100%
 --------------------------------------------------------------------
 TOTAL                                              125      0   100%
+```
 
 ### Showcase
+```
 Name                              Stmts   Miss  Cover
 -----------------------------------------------------
 showcase/__init__.py                  0      0   100%
@@ -123,6 +132,7 @@ showcase/urls.py                      3      0   100%
 showcase/views.py                    38      0   100%
 -----------------------------------------------------
 TOTAL                               103      0   100%
+```
 
 ## Manual testing of features
 
