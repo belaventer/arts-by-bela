@@ -27,8 +27,17 @@ def personal_work(request):
             request, 'Sorry, only artists can add final artworks')
         return redirect(reverse('showcase'))
 
-    resolution = models.Resolution.objects.all()[0]
-    size = models.Size.objects.all()[0]
+    if models.Resolution.objects.count() == 0:
+        resolution = models.Resolution.objects.create()
+        resolution.save()
+    else:
+        resolution = models.Resolution.objects.all()[0]
+
+    if models.Size.objects.count() == 0:
+        size = models.Size.objects.create()
+        size.save()
+    else:
+        size = models.Size.objects.all()[0]
 
     if request.method == 'POST':
         form = PersonalWork(request.POST, request.FILES)
