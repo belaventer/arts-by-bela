@@ -163,6 +163,9 @@ This project was developed using the Gitpod IDE, committed to git and pushed to 
   - SECRET_KEY
   - STRIPE_SECRET_KEY
   - STRIPE_PUBLIC_KEY
+  - USE_AWS
+  - AWS_ACCESS_KEY_ID
+  - AWS_SECRET_ACCESS_KEY
 
 - Under Deploy tab, choose the branch and click Enable Automatic Deploys in the Automatic Deploys section.
 
