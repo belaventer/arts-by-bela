@@ -15,6 +15,11 @@
 {% endblock %}
 
 {% block content %}
+    {% if request.user.is_superuser %}
+        <a href="{% url 'personal_work' %}" class="btn waves-effect waves-light black" style="margin: 2px;">
+            <i class="material-icons">add</i> <span>New Personal Work</span>
+        </a>
+    {% endif %}
     {% if not artworks %}
         <h5 class="title-font">
             <i class="material-icons">brush</i> Sorry, the artist is still working on illustrations.
@@ -22,7 +27,7 @@
     {% else %}
         <div id="showcase-container">
         {% for artwork in artworks %}
-            <div class="showcase-item">
+            <div class="showcase-item white">
                 <img class="responsive-img" src="{{ MEDIA_URL }}{{ artwork.final_illustration.name }}" alt="{{ artwork.final_illustration.name }}">
                 <blockquote class="white">
                     {{artwork.commission.name}}

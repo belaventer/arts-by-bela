@@ -20,7 +20,9 @@
     {% include 'commissions/includes/commission_details.html' %}
 
     <!-- WIP content -->
-    {% include 'commissions/includes/progress_details.html' %}
+    {% if wip.wip_illustration and wip.client_comment %}
+        {% include 'commissions/includes/progress_details.html' %}
+    {% endif %}
 
     <!-- Artwork forms -->
     <div class="row">
