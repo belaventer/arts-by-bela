@@ -155,10 +155,12 @@ This project was developed using the Gitpod IDE, committed to git and pushed to 
 
 - Log in to [Heroku](https://id.heroku.com/login).
 - Create a new application with unique name and setting the region.
+- Under Resources tab, add on Heroku Postgress.
 - Under Deploy tab, select GitHub as the Deployment Method.
 - Search for the GitHub repository and click Connect.
 - Under Settings tab, click "Reveal Config Vars"
 - Include the environment  private variables and values:
+  - SECRET_KEY
   - STRIPE_SECRET_KEY
   - STRIPE_PUBLIC_KEY
 

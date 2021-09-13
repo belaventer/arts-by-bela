@@ -1,0 +1,1 @@
+web: gunicorn arts_by_bela.wsgi:application
