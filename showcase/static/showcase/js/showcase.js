@@ -1,5 +1,3 @@
-let clickCount = 1;
-
 $('.carousel.carousel-slider').carousel({
 });
 

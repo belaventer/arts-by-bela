@@ -8,11 +8,12 @@ Refer to [Main project file](README.md) for further detail.
 
 - [W3C CSS Jigsaw Validator](https://jigsaw.w3.org/css-validator/)
 - [W3C Markup Validator](https://validator.w3.org/#validate_by_input)
-<!-- - [JSHint Validator](https://jshint.com/)
-- [Python Validator](http://pep8online.com/) -->
-<!-- 
-All CSS, JS and Python files were validated and returned no errors at the time of this entry. 
--->
+- [JSHint Validator](https://jshint.com/)
+- [Python Validator](http://pep8online.com/) 
+
+All CSS, JS and Python files were validated and returned no errors at the time of this entry.
+Auto generated Python files, as "app/migrations/*.py" were not validated as they are not created manually.
+
 The HTML templates wer tested by direct input of the rendered website. The errors returned were related to Materialize / Stripe auto generated code. No written custom HTML returned errors. The following templates and scenarios were tested 
 
 - index.html

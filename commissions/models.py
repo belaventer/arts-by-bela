@@ -107,8 +107,8 @@ class Commission(models.Model):
         Calculate commission cost
         """
         self.order_total = (
-            5*self.resolution_price.price_factor*self.size_price.price_factor
-            + 2*self.number_characters)
+            5*self.resolution_price.price_factor*self.size_price.price_factor +
+            2*self.number_characters)
 
     def _correct_path(self, path, name):
         if name.split('/')[0] == path:

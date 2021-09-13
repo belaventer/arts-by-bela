@@ -26,19 +26,19 @@ $(document).ready(function(){
 });
 
 function calculateQuote(res, sizing, numberCharacters){
-    return (5*res*sizing+2*numberCharacters).toFixed(2)
+    return (5*res*sizing+2*numberCharacters).toFixed(2);
 }
 
 function getPriceFactor(array, key, selection) {
     // Function to get price factor from the JSON data
-    for (item in array) {
+    for (var item in array) {
         if (key === 'resolution') {
             if (array[item].resolution === selection) {
-                return array[item].price_factor
+                return array[item].price_factor;
             }
         } else {
             if (array[item].size === selection) {
-                return array[item].price_factor
+                return array[item].price_factor;
             }
         }
     }

@@ -60,8 +60,8 @@ class TestModels(TestCase):
             f'{test_commission.order_number}: {test_commission.name}')
         self.assertEqual(
             test_commission.order_total,
-            5*test_size.price_factor*test_res.price_factor
-            + 2*test_commission.number_characters)
+            5*test_size.price_factor*test_res.price_factor +
+            2*test_commission.number_characters)
 
         self.assertEqual(
             test_commission.reference_image_one.name,
