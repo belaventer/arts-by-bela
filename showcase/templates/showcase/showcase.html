@@ -44,18 +44,18 @@
 
         <div class="carousel carousel-slider center hide-on-large-only">
             {% for artwork in artworks %}
-            <div class="carousel-item" href="#{{ forloop.counter }}!">
+            <a class="carousel-item" href="#{{ forloop.counter }}!">
                 <img class="" src="{{ MEDIA_URL }}{{ artwork.final_illustration.name }}" alt="{{ artwork.final_illustration.name }}">
-                <blockquote class="white">
+                <blockquote class="black-text">
                     {{artwork.commission.name}}
                 </blockquote>
                 {% if artwork.client_review %}
-                    <blockquote class="white">
+                    <blockquote class="black-text">
                         "{{ artwork.client_review }}" <br>
                         <i>- {{ artwork.commission.user_profile.user }}</i>
                     </blockquote>
                 {% endif %}
-            </div>
+            </a>
             {% endfor %}
           </div>
     {% endif %}

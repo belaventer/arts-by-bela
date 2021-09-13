@@ -47,7 +47,7 @@ $(document).ready(function(){
         $(`input[type="file"]:eq(${fileNumber})`).val("");
         $(`input[type="file"]:eq(${fileNumber})`).siblings($(`input[type="checkbox"]`)).attr(
             "checked", true);
-        $(`.mood-board-image:eq(${fileNumber}) > img`).attr('src', "");
+        $(`.mood-board-image:eq(${fileNumber}) > img`).attr('src', "#");
         $(`.mood-board-image:eq(${fileNumber}) > p:first`).text(`File name: `);
         $(`.mood-board-image:eq(${fileNumber})`).addClass('hide');
 
