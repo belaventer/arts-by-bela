@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.3.6,
+* Autoprefixer: v10.3.1
+* Browsers: last 4 version
+*/
+
 #showcase-container {
     display: none;
 }
@@ -16,14 +23,24 @@
 @media only screen and (min-width: 993px) {
 
     #showcase-container {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        flex-flow: row wrap;
-        justify-content: space-around;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-flow: row wrap;
+                flex-flow: row wrap;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
     }
     
     .showcase-item {
         margin: 2px 0;
-        flex: 0 0 30%;
+        -webkit-box-flex: 0;
+            -ms-flex: 0 0 30%;
+                flex: 0 0 30%;
+        -webkit-transition: all 0.5s;
+        -o-transition: all 0.5s;
         transition: all 0.5s;
         cursor: pointer;
     }
@@ -35,6 +52,8 @@
 
 @media only screen and (min-width: 1201px) {
     .showcase-item {
-        flex: 0 0 22%;
+        -webkit-box-flex: 0;
+            -ms-flex: 0 0 22%;
+                flex: 0 0 22%;
     }
 }

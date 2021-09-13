@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.3.6,
+* Autoprefixer: v10.3.1
+* Browsers: last 4 version
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Nunito:wght@200;300;400&display=swap');
 
 /* -----  General  ----- */
@@ -63,15 +70,18 @@ a > span {
 /* -----  Home Page  ----- */
 .floating-animation {
     position: relative;
-    animation: floating 2s infinite;
+    -webkit-animation: floating 2s infinite;
+            animation: floating 2s infinite;
 }
 
 #float-shadow {
     height: 20px;
     width: 100%;
+    background-image: -o-radial-gradient(#bdbdbd, #eeeeee 40% );
     background-image: radial-gradient(#bdbdbd, #eeeeee 40% );
     border-radius: 50%;
-    animation: shadow 2s infinite;
+    -webkit-animation: shadow 2s infinite;
+            animation: shadow 2s infinite;
 }
 
 a.black-text {
@@ -94,6 +104,22 @@ blockquote.right-align {
 }
 
 /* -----  Calculator form  ----- */
+::-webkit-input-placeholder {
+    color: #000 !important;
+    opacity: 1 !important;
+}
+::-moz-placeholder {
+    color: #000 !important;
+    opacity: 1 !important;
+}
+:-ms-input-placeholder {
+    color: #000 !important;
+    opacity: 1 !important;
+}
+::-ms-input-placeholder {
+    color: #000 !important;
+    opacity: 1 !important;
+}
 .dropdown-content li>span, ::placeholder {
     color: #000 !important;
     opacity: 1 !important;
@@ -102,7 +128,8 @@ blockquote.right-align {
 #resolution-selector:focus, 
 #size-selector:focus, #no-characters:focus {
     border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
+    -webkit-box-shadow: 0 1px 0 0 #000;
+            box-shadow: 0 1px 0 0 #000;
   }
 
 /* -----  Allauth input submit override  ----- */
@@ -117,6 +144,8 @@ blockquote.right-align {
 
 .mood-board-image img{
     width: 50%;
+    height: -webkit-max-content;
+    height: -moz-max-content;
     height: max-content;
 }
 
@@ -142,14 +171,25 @@ blockquote.right-align {
 }
 
 /* -----  Keyframes  ----- */
+@-webkit-keyframes floating {
+    0% {bottom: 10px;}
+    50% {bottom: 0px;}
+    100% {bottom: 10px;}
+}
 @keyframes floating {
     0% {bottom: 10px;}
     50% {bottom: 0px;}
     100% {bottom: 10px;}
 }
 
+@-webkit-keyframes shadow {
+    0% {-webkit-transform: scaleX(1);transform: scaleX(1);}
+    50% {-webkit-transform: scaleX(0.75);transform: scaleX(0.75);}
+    100% {-webkit-transform: scaleX(1);transform: scaleX(1);}
+}
+
 @keyframes shadow {
-    0% {transform: scaleX(1);}
-    50% {transform: scaleX(0.75);}
-    100% {transform: scaleX(1);}
+    0% {-webkit-transform: scaleX(1);transform: scaleX(1);}
+    50% {-webkit-transform: scaleX(0.75);transform: scaleX(0.75);}
+    100% {-webkit-transform: scaleX(1);transform: scaleX(1);}
 }
