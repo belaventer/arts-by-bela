@@ -14,7 +14,7 @@ Refer to [Main project file](README.md) for further detail.
 All CSS, JS and Python files were validated and returned no errors at the time of this entry.
 Auto generated Python files, as "app/migrations/*.py" were not validated as they are not created manually.
 
-The HTML templates wer tested by direct input of the rendered website. The errors returned were related to Materialize / Stripe auto generated code. No written custom HTML returned errors. The following templates and scenarios were tested 
+The HTML templates were tested by direct input of the rendered website. The errors returned were related to Materialize / Stripe auto generated code. No written custom HTML returned errors. The following templates and scenarios were tested 
 
 - index.html
 - showcase.html - with and without artworks on database
@@ -197,12 +197,84 @@ On mobile, it was viewed with Google Chrome application v.91.0 on Android 9.
 
 The Developer Tools of Google Chrome (v.91) on desktop was used to verify responsiveness on different devices. -->
 
+**Testing notes**:
+a - At least 2 different Resolutions and 2 different Sizes have to be set on the database.
+b - The tester needs access to a superuser account. This will be referred on the Test Steps as Artist Account.
+c - The tester needs access to an email to create a regular user account. [TempMail](https://temp-mail.org/en/) can be used for this, but the session should remain open throughout the testing. This account will be referred on the Test Steps as Client Account.
+d - The test is designed to follow the website workflow, ideally all test steps should be executed consecutively. 
+
 1. **Home Page**:
 
    | Test No. | Action & expected results                                    | Pass / Fail |
    | -------- | :----------------------------------------------------------- | :---------- |
-   | 1.1      |     |       |
+   | 1.1 | Navigate to https://arts-by-bela.herokuapp.com/ and verify the Home page loads. |  |
+   | 1.2 | Scroll to the bottom of the home page and select different Resolutions, Sizes and Number of Characters. Verify your quote is updated accordingly. |  |
 
+
+2. **User Authentication**:
+
+   | Test No. | Action & expected results                                    | Pass / Fail |
+   | -------- | :----------------------------------------------------------- | :---------- |
+   | 2.1 | From the Navigation Bar, click on the Register link and verify the registration page loads. |  |
+   | 2.2 | Enter email (https://temp-mail.org/en/), username and password and click on SIGN UP. Verify a confirmation email is sent. Confirm the email to be used on this account. |  |
+   | 2.3 | From the Navigation Bar, click on the Login link and verify the login page loads. |  |
+   | 2.4 | Enter the credentials of the user created in step 2.2 and click SIGN IN. Verify the Profile page loads. |  |
+   | 2.5 | From the Navigation Bar, click on the Logout link and verify the user is logged out. |  |
+
+
+3. **Profile**:
+
+   | Test No. | Action & expected results                                    | Pass / Fail |
+   | -------- | :----------------------------------------------------------- | :---------- |
+   | 3.1 | Login into the system as in step 2.4 with the Client Account. On the Profile page, verify your username is displayed at the top of the page. |  |
+   | 3.2 | Click on "Your info" and verify a form with First and Last name fields drops down. |  |
+   | 3.3 | Enter "Test" in both fields and click UPDATE. Verify the page is reloaded. Click in "Your info" once again, verify the fields have been updated. |  |
+   | 3.4 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account (superuser credentials). Under Profiles App, open the User Profiles collection. Verify the First and Last Names of the Client Account have been updated to "Test" on the database. |  |
+
+
+4. **New Commission**:
+
+   | Test No. | Action & expected results                                    | Pass / Fail |
+   | -------- | :----------------------------------------------------------- | :---------- |
+   | 4.1 | Login into the system as in step 2.4 with the Client Account. On the Profile page, click on NEW COMMISSION and verify the New Commission page loads. |  |
+   | 4.2 | On the New Commissions page, click on CANCEL. Verify the Profile Page loads. |  |
+   | 4.3 | Click on NEW COMMISSION once again. Verify the Resolution and Size options available matches the Database. |  |
+   | 4.4 | Click on the Plus Sign button on the Mood Board and chose an image file. Verify the image preview loads and another Plus Sign button is available. |  |
+   | 4.5 | Click on REMOVE next to the Mood Board Image and verify the image is Cleared. Re-add the image. |  |
+   | 4.6 | Repeat steps 4.4 and 4.5 to each available Plus button. Verify a total of 5 images can be uploaded. |  |
+   | 4.7 | Change the selected Resolution, Size and the amount of Characters. Verify the total value is updated accordingly. |  |
+   | 4.8 | Enter a Name and Description and click on PROCEED TO PAYMENT. Verify the Payment Page loads. Verify all the information and images matches the submitted on the form. Copy the Order Number. |  |
+   | 4.9 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify a commission has been created with the details and files entered on the steps above. |  |
+
+
+5. **Edit Commission**:
+
+   | Test No. | Action & expected results                                    | Pass / Fail |
+   | -------- | :----------------------------------------------------------- | :---------- |
+   | 5.1 | Login into the system as in step 2.4 with the Client Account. On the Profile page, verify the Commission created in step 4.8 is now listed under "Your Commissions".  Verify the Commission status is "Waiting Payment" |  |
+   | 5.2 | Click on the Details Symbol Button of the created commission. Verify the Edit Commission page loads. Verify all fields are filled in correctly and the Mood Board images are visible. |  |
+   | 5.3 | Update a field and click on PROCEED TO PAYMENT. Verify that field is updated on the Payments page.<br />Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify  the updated field on the database. |  |
+   | 5.4 | On the Payments page, click on RETURN. Verify the Edit commission page loads. |  |
+   | 5.5 | On the Edit commission page, click on DELETE. Verify a Modal opens to confirm deletion. Click on CANCEL and verify nothing happens. Click on DELETE again and confirm on the Modal. Verify the Profile page loads and the commission is no longer listed under "Your Commissions".<br />Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify the commission was removed from the Database. |  |
+
+
+6. **Payments**:
+
+   | Test No. | Action & expected results                                    | Pass / Fail |
+   | -------- | :----------------------------------------------------------- | :---------- |
+   | 6.1 | From the Profile page, create a new commission and click on PROCEED TO PAYMENT. Enter a card test details from [Stripe](https://stripe.com/docs/testing#cards). Verify the payments goes through and the Payment Success page loads.  |  |
+   | 6.2 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Wips collection. Verify a WIP was created associated with the paid commission. |  |
+   | 6.3 | On the Client Account email provider, verify an email was received confirming the Commission Request. On the Artist Account, verify the same email was received. |  |
+   | 6.4 | Return to the Profile page of the Client Account and verify the Commission status is In Progress. |  |
+   | 6.5 | Login with the Artist Account and navigate to the Profile, verify the payed user is now avaialble to the Artist. |  |
+
+
+7. **WIP Illustration**:
+
+   | Test No. | Action & expected results                                    | Pass / Fail |
+   | -------- | :----------------------------------------------------------- | :---------- |
+   | 7.1 |  |  |
 
    ### Known issues
+
 - The files are only open on a new tab, instead of downloaded from the S3 bucket on the deployed enviroment. To fix this issue, the Content-Disposition of the file has to be set at custom storage classes. This was not implemented to avoid data tranfer fees. For further information, refer to [StackOverflow](https://stackoverflow.com/questions/43208401/add-dynamic-content-disposition-for-file-namesamazon-s3-in-python).
