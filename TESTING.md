@@ -30,12 +30,54 @@ The HTML templates wer tested by direct input of the rendered website. The error
 
 ## User stories testing
 
-1.	
+### As a new visitor to the website,
 
-![](screenshots/screenshot-user-story-1.png "")
+1. I want to know more about the artist.
+![Home Page](screenshots/screenshot-user-story-1.png "Home Page")
 
-    - 
+    - Loading the home page, the first section has a small introduction about the artist.
+2. I want to see previous completed artworks.
+![Showcase](screenshots/screenshot-user-story-2.png "Showcase")
 
+    - From the navigation bar, I can load the Showcase page that has examples of the artist's work.
+3. I want to read reviews from previous costumers.
+![Showcase - Image zoom](screenshots/screenshot-user-story-3.png "Showcase - Image zoom")
+
+    - On the Showcase page, I can click on the image and the client review is displayed.
+4. I want to find instructions on how to commission an artwork.
+![Home Page - Instructions](screenshots/screenshot-user-story-4.png "Home Page - Instructions")
+
+    - Loading the home page, the second section has the steps on how to commission a new illustration.
+5. I want to calculate a quote for the commission.
+![Home Page - Quote](screenshots/screenshot-user-story-5.png "Home Page - Quote")
+
+    - Loading the home page, the third section is an interactive quote calculator depending on my illustration requirements.
+
+### As a registered user,
+
+1. I want to request a new commission.
+![New Commission](screenshots/screenshot-user-story-6.png "New Commission")
+
+    - Once logged in, I´m redirected to the profile page that has a new commission button. Clicking that button loads the form for me to include my commission request details.
+2. I want to pay for the new commission.
+![Pay Commission](screenshots/screenshot-user-story-7.png "Pay Commission")
+
+    - By clicking proceed to payment, I can review and pay for my commission by card.
+3. I want to be notified as my commission is in progress.
+![Email](screenshots/screenshot-user-story-8.png "Email")
+
+    - Once the commission is paid and the artist uploads the illustration, I am notified via email.
+4. I want to request changes to the artwork, if necessary.
+![WIP details](screenshots/screenshot-user-story-9.png "WIP details")
+
+    - From my profile, I can navigate to the Illustration details and submit comments to the artist.
+5. I want to be notified  and download my completed art work.
+6. I want access to previous artwork commissions I have ordered, if any.
+
+### As the artist,
+
+1. I want to be notified as commissions are requested and commented on.
+2. I want to upload the artworks and submit for comments and download.
 
 ## Python Testing
 Custom test cases were written for each application. A total of 65 test were completed. Coverage of 100% was achieved for each application.

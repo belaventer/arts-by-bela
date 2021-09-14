@@ -24,13 +24,13 @@ As a registered user,
 2. I want to pay for the new commission.
 3. I want to be notified as my commission is in progress.
 4. I want to request changes to the artwork, if necessary.
-5. I want to accept and download my completed art work.
+5. I want to be notified and download my completed art work.
 6. I want access to previous artwork commissions I have ordered, if any.
 
 As the artist,
 
-1. I want to be notified as commissions are requested, accepted or rejected.
-2. I want to upload the artworks and submit for acceptance or comments.
+1. I want to be notified as commissions are requested and commented on.
+2. I want to upload the artworks and submit for comments and download.
 
 ### Strategy 
 
