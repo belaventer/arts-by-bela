@@ -60,6 +60,8 @@
                             <i>- {{ commission.user_profile.user }}</i>
                         </blockquote>
                     {% endif %}
+                    <a href="{{ MEDIA_URL }}{{ artwork.final_illustration.name }}" class="btn waves-effect waves-light black"
+                        style="margin: 2px;" download>Download</a>
                 </div>
             {% endif %}
         </div>
