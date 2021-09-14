@@ -72,12 +72,23 @@ The HTML templates wer tested by direct input of the rendered website. The error
 
     - From my profile, I can navigate to the Illustration details and submit comments to the artist.
 5. I want to be notified  and download my completed art work.
-6. I want access to previous artwork commissions I have ordered, if any.
+![Artwork details](screenshots/screenshot-user-story-10.png "Artwork details")
 
+    - Once the artist uploads the illustration, I am notified via email and I can navigate to the illustration details from my profile to download the image.
+6. I want access to previous artwork commissions I have ordered, if any.
+![Profile](screenshots/screenshot-user-story-11.png "Profile")
+
+    - From my profile, I can see a list of my commissions and redirect to the details page of each commission.
 ### As the artist,
 
 1. I want to be notified as commissions are requested and commented on.
+![Artists emails](screenshots/screenshot-user-story-12.png "Artists emails")
+
+    - As the artist, I receive all emails during the commission workflow.
 2. I want to upload the artworks and submit for comments and download.
+![Upload images](screenshots/screenshot-user-story-13.png "Upload images")
+
+    - From the commission details page, I can upload the images and submit them to the client.
 
 ## Python Testing
 Custom test cases were written for each application. A total of 65 test were completed. Coverage of 100% was achieved for each application.
@@ -194,3 +205,4 @@ The Developer Tools of Google Chrome (v.91) on desktop was used to verify respon
 
 
    ### Known issues
+- The files are only open on a new tab, instead of downloaded from the S3 bucket on the deployed enviroment. To fix this issue, the Content-Disposition of the file has to be set at custom storage classes. This was not implemented to avoid data tranfer fees. For further information, refer to [StackOverflow](https://stackoverflow.com/questions/43208401/add-dynamic-content-disposition-for-file-namesamazon-s3-in-python).
