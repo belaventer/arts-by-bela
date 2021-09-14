@@ -2,6 +2,10 @@ from django import forms
 
 
 class PersonalWork(forms.Form):
+    """
+    Form to get name, description and illustration used
+    in the personal_work template.
+    """
     name = forms.CharField(
         required=True, label=False, max_length=50)
     description = forms.CharField(

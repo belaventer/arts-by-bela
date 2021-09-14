@@ -11,6 +11,9 @@ from commissions.models import Artwork, Resolution, Size
 class TestViews(TestCase):
 
     def setUp(self):
+        """
+        Setup required model Instances on test database
+        """
         self.test_user = User.objects.create(
             username="TestUser", password="TestPass",
             is_superuser=True)
@@ -23,16 +26,25 @@ class TestViews(TestCase):
             content_type='image/png')
 
     def test_showcase(self):
+        """
+        Test get response and template of showcase view
+        """
         response = self.client.get('/showcase/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'showcase/showcase.html')
 
     def test_add_personal_work_no_login(self):
+        """
+        Test login required decorator on personal_work view
+        """
         response = self.client.get('/showcase/add/')
         self.assertRedirects(
             response, '/accounts/login/?next=/showcase/add/')
 
     def test_add_personal_work_not_superuser(self):
+        """
+        Test redirection if user not superuser
+        """
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass")
         test_user_profile_two = UserProfile.objects.get(
@@ -45,12 +57,18 @@ class TestViews(TestCase):
         test_user_two.delete()
 
     def test_add_personal_work_login(self):
+        """
+        Test get response and template of personal_work view
+        """
         self.client.force_login(user=self.test_user)
         response = self.client.get('/showcase/add/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'showcase/personal_work.html')
 
     def test_add_personal_work_invalid(self):
+        """
+        Test post response with invalid form of personal_work view
+        """
         test_res = Resolution.objects.create()
         test_size = Size.objects.create()
         self.client.force_login(user=self.test_user)
@@ -68,6 +86,9 @@ class TestViews(TestCase):
         test_size.delete()
 
     def test_add_personal_work_valid(self):
+        """
+        Test post response with valid form of personal_work view
+        """
         self.client.force_login(user=self.test_user)
         response = self.client.post(
             '/showcase/add/', {

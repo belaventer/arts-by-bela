@@ -3,6 +3,10 @@ from .models import UserProfile
 
 
 class UserProfileForm(forms.ModelForm):
+    """
+    UserProfile Model Form to select and format desired fields for
+    profile template
+    """
     class Meta:
         model = UserProfile
         exclude = ('user',)

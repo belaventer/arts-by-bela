@@ -11,6 +11,9 @@ from commissions import models
 class TestViews(TestCase):
 
     def setUp(self):
+        """
+        Setup required model Instaces on test database
+        """
         self.test_res = models.Resolution.objects.create(
             resolution="72 dpi", price_factor=1)
         self.test_size = models.Size.objects.create(
@@ -31,17 +34,26 @@ class TestViews(TestCase):
 
 # New commission view
     def test_new_commission_no_login(self):
+        """
+        Test login required decorator on new_commission view
+        """
         response = self.client.get('/commission/new/')
         self.assertRedirects(
             response, '/accounts/login/?next=/commission/new/')
 
     def test_new_commission_login(self):
+        """
+        Test get response and template of new_commission view
+        """
         self.client.force_login(user=self.test_user)
         response = self.client.get('/commission/new/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'commissions/new_commission.html')
 
     def test_new_commission_invalid(self):
+        """
+        Test post response with invalid form of new_commission view
+        """
         self.client.force_login(user=self.test_user)
         response = self.client.post('/commission/new/', {
             'name': 'Create new commission with invalid form inputs \
@@ -55,6 +67,9 @@ class TestViews(TestCase):
         self.assertEqual(commissions, 0)
 
     def test_new_commission_valid(self):
+        """
+        Test post response with valid form of new_commission view
+        """
         self.client.force_login(user=self.test_user)
         response = self.client.post('/commission/new/', {
             'name': 'Valid commission',
@@ -72,6 +87,9 @@ class TestViews(TestCase):
 
 # Edit commission view
     def test_edit_commission_no_login(self):
+        """
+        Test login required decorator on edit_commission view
+        """
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -83,6 +101,9 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_edit_wrong_user(self):
+        """
+        Test redirection if logged user is not commission owner
+        """
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass")
         test_user_profile_two = UserProfile.objects.get(
@@ -100,6 +121,9 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_redirect_wip_exists(self):
+        """
+        Test redirection if commission has wip, i.e, was already paid
+        """
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -115,6 +139,10 @@ class TestViews(TestCase):
         test_wip.delete()
 
     def test_redirect_artwork_exists(self):
+        """
+        Test redirection if commission has artwork, i.e,
+        client already commented on commission
+        """
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -134,6 +162,9 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_edit_commission_login(self):
+        """
+        Test get response and template of edit_commission view
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -145,6 +176,9 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_edit_commission_invalid(self):
+        """
+        Test post response with invalid form of edit_commission view
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -165,6 +199,9 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_edit_commission_valid(self):
+        """
+        Test post response with valid form of edit_commission view
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -186,6 +223,9 @@ class TestViews(TestCase):
 
 # Delete commission view
     def test_delete_commission_no_login(self):
+        """
+        Test login required decorator on delete_commission view
+        """
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -197,6 +237,9 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_delete_wrong_user(self):
+        """
+        Test redirection if logged user is not commission owner
+        """
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass")
         test_user_profile_two = UserProfile.objects.get(
@@ -214,6 +257,9 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_delete_payment_exists(self):
+        """
+        Test redirection if commission has wip, i.e, was already paid
+        """
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -228,6 +274,9 @@ class TestViews(TestCase):
         test_wip.delete()
 
     def test_delete_success(self):
+        """
+        Test get response of delete_commission view
+        """
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -243,6 +292,9 @@ class TestViews(TestCase):
 
 # WIP commission view
     def test_wip_no_login(self):
+        """
+        Test login required decorator on wip view
+        """
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -256,6 +308,9 @@ class TestViews(TestCase):
         test_wip.delete()
 
     def test_wip_wrong_user(self):
+        """
+        Test redirection if logged user is not commission owner
+        """
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass")
         test_user_profile_two = UserProfile.objects.get(
@@ -275,6 +330,10 @@ class TestViews(TestCase):
         test_wip.delete()
 
     def test_redirect_no_wip(self):
+        """
+        Test redirection if commission doesn't have wip, i.e,
+        payment pending
+        """
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -286,6 +345,10 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_wip_redirect_artwork_exists(self):
+        """
+        Test redirection if commission has artwork, i.e,
+        client already commented on commission
+        """
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -304,6 +367,9 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_wip_login(self):
+        """
+        Test get response and template of wip view
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -317,6 +383,9 @@ class TestViews(TestCase):
         test_wip.delete()
 
     def test_wip_login_superuser(self):
+        """
+        Test superuser is allowed to see wip_details
+        """
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass", is_superuser=True)
         test_user_profile_two = UserProfile.objects.get(
@@ -336,6 +405,10 @@ class TestViews(TestCase):
         test_wip.delete()
 
     def test_wip_illustration_exists(self):
+        """
+        Test redirection on post if illustration
+        was previously uploaded
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -361,6 +434,10 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_wip_illustration_invalid(self):
+        """
+        Test post response with invalid file
+        of wip view
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -382,6 +459,10 @@ class TestViews(TestCase):
         test_wip.delete()
 
     def test_wip_illustration_valid(self):
+        """
+        Test post response with valid file
+        of wip view
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -403,6 +484,10 @@ class TestViews(TestCase):
         test_wip.delete()
 
     def test_wip_comment_exists(self):
+        """
+        Test redirection on post if comment
+        was previously added
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -424,6 +509,10 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_wip_comment_invalid(self):
+        """
+        Test post response with invalid form
+        of wip view
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -441,6 +530,10 @@ class TestViews(TestCase):
         test_wip.delete()
 
     def test_wip_comment_valid(self):
+        """
+        Test post response with valid form
+        of wip view
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -466,6 +559,9 @@ class TestViews(TestCase):
 
 # Artwork commission view
     def test_artwork_no_login(self):
+        """
+        Test login required decorator on artwork view
+        """
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -481,6 +577,9 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_artwork_wrong_user(self):
+        """
+        Test redirection if logged user is not commission owner
+        """
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass")
         test_user_profile_two = UserProfile.objects.get(
@@ -505,6 +604,10 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_artwork_redirect_no_wip(self):
+        """
+        Test redirection if commission doesn't have wip, i.e,
+        payment pending
+        """
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -516,6 +619,10 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_redirect_no_artwork(self):
+        """
+        Test redirection if commission doesn't have artwork, i.e,
+        comment pending
+        """
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
             description="Test", resolution_price=self.test_res,
@@ -531,6 +638,9 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_artwork_login(self):
+        """
+        Test get response and template of artwork view
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -550,6 +660,9 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_artwork_login_superuser(self):
+        """
+        Test superuser is allowed to see artwork_details
+        """
         test_user_two = User.objects.create(
             username="TestUser2", password="TestPass", is_superuser=True)
         test_user_profile_two = UserProfile.objects.get(
@@ -575,6 +688,10 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_artwork_illustration_exists(self):
+        """
+        Test redirection on post if illustration
+        was previously uploaded
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -607,6 +724,10 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_artwork_illustration_invalid(self):
+        """
+        Test post response with invalid file
+        of artwork view
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -633,6 +754,10 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_artwork_illustration_valid(self):
+        """
+        Test post response with valid file
+        of artwork view
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -664,6 +789,10 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_artwork_comment_exists(self):
+        """
+        Test redirection on post if client review
+        was previously added
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -690,6 +819,10 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_artwork_comment_invalid(self):
+        """
+        Test post response with invalid form
+        of artwork view
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",
@@ -713,6 +846,10 @@ class TestViews(TestCase):
         test_commission.delete()
 
     def test_artwork_comment_valid(self):
+        """
+        Test post response with valid form
+        of artwork view
+        """
         self.client.force_login(user=self.test_user)
         test_commission = models.Commission.objects.create(
             user_profile=self.test_user_profile, name="Test",

@@ -9,6 +9,9 @@ from commissions import models
 class TestModels(TestCase):
 
     def test_resolution_defaults_and_string(self):
+        """
+        Test Resolution model default value and string method
+        """
         test_res = models.Resolution.objects.create()
 
         self.assertEqual(test_res.resolution, '72 dpi')
@@ -16,6 +19,9 @@ class TestModels(TestCase):
         self.assertEqual(str(test_res), test_res.resolution)
 
     def test_size_defaults_and_string(self):
+        """
+        Test Size model default value and string method
+        """
         test_size = models.Size.objects.create()
 
         self.assertEqual(test_size.size, 'A7 74 x 105 mm')
@@ -23,6 +29,10 @@ class TestModels(TestCase):
         self.assertEqual(str(test_size), test_size.size)
 
     def test_commission_model(self):
+        """
+        Test Commission model string method, order total and uploaded
+        file directory path
+        """
         # Create test file solution found in
         # https://stackoverflow.com/questions/11170425/
         # how-to-unit-test-file-upload-in-django
@@ -87,6 +97,10 @@ class TestModels(TestCase):
         test_commission.delete()
 
     def test_commission_file_reupload(self):
+        """
+        Test Commission model uploaded file directory path in case
+        of re-upload of files
+        """
         image_one = SimpleUploadedFile(
             'one.png', b'file_content',
             content_type='image/png')
@@ -116,6 +130,10 @@ class TestModels(TestCase):
         test_commission.reference_image_one.delete(save=True)
 
     def test_wip_model(self):
+        """
+        Test WIP model string method, uploaded and re-uploaded
+        file directory path
+        """
         test_res = models.Resolution.objects.create(
             resolution='72 dpi', price_factor=1)
         test_size = models.Size.objects.create(
@@ -151,6 +169,10 @@ class TestModels(TestCase):
         wip.wip_illustration.delete()
 
     def test_artwork_model(self):
+        """
+        Test Artwork model string method, uploaded and re-uploaded
+        file directory path
+        """
         test_res = models.Resolution.objects.create(
             resolution='72 dpi', price_factor=1)
         test_size = models.Size.objects.create(

@@ -6,10 +6,16 @@ from .models import UserProfile
 class TestViews(TestCase):
 
     def test_profile_no_login(self):
+        """
+        Test login required decorator on profile view
+        """
         response = self.client.get('/profile/')
         self.assertRedirects(response, '/accounts/login/?next=/profile/')
 
     def test_profile_login(self):
+        """
+        Test get response and template of profile view
+        """
         test_user = User.objects.create(
             username="TestUser", password="TestPass")
         test_user_profile = UserProfile.objects.get(user=test_user)
@@ -21,6 +27,9 @@ class TestViews(TestCase):
         test_user_profile.delete()
 
     def test_profile_login_superuser(self):
+        """
+        Test superuser login of profile
+        """
         test_user = User.objects.create(
             username="TestUser", password="TestPass", is_superuser=True)
         test_user_profile = UserProfile.objects.get(user=test_user)
@@ -32,6 +41,9 @@ class TestViews(TestCase):
         test_user_profile.delete()
 
     def test_profile_update(self):
+        """
+        Test post response with valid form of profile view
+        """
         test_user = User.objects.create(
             username="TestUser", password="TestPass")
         test_user_profile = UserProfile.objects.get(user=test_user)
@@ -45,6 +57,9 @@ class TestViews(TestCase):
         updated_profile.delete()
 
     def test_profile_invalid(self):
+        """
+        Test post response with invalid form of profile view
+        """
         test_user = User.objects.create(
             username="TestUser", password="TestPass")
         test_user_profile = UserProfile.objects.get(user=test_user)
@@ -62,6 +77,9 @@ class TestViews(TestCase):
 class TestModels(TestCase):
 
     def test_userprofile_string_method_returns_username(self):
+        """
+        Test UserProfile model string method
+        """
         test_user = User.objects.create(
             username="TestUser", password="TestPass")
         test_user_profile = UserProfile.objects.get(user=test_user)

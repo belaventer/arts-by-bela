@@ -111,6 +111,9 @@ class Commission(models.Model):
             2*self.number_characters)
 
     def _correct_path(self, path, name):
+        """
+        Define image path. If path already set, just update the file name
+        """
         if name.split('/')[0] == path:
             file_name = name.split('/')[-1]
             return f'{path}/references/{file_name}'
@@ -118,6 +121,9 @@ class Commission(models.Model):
             return f'{path}/references/{name}'
 
     def _define_file_name(self):
+        """
+        If the image is uploaded, save image to correct directory
+        """
         path = f'{self.order_number}'
 
         if self.reference_image_one:
@@ -164,6 +170,9 @@ class WIP(models.Model):
     wip_illustration = models.ImageField(null=True, blank=True)
 
     def _correct_path(self, path, name):
+        """
+        Define image path. If path already set, just update the file name
+        """
         if name.split('/')[0] == path:
             file_name = name.split('/')[-1]
             return f'{path}/WIP/{file_name}'
@@ -197,6 +206,9 @@ class Artwork(models.Model):
     final_illustration = models.ImageField(null=True, blank=True)
 
     def _correct_path(self, path, name):
+        """
+        Define image path. If path already set, just update the file name
+        """
         if name.split('/')[0] == path:
             file_name = name.split('/')[-1]
             return f'{path}/{file_name}'

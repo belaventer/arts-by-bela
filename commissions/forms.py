@@ -3,6 +3,10 @@ from . import models
 
 
 class CommissionForm(forms.ModelForm):
+    """
+    Commission Model Form to select and format desired fields for
+    new_commission and edit_commission templates
+    """
     class Meta:
         model = models.Commission
         exclude = ('user_profile', 'order_number', 'order_total')
@@ -35,6 +39,10 @@ class CommissionForm(forms.ModelForm):
 
 
 class IllustrationForm(forms.Form):
+    """
+    Form to relate with wip_illustration and
+    final_illustration fields of WIP and Artwork models
+    """
     illustration = forms.ImageField(
         required=True, label=False)
 
@@ -42,6 +50,10 @@ class IllustrationForm(forms.Form):
 
 
 class CommentForm(forms.Form):
+    """
+    Form to relate with client_comment and
+    client_review fields of WIP and Artwork models
+    """
     comment = forms.CharField(
         widget=forms.Textarea, required=True, label=False)
 

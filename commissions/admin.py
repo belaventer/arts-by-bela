@@ -4,6 +4,9 @@ from . import models
 
 @admin.register(models.Resolution, models.Size)
 class PriceAdmin(admin.ModelAdmin):
+    """
+    Admin Class for Resolution and Size models
+    """
     list_display = (
         '__str__',
         'price_factor'
@@ -14,6 +17,9 @@ class PriceAdmin(admin.ModelAdmin):
 
 @admin.register(models.Commission)
 class CommissionAdmin(admin.ModelAdmin):
+    """
+    Admin Class for Commission model
+    """
     list_display = (
         '__str__',
         'description',
@@ -25,6 +31,9 @@ class CommissionAdmin(admin.ModelAdmin):
 
 @admin.register(models.WIP)
 class WIPAdmin(admin.ModelAdmin):
+    """
+    Admin Class for WIP model
+    """
     list_display = (
         '__str__',
         'client_comment',
@@ -33,6 +42,9 @@ class WIPAdmin(admin.ModelAdmin):
 
 @admin.register(models.Artwork)
 class ArtworkAdmin(admin.ModelAdmin):
+    """
+    Admin Class for Artwork model
+    """
     list_display = (
         '__str__',
         'final_illustration',
