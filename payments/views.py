@@ -57,26 +57,31 @@ def payment(request, commission_id):
         )
         if commission.reference_image_one:
             email.attach_file(
-                f'{settings.MEDIA_URL}{commission.reference_image_one.name}')
+                f'./{settings.MEDIA_URL}'
+                f'{commission.reference_image_one.name}')
         if commission.reference_image_two:
             email.attach_file(
-                f'{settings.MEDIA_URL}{commission.reference_image_two.name}')
+                f'./{settings.MEDIA_URL}'
+                f'{commission.reference_image_two.name}')
         if commission.reference_image_three:
             email.attach_file(
-                f'{settings.MEDIA_URL}{commission.reference_image_three.name}'
-            )
+                f'./{settings.MEDIA_URL}'
+                f'{commission.reference_image_three.name}')
         if commission.reference_image_four:
             email.attach_file(
-                f'{settings.MEDIA_URL}{commission.reference_image_four.name}')
+                f'./{settings.MEDIA_URL}'
+                f'{commission.reference_image_four.name}')
         if commission.reference_image_five:
             email.attach_file(
-                f'{settings.MEDIA_URL}{commission.reference_image_five.name}')
+                f'./{settings.MEDIA_URL}'
+                f'{commission.reference_image_five.name}')
 
         email.attach_alternative(
             render_to_string(
                 'payments/confirmation_email/confirmation_email_body.html',
-                {'commission': commission,
-                'MEDIA_URL': settings.MEDIA_URL}),
+                {
+                    'commission': commission,
+                    'MEDIA_URL': settings.MEDIA_URL}),
             "text/html")
         email.send()
 
