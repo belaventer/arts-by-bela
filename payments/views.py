@@ -3,7 +3,7 @@ from django.shortcuts import (
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 
@@ -41,23 +41,44 @@ def payment(request, commission_id):
 
         artist_users = User.objects.filter(is_superuser=True)
 
-        emails_list = [commission.user_profile.user.email]
+        emails_list = []
         for artist in artist_users:
             emails_list.append(artist.email)
 
-        subject = render_to_string(
-            'payments/confirmation_email/confirmation_email_subject.txt',
-            {'commission': commission})
-        body = render_to_string(
-            'payments/confirmation_email/confirmation_email_body.txt',
-            {'commission': commission})
-
-        send_mail(
-            subject,
-            body,
-            settings.DEFAULT_FROM_EMAIL,
-            emails_list
+        email = EmailMultiAlternatives(
+            subject=render_to_string(
+                'payments/confirmation_email/confirmation_email_subject.txt',
+                {'commission': commission}),
+            body=render_to_string(
+                'payments/confirmation_email/confirmation_email_body.txt',
+                {'commission': commission}),
+            to=[commission.user_profile.user.email],
+            bcc=emails_list
         )
+        if commission.reference_image_one:
+            email.attach_file(
+                f'{settings.MEDIA_URL}{commission.reference_image_one.name}')
+        if commission.reference_image_two:
+            email.attach_file(
+                f'{settings.MEDIA_URL}{commission.reference_image_two.name}')
+        if commission.reference_image_three:
+            email.attach_file(
+                f'{settings.MEDIA_URL}{commission.reference_image_three.name}'
+            )
+        if commission.reference_image_four:
+            email.attach_file(
+                f'{settings.MEDIA_URL}{commission.reference_image_four.name}')
+        if commission.reference_image_five:
+            email.attach_file(
+                f'{settings.MEDIA_URL}{commission.reference_image_five.name}')
+
+        email.attach_alternative(
+            render_to_string(
+                'payments/confirmation_email/confirmation_email_body.html',
+                {'commission': commission,
+                'MEDIA_URL': settings.MEDIA_URL}),
+            "text/html")
+        email.send()
 
         return redirect(reverse(
             'payment_success', args=[commission.id]))

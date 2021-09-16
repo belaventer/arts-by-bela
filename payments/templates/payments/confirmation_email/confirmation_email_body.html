@@ -1,0 +1,72 @@
+<h5>Thank you for your request, {{ commission.user_profile.user.username }}!</h5>
+<a href="{% url 'edit_commission' commission.id %}">View commission details.</a>
+<table class="highlight responsive-table">
+    <thead>
+        <tr>
+            <th>Order Number</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Size</th>
+            <th>Resolution</th>
+            <th>Number of Characters</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td>{{ commission.order_number }}</td>
+                <td>{{ commission.name }}</td>
+                <td>{{ commission.description }}</td>
+                <td>{{ commission.size_price.size }}</td>
+                <td>{{ commission.resolution_price.resolution }}</td>
+                <td>{{ commission.number_characters }}</td>
+                <td>$ {{ commission.order_total }}</td>
+            </tr>
+    </tbody>
+</table>
+
+<div class="card-panel grey">
+    <h5>Mood board: </h5>
+    <div class="row">
+        {% if commission.reference_image_one %}
+            <div class="col s6 xl4">
+                <div class="mood-board-image">
+                    <img src="{{ MEDIA_URL }}{{ commission.reference_image_one.name }}" alt="{{ commission.reference_image_one.name }}">
+                </div>
+            </div>
+        {% endif %}
+        {% if commission.reference_image_two %}
+            <div class="col s6 xl4">
+                <div class="mood-board-image">
+                    <img src="{{ MEDIA_URL }}{{ commission.reference_image_two.name }}" alt="{{ commission.reference_image_two.name }}">
+                </div>
+            </div>
+        {% endif %}
+        {% if commission.reference_image_three %}
+            <div class="col s6 xl4">
+                <div class="mood-board-image">
+                    <img src="{{ MEDIA_URL }}{{ commission.reference_image_three.name }}" alt="{{ commission.reference_image_three.name }}">
+                </div>
+            </div>
+        {% endif %}
+        {% if commission.reference_image_four %}
+            <div class="col s6 xl4">
+                <div class="mood-board-image">
+                    <img src="{{ MEDIA_URL }}{{ commission.reference_image_four.name }}" alt="{{ commission.reference_image_four.name }}">
+                </div>
+            </div>
+        {% endif %}
+        {% if commission.reference_image_five %}
+            <div class="col s6 xl4">
+                <div class="mood-board-image">
+                    <img src="{{ MEDIA_URL }}{{ commission.reference_image_five.name }}" alt="{{ commission.reference_image_five.name }}">
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<p>
+    You will be notified again once the Artist uploads the work in progress illustration. <br />
+    Regards,<br />
+    Arts by Bela.
+</p>
