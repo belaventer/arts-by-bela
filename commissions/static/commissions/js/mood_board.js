@@ -34,7 +34,7 @@ $(document).ready(function(){
 
         $(this).parent().addClass('hide');
         for (var i = fileCount + 1; i < $('input[type="file"]').length; i++) {
-            if ($(`.mood-board-image:eq(${i}) > img`).attr('src') === "") {
+            if ($(`.mood-board-image:eq(${i}) > img`).attr('src') === "#") {
                 $(`input[type="file"]:eq(${i})`).parent().removeClass('hide');
                 break
             }

@@ -100,6 +100,9 @@
     {{ block.super }}
 
     {{ json_data|json_script:"json-data" }}
+    {{ commission.resolution_price.resolution|json_script:"commission-resolution"}}
+    {{ commission.size_price.size|json_script:"commission-size"}}
     <script src="{% static 'js/quote_calculator.js' %}"></script>
     <script src="{% static 'commissions/js/mood_board.js' %}"></script>
+    <script src="{% static 'commissions/js/select_resolution_size.js' %}"></script>
 {% endblock %}

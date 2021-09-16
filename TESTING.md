@@ -33,60 +33,60 @@ The HTML templates were tested by direct input of the rendered website. The erro
 ### As a new visitor to the website,
 
 1. I want to know more about the artist.
-![Home Page](screenshots/screenshot-user-story-1.png "Home Page")
+   ![Home Page](screenshots/screenshot-user-story-1.png "Home Page")
 
     - Loading the home page, the first section has a small introduction about the artist.
 2. I want to see previous completed artworks.
-![Showcase](screenshots/screenshot-user-story-2.png "Showcase")
+   ![Showcase](screenshots/screenshot-user-story-2.png "Showcase")
 
     - From the navigation bar, I can load the Showcase page that has examples of the artist's work.
 3. I want to read reviews from previous costumers.
-![Showcase - Image zoom](screenshots/screenshot-user-story-3.png "Showcase - Image zoom")
+   ![Showcase - Image zoom](screenshots/screenshot-user-story-3.png "Showcase - Image zoom")
 
     - On the Showcase page, I can click on the image and the client review is displayed.
 4. I want to find instructions on how to commission an artwork.
-![Home Page - Instructions](screenshots/screenshot-user-story-4.png "Home Page - Instructions")
+   ![Home Page - Instructions](screenshots/screenshot-user-story-4.png "Home Page - Instructions")
 
     - Loading the home page, the second section has the steps on how to commission a new illustration.
 5. I want to calculate a quote for the commission.
-![Home Page - Quote](screenshots/screenshot-user-story-5.png "Home Page - Quote")
+   ![Home Page - Quote](screenshots/screenshot-user-story-5.png "Home Page - Quote")
 
     - Loading the home page, the third section is an interactive quote calculator depending on my illustration requirements.
 
 ### As a registered user,
 
 1. I want to request a new commission.
-![New Commission](screenshots/screenshot-user-story-6.png "New Commission")
+   ![New Commission](screenshots/screenshot-user-story-6.png "New Commission")
 
     - Once logged in, I´m redirected to the profile page that has a new commission button. Clicking that button loads the form for me to include my commission request details.
 2. I want to pay for the new commission.
-![Pay Commission](screenshots/screenshot-user-story-7.png "Pay Commission")
+   ![Pay Commission](screenshots/screenshot-user-story-7.png "Pay Commission")
 
     - By clicking proceed to payment, I can review and pay for my commission by card.
 3. I want to be notified as my commission is in progress.
-![Email](screenshots/screenshot-user-story-8.png "Email")
+   ![Email](screenshots/screenshot-user-story-8.png "Email")
 
     - Once the commission is paid and the artist uploads the illustration, I am notified via email.
 4. I want to request changes to the artwork, if necessary.
-![WIP details](screenshots/screenshot-user-story-9.png "WIP details")
+   ![WIP details](screenshots/screenshot-user-story-9.png "WIP details")
 
     - From my profile, I can navigate to the Illustration details and submit comments to the artist.
 5. I want to be notified  and download my completed art work.
-![Artwork details](screenshots/screenshot-user-story-10.png "Artwork details")
+   ![Artwork details](screenshots/screenshot-user-story-10.png "Artwork details")
 
     - Once the artist uploads the illustration, I am notified via email and I can navigate to the illustration details from my profile to download the image.
 6. I want access to previous artwork commissions I have ordered, if any.
-![Profile](screenshots/screenshot-user-story-11.png "Profile")
+   ![Profile](screenshots/screenshot-user-story-11.png "Profile")
 
     - From my profile, I can see a list of my commissions and redirect to the details page of each commission.
 ### As the artist,
 
 1. I want to be notified as commissions are requested and commented on.
-![Artists emails](screenshots/screenshot-user-story-12.png "Artists emails")
+   ![Artists emails](screenshots/screenshot-user-story-12.png "Artists emails")
 
     - As the artist, I receive all emails during the commission workflow.
 2. I want to upload the artworks and submit for comments and download.
-![Upload images](screenshots/screenshot-user-story-13.png "Upload images")
+   ![Upload images](screenshots/screenshot-user-story-13.png "Upload images")
 
     - From the commission details page, I can upload the images and submit them to the client.
 
@@ -191,11 +191,11 @@ TOTAL                               103      0   100%
 
 The deployed Heroku website was viewed on  desktops screens (21 and 13 inches) and also on Motorola G6 Play device.
 
-<!-- The website was tested with Google Chrome (v.91.0), Mozilla Firefox (v.89) and Microsoft Edge (v.91) browsers.
+The website was tested with Google Chrome (v.93.0), Mozilla Firefox (v.91) and Microsoft Edge (v.93) browsers.
 
-On mobile, it was viewed with Google Chrome application v.91.0 on Android 9.
+On mobile, it was viewed with Google Chrome application v.93.0 on Android 9.
 
-The Developer Tools of Google Chrome (v.91) on desktop was used to verify responsiveness on different devices. -->
+The Developer Tools of Google Chrome (v.93) on desktop was used to verify responsiveness on different devices. 
 
 **Testing notes**:
 a - At least 2 different Resolutions and 2 different Sizes have to be set on the database.
@@ -207,55 +207,61 @@ d - The test is designed to follow the website workflow, ideally all test steps 
 
    | Test No. | Action & expected results                                    | Pass / Fail |
    | -------- | :----------------------------------------------------------- | :---------- |
-   | 1.1 | Navigate to https://arts-by-bela.herokuapp.com/ and verify the Home page loads. |  |
-   | 1.2 | Scroll to the bottom of the home page and select different Resolutions, Sizes and Number of Characters. Verify your quote is updated accordingly. |  |
+   | 1.1 | Navigate to https://arts-by-bela.herokuapp.com/ and verify the Home page loads. | Pass |
+   | 1.2 | Scroll to the bottom of the home page and select different Resolutions, Sizes and Number of Characters. Verify your quote is updated accordingly. | Pass |
 
 
 2. **User Authentication**:
 
    | Test No. | Action & expected results                                    | Pass / Fail |
    | -------- | :----------------------------------------------------------- | :---------- |
-   | 2.1 | From the Navigation Bar, click on the Register link and verify the registration page loads. |  |
-   | 2.2 | Enter email (https://temp-mail.org/en/), username and password and click on SIGN UP. Verify a confirmation email is sent. Confirm the email to be used on this account. |  |
-   | 2.3 | From the Navigation Bar, click on the Login link and verify the login page loads. |  |
-   | 2.4 | Enter the credentials of the user created in step 2.2 and click SIGN IN. Verify the Profile page loads. |  |
-   | 2.5 | From the Navigation Bar, click on the Logout link and verify the user is logged out. |  |
+   | 2.1 | From the Navigation Bar, click on the Register link and verify the registration page loads. | Pass |
+   | 2.2 | Enter email (https://temp-mail.org/en/), username and password and click on SIGN UP. Verify a confirmation email is sent. Confirm the email to be used on this account. | Pass |
+   | 2.3 | From the Navigation Bar, click on the Login link and verify the login page loads. | Pass |
+   | 2.4 | Enter the credentials of the user created in step 2.2 and click SIGN IN. Verify the Profile page loads. | Pass |
+   | 2.5 | From the Navigation Bar, click on the Logout link and verify the user is logged out. | Pass |
 
 
 3. **Profile**:
 
    | Test No. | Action & expected results                                    | Pass / Fail |
    | -------- | :----------------------------------------------------------- | :---------- |
-   | 3.1 | Login into the system as in step 2.4 with the Client Account. On the Profile page, verify your username is displayed at the top of the page. |  |
-   | 3.2 | Click on "Your info" and verify a form with First and Last name fields drops down. |  |
-   | 3.3 | Enter "Test" in both fields and click UPDATE. Verify the page is reloaded. Click in "Your info" once again, verify the fields have been updated. |  |
-   | 3.4 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account (superuser credentials). Under Profiles App, open the User Profiles collection. Verify the First and Last Names of the Client Account have been updated to "Test" on the database. |  |
+   | 3.1 | Login into the system as in step 2.4 with the Client Account. On the Profile page, verify your username is displayed at the top of the page. | Pass |
+   | 3.2 | Click on "Your info" and verify a form with First and Last name fields drops down. | Pass |
+   | 3.3 | Enter "Test" in both fields and click UPDATE. Verify the page is reloaded. Click in "Your info" once again, verify the fields have been updated. | Pass |
+   | 3.4 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account (superuser credentials). Under Profiles App, open the User Profiles collection. Verify the First and Last Names of the Client Account have been updated to "Test" on the database. | Pass |
 
 
 4. **New Commission**:
 
    | Test No. | Action & expected results                                    | Pass / Fail |
    | -------- | :----------------------------------------------------------- | :---------- |
-   | 4.1 | Login into the system as in step 2.4 with the Client Account. On the Profile page, click on NEW COMMISSION and verify the New Commission page loads. |  |
-   | 4.2 | On the New Commissions page, click on CANCEL. Verify the Profile Page loads. |  |
-   | 4.3 | Click on NEW COMMISSION once again. Verify the Resolution and Size options available matches the Database. |  |
-   | 4.4 | Click on the Plus Sign button on the Mood Board and chose an image file. Verify the image preview loads and another Plus Sign button is available. |  |
-   | 4.5 | Click on REMOVE next to the Mood Board Image and verify the image is Cleared. Re-add the image. |  |
-   | 4.6 | Repeat steps 4.4 and 4.5 to each available Plus button. Verify a total of 5 images can be uploaded. |  |
-   | 4.7 | Change the selected Resolution, Size and the amount of Characters. Verify the total value is updated accordingly. |  |
-   | 4.8 | Enter a Name and Description and click on PROCEED TO PAYMENT. Verify the Payment Page loads. Verify all the information and images matches the submitted on the form. Copy the Order Number. |  |
-   | 4.9 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify a commission has been created with the details and files entered on the steps above. |  |
+   | 4.1 | Login into the system as in step 2.4 with the Client Account. On the Profile page, click on NEW COMMISSION and verify the New Commission page loads. | Pass |
+   | 4.2 | On the New Commissions page, click on CANCEL. Verify the Profile Page loads. | Pass |
+   | 4.3 | Click on NEW COMMISSION once again. Verify the Resolution and Size options available matches the Database. | Pass |
+   | 4.4 | Click on the Plus Sign button on the Mood Board and chose an image file. Verify the image preview loads and another Plus Sign button is available. | Fail* |
+   | 4.5 | Click on REMOVE next to the Mood Board Image and verify the image is Cleared. Re-add the image. | Pass |
+   | 4.6 | Repeat steps 4.4 and 4.5 to each available Plus button. Verify a total of 5 images can be uploaded. | Pass |
+   | 4.7 | Change the selected Resolution, Size and the amount of Characters. Verify the total value is updated accordingly. | Pass |
+   | 4.8 | Enter a Name and Description and click on PROCEED TO PAYMENT. Verify the Payment Page loads. Verify all the information and images matches the submitted on the form. Copy the Order Number. | Pass |
+   | 4.9 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify a commission has been created with the details and files entered on the steps above. | Pass |
+
+
+* The button to add other images did not show. The JavaScript mood-bord.js looked for the next img field where the scr attribute was a blank string. During code refactoring, all img field scr attributes were updated to # symbol, not to throw a validation error. Issue was corrected by updating the if statement to === "#"
 
 
 5. **Edit/Delete Commission**:
 
    | Test No. | Action & expected results                                    | Pass / Fail |
    | -------- | :----------------------------------------------------------- | :---------- |
-   | 5.1 | Login into the system as in step 2.4 with the Client Account. On the Profile page, verify the Commission created in step 4.8 is now listed under "Your Commissions".  Verify the Commission status is "Waiting Payment" |  |
-   | 5.2 | Click on the Details Symbol Button of the created commission. Verify the Edit Commission page loads. Verify all fields are filled in correctly and the Mood Board images are visible. |  |
+   | 5.1 | Login into the system as in step 2.4 with the Client Account. On the Profile page, verify the Commission created in step 4.8 is now listed under "Your Commissions".  Verify the Commission status is "Waiting Payment" | Pass |
+   | 5.2 | Click on the Details Symbol Button of the created commission. Verify the Edit Commission page loads. Verify all fields are filled in correctly and the Mood Board images are visible. | Fail* |
    | 5.3 | Update a field and click on PROCEED TO PAYMENT. Verify that field is updated on the Payments page.<br />Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify  the updated field on the database. |  |
    | 5.4 | On the Payments page, click on RETURN. Verify the Edit commission page loads. |  |
    | 5.5 | On the Edit commission page, click on DELETE. Verify a Modal opens to confirm deletion. Click on CANCEL and verify nothing happens. Click on DELETE again and confirm on the Modal. Verify the Profile page loads and the commission is no longer listed under "Your Commissions".<br />Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify the commission was removed from the Database. |  |
+
+
+* The Resolution and Size were not updating to selected options, and just defaulting to the default option of the Model Class. To fix the issue, the script  select_resolution_size.js was written to set the selected values and recalculate total at document ready.
 
 
 6. **Payments**:
@@ -338,3 +344,4 @@ d - The test is designed to follow the website workflow, ideally all test steps 
    ### Known issues
 
 - The files are only open on a new tab, instead of downloaded from the S3 bucket on the deployed environment. To fix this issue, the Content-Disposition of the file has to be set at custom storage classes. This was not implemented to avoid data transfer fees. For further information, refer to [StackOverflow](https://stackoverflow.com/questions/43208401/add-dynamic-content-disposition-for-file-namesamazon-s3-in-python).
+- When adding images on Mozilla, files with extension .jfif were not available for selection. Microsoft Edge and Google Chrome allowed selection and upload of those files.
