@@ -61,7 +61,10 @@ def payment(request, commission_id):
                 'payments/confirmation_email/confirmation_email_body.html',
                 {
                     'commission': commission,
-                    'MEDIA_URL': settings.MEDIA_URL}),
+                    'link_url': request.build_absolute_uri(
+                        f'/commission/edit/{commission_id}'
+                    )
+                }),
             "text/html")
         email.send()
 
