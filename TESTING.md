@@ -246,7 +246,6 @@ d - The test is designed to follow the website workflow, ideally all test steps 
    | 4.8 | Enter a Name and Description and click on PROCEED TO PAYMENT. Verify the Payment Page loads. Verify all the information and images matches the submitted on the form. Copy the Order Number. | Pass |
    | 4.9 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify a commission has been created with the details and files entered on the steps above. | Pass |
 
-
 * The button to add other images did not show. The JavaScript mood-bord.js looked for the next img field where the scr attribute was a blank string. During code refactoring, all img field scr attributes were updated to # symbol, not to throw a validation error. Issue was corrected by updating the if statement to === "#"
 
 
@@ -256,9 +255,9 @@ d - The test is designed to follow the website workflow, ideally all test steps 
    | -------- | :----------------------------------------------------------- | :---------- |
    | 5.1 | Login into the system as in step 2.4 with the Client Account. On the Profile page, verify the Commission created in step 4.8 is now listed under "Your Commissions".  Verify the Commission status is "Waiting Payment" | Pass |
    | 5.2 | Click on the Details Symbol Button of the created commission. Verify the Edit Commission page loads. Verify all fields are filled in correctly and the Mood Board images are visible. | Fail* |
-   | 5.3 | Update a field and click on PROCEED TO PAYMENT. Verify that field is updated on the Payments page.<br />Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify  the updated field on the database. |  |
-   | 5.4 | On the Payments page, click on RETURN. Verify the Edit commission page loads. |  |
-   | 5.5 | On the Edit commission page, click on DELETE. Verify a Modal opens to confirm deletion. Click on CANCEL and verify nothing happens. Click on DELETE again and confirm on the Modal. Verify the Profile page loads and the commission is no longer listed under "Your Commissions".<br />Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify the commission was removed from the Database. |  |
+   | 5.3 | Update a field and click on PROCEED TO PAYMENT. Verify that field is updated on the Payments page.<br />Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify  the updated field on the database. | Pass |
+   | 5.4 | On the Payments page, click on RETURN. Verify the Edit commission page loads. | Pass |
+   | 5.5 | On the Edit commission page, click on DELETE. Verify a Modal opens to confirm deletion. Click on CANCEL and verify nothing happens. Click on DELETE again and confirm on the Modal. Verify the Profile page loads and the commission is no longer listed under "Your Commissions".<br />Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify the commission was removed from the Database. | Pass |
 
 
 * The Resolution and Size were not updating to selected options, and just defaulting to the default option of the Model Class. To fix the issue, the script  select_resolution_size.js was written to set the selected values and recalculate total at document ready.
@@ -268,77 +267,80 @@ d - The test is designed to follow the website workflow, ideally all test steps 
 
    | Test No. | Action & expected results                                    | Pass / Fail |
    | -------- | :----------------------------------------------------------- | :---------- |
-   | 6.1 | From the Profile page, create a new commission and click on PROCEED TO PAYMENT. Enter a card test details from [Stripe](https://stripe.com/docs/testing#cards). Verify the payments goes through and the Payment Success page loads.  |  |
-   | 6.2 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Wips collection. Verify a WIP was created associated with the paid commission. |  |
-   | 6.3 | On the Client Account email provider, verify an email was received confirming the Commission Request. On the Artist Account, verify the same email was received. |  |
-   | 6.4 | Return to the Profile page of the Client Account and verify the Commission status is In Progress. |  |
-   | 6.5 | Login with the Artist Account and navigate to the Profile, verify the payed user is now available to the Artist. |  |
+   | 6.1 | From the Profile page, create a new commission and click on PROCEED TO PAYMENT. Enter a card test details from [Stripe](https://stripe.com/docs/testing#cards). Verify the payments goes through and the Payment Success page loads.  | Pass |
+   | 6.2 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Wips collection. Verify a WIP was created associated with the paid commission. | Pass |
+   | 6.3 | On the Client Account email provider, verify an email was received confirming the Commission Request. On the Artist Account, verify the same email was received. | Pass |
+   | 6.4 | Return to the Profile page of the Client Account and verify the Commission status is In Progress. | Pass |
+   | 6.5 | Login with the Artist Account and navigate to the Profile, verify the payed commission is now available to the Artist. | Pass |
 
 
 7. **WIP Illustration**:
 
    | Test No. | Action & expected results                                    | Pass / Fail |
    | -------- | :----------------------------------------------------------- | :---------- |
-   | 7.1 | From the Profile page with the Artist Account, click on the Details symbol button of the In Progress Commission. Verify the WIP details page loads. |  |
-   | 7.2 | On the WIP page, verify all the Commission information is available. Click on the Mood Board and verify it drops down to reveal the reference images. |  |
-   | 7.3 | On the WIP page, click on CHOOSE FILE and upload a image file. Verify the image preview is loaded and the SEND TO CLIENT button is available. |  |
-   | 7.4 | Click on SEND TO CLIENT and verify the page reloads. Return to the Profile, and verify the Commission status is Waiting comment.<br />Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Wips collection. Verify on the WIP details that the wip_illustration was uploaded.|  |
-   | 7.5 | On the Client Account email provider, verify an email was received confirming the Illustration Upload. On the Artist Account, verify the same email was received. |  |
+   | 7.1 | From the Profile page with the Artist Account, click on the Details symbol button of the In Progress Commission. Verify the WIP details page loads. | Pass |
+   | 7.2 | On the WIP page, verify all the Commission information is available. Click on the Mood Board and verify it drops down to reveal the reference images. | Pass |
+   | 7.3 | On the WIP page, click on CHOOSE FILE and upload a image file. Verify the image preview is loaded and the SEND TO CLIENT button is available. | Pass |
+   | 7.4 | Click on SEND TO CLIENT and verify the page reloads. Return to the Profile, and verify the Commission status is Waiting comment.<br />Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Wips collection. Verify on the WIP details that the wip_illustration was uploaded.| Pass |
+   | 7.5 | On the Client Account email provider, verify an email was received confirming the Illustration Upload. On the Artist Account, verify the same email was received. | Pass |
 
 
 8. **WIP Comment**:
 
    | Test No. | Action & expected results                                    | Pass / Fail |
    | -------- | :----------------------------------------------------------- | :---------- |
-   | 8.1 | From the Profile page with the Client Account, click on the Details symbol button of the Waiting Comment Commission. Verify the WIP details page loads. |  |
-   | 8.2 | On the WIP page, verify all the Commission information is available and the uploaded WIP picture is available. |  |
-   | 8.3 | On the WIP page, enter a test comment and click SUBMIT COMMENT. Verify the page reloads. Return to the Profile, and verify the Commission status is Final work in progress. |  |
-   | 8.4 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Wips collection. Verify on the WIP details that the client_comment was updated. |  |
-   | 8.5 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Artworks collection. Verify a Artwork was created associated with the commented WIP commission. |  |
-   | 8.6 | On the Artist Account email provider, verify an email was received confirming the Comment Upload. |  |
+   | 8.1 | From the Profile page with the Client Account, click on the Details symbol button of the Waiting Comment Commission. Verify the WIP details page loads. | Pass |
+   | 8.2 | On the WIP page, verify all the Commission information is available and the uploaded WIP picture is available. | Pass |
+   | 8.3 | On the WIP page, enter a test comment and click SUBMIT COMMENT. Verify the Profile page loads and verify the Commission status is Final work in progress. | Pass |
+   | 8.4 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Wips collection. Verify on the WIP details that the client_comment was updated. | Pass |
+   | 8.5 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Artworks collection. Verify a Artwork was created associated with the commented WIP commission. | Pass |
+   | 8.6 | On the Artist Account email provider, verify an email was received confirming the Comment Upload. | Pass |
 
 
 9. **Artwork Illustration**:
 
    | Test No. | Action & expected results                                    | Pass / Fail |
    | -------- | :----------------------------------------------------------- | :---------- |
-   | 9.1 | From the Profile page with the Artist Account, click on the Details symbol button of the Final work in progress Commission. Verify the Artwork details page loads. |  |
-   | 9.2 | On the Artwork page, verify all the Commission information is available. Click on the Mood Board and verify it drops down to reveal the reference images. |  |
-   | 9.3 | On the Artwork page, click on the WIP Illustration and verify it drops down to reveal the WIP images. |  |
-   | 9.4 | On the Artwork page, click on CHOOSE FILE and upload a image file. Verify the image preview is loaded and the SEND TO CLIENT button is available. |  |
-   | 9.5 | Click on SEND TO CLIENT and verify the page reloads. Return to the Profile, and verify the Commission status is Complete.<br />Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Artworks collection. Verify on the Artwork details that the final_illustration was uploaded. |  |
-   | 9.6 | On the Client Account email provider, verify an email was received confirming the Illustration Upload. On the Artist Account, verify the same email was received. |  |
+   | 9.1 | From the Profile page with the Artist Account, click on the Details symbol button of the Final work in progress Commission. Verify the Artwork details page loads. | Pass |
+   | 9.2 | On the Artwork page, verify all the Commission information is available. Click on the Mood Board and verify it drops down to reveal the reference images. | Pass |
+   | 9.3 | On the Artwork page, click on the WIP Illustration and verify it drops down to reveal the WIP images. | Pass |
+   | 9.4 | On the Artwork page, click on CHOOSE FILE and upload a image file. Verify the image preview is loaded and the SEND TO CLIENT button is available. | Pass |
+   | 9.5 | Click on SEND TO CLIENT and verify the page reloads. Return to the Profile, and verify the Commission status is Complete.<br />Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Artworks collection. Verify on the Artwork details that the final_illustration was uploaded. | Pass |
+   | 9.6 | On the Client Account email provider, verify an email was received confirming the Illustration Upload. On the Artist Account, verify the same email was received. | Pass |
 
 
 10. **Artwork Review**:
 
 | Test No. | Action & expected results                                    | Pass / Fail |
 | -------- | :----------------------------------------------------------- | :---------- |
-| 10.1 | From the Profile page with the Client Account, click on the Details symbol button of the Complete Commission. Verify the Artworks details page loads. |  |
-| 10.2 | On the Artwork page, verify all the Commission and WIP information is available and the uploaded Final picture is available. Click on DOWNLOAD button and verify the image opens in another tab. |  |
-| 10.3 | On the  page, enter a test review and click SUBMIT REVIEW. Verify the page reloads. |  |
-| 10.4 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Wips collection. Verify on the Artworks details that the client_review was updated. |  |
-| 10.5 | On the Artist Account email provider, verify an email was received confirming the Review Upload. |  |
+| 10.1 | From the Profile page with the Client Account, click on the Details symbol button of the Complete Commission. Verify the Artworks details page loads. | Pass |
+| 10.2 | On the Artwork page, verify all the Commission and WIP information is available and the uploaded Final picture is available. Click on DOWNLOAD button and verify the image opens in another tab. | Pass* |
+| 10.3 | On the  page, enter a test review and click SUBMIT REVIEW. Verify the profile page loads. | Pass |
+| 10.4 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Artworks collection. Verify on the Artworks details that the client_review was updated. | Pass |
+| 10.5 | On the Artist Account email provider, verify an email was received confirming the Review Upload. | Pass |
+
+
+* See Known Issues below.
 
 
 11. **Showcase**:
 
 | Test No. | Action & expected results                                    | Pass / Fail |
 | -------- | :----------------------------------------------------------- | :---------- |
-| 11.1 | From the Navigation Bar, click on the Showcase link. Verify the Showcase page loads with all the artwork illustrations. On Mobile, this is a carousel. |  |
-| 11.2 | On the Showcase, desktop view, click on a illustration and verify the illustration increases in side and the Name, Review and User is displayed. |  |
-| 11.3 | Click on a different illustration, and verify the previous illustration returns to its initial state. |  |
+| 11.1 | From the Navigation Bar, click on the Showcase link. Verify the Showcase page loads with all the artwork illustrations. On Mobile, this is a carousel. | Pass |
+| 11.2 | On the Showcase, desktop view, click on a illustration and verify the illustration increases in side and the Name, Review and User is displayed. | Pass |
+| 11.3 | Click on a different illustration, and verify the previous illustration returns to its initial state. | Pass |
 
 
 12. **Personal Work**:
 
 | Test No. | Action & expected results                                    | Pass / Fail |
 | -------- | :----------------------------------------------------------- | :---------- |
-| 12.1 | Login with the Artist Account and navigate to the Showcase page. Verify the NEW PERSONAL WORK button is available. Click the button and verify the Personal Work page loads. |  |
-| 12.2 | Click on CANCEL and verify the Showcase page loads. Click on the NEW PERSONAL WORK button once again. |  |
-| 12.3 | Enter a Name and Description. Click on CHOOSE FILE and select an image file. Verify the image preview is loaded. |  |
-| 12.4 | Click on the ADD button and verify the Showcase page loads with the newly added artwork. |  |
-| 12.5 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify a Commission was created for the newly added artwork with the Name and Description entered.<br />On the Wips collection, verify a WIP was created associated with the newly added commission.<br />On the Artworks collection, verify an Artwork was created associated with the newly added commission. On the Artwork details, verify the client_review matches the Description entered on the form and that final_illustration is uploaded. |  |
+| 12.1 | Login with the Artist Account and navigate to the Showcase page. Verify the NEW PERSONAL WORK button is available. Click the button and verify the Personal Work page loads. | Pass |
+| 12.2 | Click on CANCEL and verify the Showcase page loads. Click on the NEW PERSONAL WORK button once again. | Pass |
+| 12.3 | Enter a Name and Description. Click on CHOOSE FILE and select an image file. Verify the image preview is loaded. | Pass |
+| 12.4 | Click on the ADD button and verify the Showcase page loads with the newly added artwork. | Pass |
+| 12.5 | Navigate to https://arts-by-bela.herokuapp.com/admin and Login using the Artist Account. Under Commissions App, open the Commissions collection. Verify a Commission was created for the newly added artwork with the Name and Description entered.<br />On the Wips collection, verify a WIP was created associated with the newly added commission.<br />On the Artworks collection, verify an Artwork was created associated with the newly added commission. On the Artwork details, verify the client_review matches the Description entered on the form and that final_illustration is uploaded. | Pass |
 
 
    ### Known issues
