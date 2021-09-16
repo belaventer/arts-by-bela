@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'payments',
     'showcase',
     'storages',
+    'django_inlinecss',
 ]
 
 MIDDLEWARE = [

@@ -1,17 +1,13 @@
 {% load static %}
+{% inlinecss static base.css %}
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-</head>
 
 <body>
     <h5>Thank you for your request, {{ commission.user_profile.user.username }}!</h5>
     <a href="{% url 'edit_commission' commission.id %}">View commission details.</a>
-    <table class="highlight responsive-table">
+    <table>
         <thead>
             <tr>
                 <th>Order Number</th>
@@ -35,47 +31,32 @@
                 </tr>
         </tbody>
     </table>
-
-    <div class="card-panel grey">
-        <h5>Mood board: </h5>
-        <div class="row">
-            {% if commission.reference_image_one %}
-                <div class="col s6 xl4">
-                    <div class="mood-board-image">
-                        <img src="{{ MEDIA_URL }}{{ commission.reference_image_one.name }}" alt="{{ commission.reference_image_one.name }}">
-                    </div>
-                </div>
-            {% endif %}
-            {% if commission.reference_image_two %}
-                <div class="col s6 xl4">
-                    <div class="mood-board-image">
-                        <img src="{{ MEDIA_URL }}{{ commission.reference_image_two.name }}" alt="{{ commission.reference_image_two.name }}">
-                    </div>
-                </div>
-            {% endif %}
-            {% if commission.reference_image_three %}
-                <div class="col s6 xl4">
-                    <div class="mood-board-image">
-                        <img src="{{ MEDIA_URL }}{{ commission.reference_image_three.name }}" alt="{{ commission.reference_image_three.name }}">
-                    </div>
-                </div>
-            {% endif %}
-            {% if commission.reference_image_four %}
-                <div class="col s6 xl4">
-                    <div class="mood-board-image">
-                        <img src="{{ MEDIA_URL }}{{ commission.reference_image_four.name }}" alt="{{ commission.reference_image_four.name }}">
-                    </div>
-                </div>
-            {% endif %}
-            {% if commission.reference_image_five %}
-                <div class="col s6 xl4">
-                    <div class="mood-board-image">
-                        <img src="{{ MEDIA_URL }}{{ commission.reference_image_five.name }}" alt="{{ commission.reference_image_five.name }}">
-                    </div>
-                </div>
-            {% endif %}
+    <h5>Mood board: </h5>
+    {% if commission.reference_image_one %}
+        <div class="mood-board-image">
+            <img src="{{ MEDIA_URL }}{{ commission.reference_image_one.name }}" alt="{{ commission.reference_image_one.name }}">
         </div>
-    </div>
+    {% endif %}
+    {% if commission.reference_image_two %}
+        <div class="mood-board-image">
+            <img src="{{ MEDIA_URL }}{{ commission.reference_image_two.name }}" alt="{{ commission.reference_image_two.name }}">
+        </div>
+    {% endif %}
+    {% if commission.reference_image_three %}
+        <div class="mood-board-image">
+            <img src="{{ MEDIA_URL }}{{ commission.reference_image_three.name }}" alt="{{ commission.reference_image_three.name }}">
+        </div>
+    {% endif %}
+    {% if commission.reference_image_four %}
+        <div class="mood-board-image">
+            <img src="{{ MEDIA_URL }}{{ commission.reference_image_four.name }}" alt="{{ commission.reference_image_four.name }}">
+        </div>
+    {% endif %}
+    {% if commission.reference_image_five %}
+        <div class="mood-board-image">
+            <img src="{{ MEDIA_URL }}{{ commission.reference_image_five.name }}" alt="{{ commission.reference_image_five.name }}">
+        </div>
+    {% endif %}
     <p>
         You will be notified again once the Artist uploads the work in progress illustration. <br />
         Regards,<br />
