@@ -1,12 +1,13 @@
 {% load static %}
-{% inlinecss static base.css %}
+{% load inlinecss %}
+{% inlinecss 'css/base.css' %}
 
 <!DOCTYPE html>
 <html lang="en">
 
 <body>
     <h5>Thank you for your request, {{ commission.user_profile.user.username }}!</h5>
-    <a href="{% url 'edit_commission' commission.id %}">View commission details.</a>
+    <a href="{{ request.path }}{% url 'edit_commission' commission.id %}">View commission details.</a>
     <table>
         <thead>
             <tr>
@@ -64,3 +65,4 @@
     </p>
 </body>
 </html>
+{% endinlinecss %}
