@@ -55,26 +55,6 @@ def payment(request, commission_id):
             to=[commission.user_profile.user.email],
             bcc=emails_list
         )
-        if commission.reference_image_one:
-            email.attach_file(
-                f'./{settings.MEDIA_URL}'
-                f'{commission.reference_image_one.name}')
-        if commission.reference_image_two:
-            email.attach_file(
-                f'./{settings.MEDIA_URL}'
-                f'{commission.reference_image_two.name}')
-        if commission.reference_image_three:
-            email.attach_file(
-                f'./{settings.MEDIA_URL}'
-                f'{commission.reference_image_three.name}')
-        if commission.reference_image_four:
-            email.attach_file(
-                f'./{settings.MEDIA_URL}'
-                f'{commission.reference_image_four.name}')
-        if commission.reference_image_five:
-            email.attach_file(
-                f'./{settings.MEDIA_URL}'
-                f'{commission.reference_image_five.name}')
 
         email.attach_alternative(
             render_to_string(
