@@ -3,7 +3,7 @@ from django.shortcuts import (
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 
@@ -18,10 +18,7 @@ def send_workflow_emails(client_email, template_name, context):
     """
 
     artist_users = User.objects.filter(is_superuser=True)
-    if client_email:
-        emails_list = [client_email]
-    else:
-        emails_list = []
+    emails_list = []
 
     for artist in artist_users:
         emails_list.append(artist.email)
@@ -33,12 +30,27 @@ def send_workflow_emails(client_email, template_name, context):
         f'commissions/workflow_emails/{template_name}_email_body.txt',
         context)
 
-    send_mail(
-        subject,
-        body,
-        settings.DEFAULT_FROM_EMAIL,
-        emails_list
-    )
+    if client_email:
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=body,
+            to=[client_email],
+            bcc=emails_list
+        )
+    else:
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=body,
+            to=emails_list
+        )
+
+    email.attach_alternative(
+            render_to_string(
+                f'commissions/workflow_emails/'
+                f'{template_name}_email_body.html',
+                context),
+            "text/html")
+    email.send()
 
 
 @login_required
@@ -172,11 +184,16 @@ def wip(request, commission_id):
         if form.is_valid():
             wip.wip_illustration = form.cleaned_data['illustration']
             wip.save()
+            wip.refresh_from_db()
 
             send_workflow_emails(
                 commission.user_profile.user.email,
                 'wip_illustration', {
-                    'commission': commission})
+                    'commission': commission,
+                    'wip': wip,
+                    'link_url': request.build_absolute_uri(
+                        f'/commission/edit/{commission_id}'),
+                    'MEDIA_URL': settings.MEDIA_URL})
 
             messages.success(
                 request, 'Illustration submitted for comments.')
@@ -203,7 +220,9 @@ def wip(request, commission_id):
             send_workflow_emails(
                 None, 'wip_comment', {
                     'commission': commission,
-                    'wip': wip})
+                    'wip': wip,
+                    'link_url': request.build_absolute_uri(
+                        f'/commission/edit/{commission_id}')})
 
             messages.success(
                 request, 'Comment submitted.')
@@ -262,11 +281,16 @@ def artwork(request, commission_id):
         if form.is_valid():
             artwork.final_illustration = form.cleaned_data['illustration']
             artwork.save()
+            artwork.refresh_from_db()
 
             send_workflow_emails(
                 commission.user_profile.user.email,
                 'artwork_illustration', {
-                    'commission': commission})
+                    'commission': commission,
+                    'artwork': artwork,
+                    'link_url': request.build_absolute_uri(
+                        f'/commission/edit/{commission_id}'),
+                    'MEDIA_URL': settings.MEDIA_URL})
 
             messages.success(
                 request, 'Final illustration submitted')
@@ -292,7 +316,9 @@ def artwork(request, commission_id):
             send_workflow_emails(
                 None, 'artwork_review', {
                     'commission': commission,
-                    'artwork': artwork})
+                    'artwork': artwork,
+                    'link_url': request.build_absolute_uri(
+                        f'/commission/edit/{commission_id}')})
 
             messages.success(
                 request, 'Review submitted.')

@@ -1,0 +1,21 @@
+{% load inlinecss %}
+{% inlinecss 'static/css/base.css' %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <h5>Hello Astists,</h5>
+    <p>
+        The Client {{ commission.user_profile.user.username }} has added a review on the illustration.  
+    </p>
+
+    <p><strong>Review::</strong> "{{ artwork.client_review }}"</p>
+    <p><a href="{{ link_url }}">Click here</a> to see the illustration details and comment.</p>
+    <p>
+        Regards,<br />
+        Arts by Bela.
+    </p>
+</body>
+</html>
+{% endinlinecss %}

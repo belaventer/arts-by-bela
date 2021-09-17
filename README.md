@@ -244,6 +244,8 @@ Custom Split Filter from [StackOverflow](https://stackoverflow.com/questions/419
 
 Upload files for unit testing [StackOverflow](https://stackoverflow.com/questions/11170425/how-to-unit-test-file-upload-in-django).
 
+Use of django-inline for email css taken from [StackOverflow](https://stackoverflow.com/questions/19970348/django-html-e-mail-template-doesnt-load-css-in-the-e-mail).
+
 [W3Schools](https://www.w3schools.com/) was referenced throughout the project for HTML, CSS and Python references.
 
 [jQuery Documentation](https://api.jquery.com/) was referenced throughout the project for jQuery references.

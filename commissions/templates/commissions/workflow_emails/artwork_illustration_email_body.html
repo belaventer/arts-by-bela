@@ -1,0 +1,24 @@
+{% load inlinecss %}
+{% inlinecss 'static/css/base.css' %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <h5>Hello {{ commission.user_profile.user.username }},</h5>
+    <p>
+        The Artist has uploaded the final illustration.
+    </p>
+    <div class="mood-board-image">
+        <img src="{{ MEDIA_URL }}{{ artwork.final_illustration.name }}" alt="{{ artwork.final_illustration.name }}">
+    </div>
+    <p>
+        <a href="{{ link_url }}">Click here</a> to see the illustration details. <br />
+        If you wish, please leave the Artist a review.</p>
+    <p>
+        Regards,<br />
+        Arts by Bela.
+    </p>
+</body>
+</html>
+{% endinlinecss %}

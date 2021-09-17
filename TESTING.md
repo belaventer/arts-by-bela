@@ -14,7 +14,9 @@ Refer to [Main project file](README.md) for further detail.
 All CSS, JS and Python files were validated and returned no errors at the time of this entry.
 Auto generated Python files, as "app/migrations/*.py" were not validated as they are not created manually.
 
-The HTML templates were tested by direct input of the rendered website. The errors returned were related to Materialize / Stripe auto generated code. No written custom HTML returned errors. The following templates and scenarios were tested 
+The HTML templates were tested by direct input of the rendered website. The errors returned were related to Materialize / Stripe auto generated code. No written custom HTML returned errors. HTML content emails were not validated as there was inline styling being auto-gerenerated from django-inlinecss.
+
+The following templates and scenarios were tested:
 
 - index.html
 - showcase.html - with and without artworks on database
@@ -120,9 +122,9 @@ commissions/templatetags/split_filter.py                      5      0   100%
 commissions/testsModels.py                                   79      0   100%
 commissions/testsViews.py                                   399      0   100%
 commissions/urls.py                                           3      0   100%
-commissions/views.py                                        166      0   100%
+commissions/views.py                                        170      0   100%
 -----------------------------------------------------------------------------
-TOTAL                                                       852      0   100%
+TOTAL                                                       856      0   100%
 ```
 
 ### Home
