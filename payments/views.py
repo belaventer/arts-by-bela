@@ -1,7 +1,8 @@
 from django.shortcuts import (
-    render, redirect, reverse, get_object_or_404)
+    render, redirect, reverse, get_object_or_404, HttpResponse)
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -12,6 +13,27 @@ from commissions.models import Commission, WIP
 
 import stripe
 import os
+
+
+@require_POST
+def cache_commission(request):
+    """
+    A view to update the payment intent with the
+    commission id
+    """
+    try:
+        pid = request.POST.get('client_secret').split('_secret')[0]
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        stripe.PaymentIntent.modify(pid, metadata={
+            'username': request.user,
+            'commission_id': request.POST.get('commission_id'),
+        })
+        return HttpResponse(status=200)
+    except Exception as e:
+        messages.error(request, ('Sorry, your payment cannot be '
+                                 'processed right now. Please try '
+                                 'again later.'))
+        return HttpResponse(content=e, status=400)
 
 
 @login_required
@@ -39,38 +61,6 @@ def payment(request, commission_id):
 
     if request.method == 'POST':
         WIP.objects.create(commission=commission)
-
-        artist_users = User.objects.filter(is_superuser=True)
-
-        emails_list = []
-        for artist in artist_users:
-            emails_list.append(artist.email)
-
-        email = EmailMultiAlternatives(
-            subject=render_to_string(
-                'payments/confirmation_email/confirmation_email_subject.txt',
-                {'commission': commission}),
-            body=render_to_string(
-                'payments/confirmation_email/confirmation_email_body.txt',
-                {'commission': commission}),
-            to=[commission.user_profile.user.email],
-            bcc=emails_list
-        )
-
-        email.attach_alternative(
-            render_to_string(
-                'payments/confirmation_email/confirmation_email_body.html',
-                {
-                    'commission': commission,
-                    'MEDIA_URL': settings.MEDIA_URL,
-                    'static_dir': 'css/base.css' if 'USE_AWS' in os.environ
-                                  else 'static/css/base.css',
-                    'link_url': request.build_absolute_uri(
-                        f'/commission/edit/{commission_id}'
-                    )
-                }),
-            "text/html")
-        email.send()
 
         return redirect(reverse(
             'payment_success', args=[commission.id]))

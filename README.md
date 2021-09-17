@@ -125,8 +125,6 @@ The website is consistent of:
 
 **Stripe Webhooks:** Webhook handling for a robust payment system was not implemented at the moment, but is desired for the next version.
 
-**Detailed Emails:** It would be desirable to have the links and images on the workflow emails. Due to a time constraint, the emails were kept as basic strings.
-
 ## Technologies used
 
 ### Languages
