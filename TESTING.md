@@ -122,9 +122,9 @@ commissions/templatetags/split_filter.py                      5      0   100%
 commissions/testsModels.py                                   79      0   100%
 commissions/testsViews.py                                   399      0   100%
 commissions/urls.py                                           3      0   100%
-commissions/views.py                                        170      0   100%
+commissions/views.py                                        171      0   100%
 -----------------------------------------------------------------------------
-TOTAL                                                       856      0   100%
+TOTAL                                                       857      0   100%
 ```
 
 ### Home
@@ -150,9 +150,9 @@ payments/apps.py                      4      0   100%
 payments/migrations/__init__.py       0      0   100%
 payments/tests.py                    53      0   100%
 payments/urls.py                      3      0   100%
-payments/views.py                    46      0   100%
+payments/views.py                    47      0   100%
 -----------------------------------------------------
-TOTAL                               106      0   100%
+TOTAL                               107      0   100%
 ```
 
 ### Profiles

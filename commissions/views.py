@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from .forms import CommissionForm, IllustrationForm, CommentForm
 from .models import Commission, WIP, Artwork
 from profiles.models import UserProfile
+import os
 
 
 def send_workflow_emails(client_email, template_name, context):
@@ -191,6 +192,8 @@ def wip(request, commission_id):
                 'wip_illustration', {
                     'commission': commission,
                     'wip': wip,
+                    'static_dir': 'css/base.css' if 'USE_AWS' in os.environ
+                                  else 'static/css/base.css',
                     'link_url': request.build_absolute_uri(
                         f'/commission/edit/{commission_id}'),
                     'MEDIA_URL': settings.MEDIA_URL})
@@ -221,6 +224,8 @@ def wip(request, commission_id):
                 None, 'wip_comment', {
                     'commission': commission,
                     'wip': wip,
+                    'static_dir': 'css/base.css' if 'USE_AWS' in os.environ
+                                  else 'static/css/base.css',
                     'link_url': request.build_absolute_uri(
                         f'/commission/edit/{commission_id}')})
 
@@ -288,6 +293,8 @@ def artwork(request, commission_id):
                 'artwork_illustration', {
                     'commission': commission,
                     'artwork': artwork,
+                    'static_dir': 'css/base.css' if 'USE_AWS' in os.environ
+                                  else 'static/css/base.css',
                     'link_url': request.build_absolute_uri(
                         f'/commission/edit/{commission_id}'),
                     'MEDIA_URL': settings.MEDIA_URL})
@@ -317,6 +324,8 @@ def artwork(request, commission_id):
                 None, 'artwork_review', {
                     'commission': commission,
                     'artwork': artwork,
+                    'static_dir': 'css/base.css' if 'USE_AWS' in os.environ
+                                  else 'static/css/base.css',
                     'link_url': request.build_absolute_uri(
                         f'/commission/edit/{commission_id}')})
 

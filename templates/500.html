@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}
+    500
+{% endblock %}
+
+{% block header %}
+    <h1 class="red-text">500!</h1>
+    <h3 class="row">
+        Oh no! We are very sorry, but the server encountered an unexpected condition.
+    </h3>
+{% endblock %}
+
+{% block content %}
+    <p><a href="{% url 'home' %}">Click here</a> to return to the Home page or use the navigation bar to redirect where you would like to go.</p>
+{% endblock %}

@@ -11,6 +11,7 @@ from profiles.models import UserProfile
 from commissions.models import Commission, WIP
 
 import stripe
+import os
 
 
 @login_required
@@ -62,6 +63,8 @@ def payment(request, commission_id):
                 {
                     'commission': commission,
                     'MEDIA_URL': settings.MEDIA_URL,
+                    'static_dir': 'css/base.css' if 'USE_AWS' in os.environ
+                                  else 'static/css/base.css',
                     'link_url': request.build_absolute_uri(
                         f'/commission/edit/{commission_id}'
                     )
