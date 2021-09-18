@@ -1,6 +1,6 @@
 var stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
 var clientSecret = $('#id_client_secret').text().slice(1, -1);
-var commissionId = $('#commission_id').text().slice(1, -1);
+var commissionId = $('#commission_id').text();
 var stripe = Stripe(stripePublicKey);
 var elements = stripe.elements();
 var style = {
@@ -43,7 +43,6 @@ form.addEventListener('submit', function(ev) {
   card.update({ 'disabled': true});
   $('#submit-button').attr('disabled', true);
   $('#loader').fadeIn();
-  
   var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
   var postData = {
     'client_secret': clientSecret,
@@ -76,5 +75,5 @@ form.addEventListener('submit', function(ev) {
       });
   }).fail(function () {
     location.reload();
-  })
+  });
 });

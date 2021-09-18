@@ -4,15 +4,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
-from django.contrib.auth.models import User
 
 from profiles.models import UserProfile
 from commissions.models import Commission, WIP
 
 import stripe
-import os
 
 
 @require_POST

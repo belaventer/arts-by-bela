@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
@@ -42,19 +42,27 @@ class StripeWH_Handler:
                     'MEDIA_URL': settings.MEDIA_URL,
                     'static_dir': 'css/base.css' if 'USE_AWS' in os.environ
                                   else 'static/css/base.css',
-                    'link_url': HttpRequest.build_absolute_uri(
+                    'link_url': self.request.build_absolute_uri(
                         f'/commission/edit/{commission.id}'
                     )
                 }),
             "text/html")
         email.send()
 
+    def handle_event(self, event):
+        """
+        Handle a generic/unknown/unexpected webhook event
+        """
+        return HttpResponse(
+            content=f'Unhandled webhook received: {event["type"]}',
+            status=200)
+
     def handle_payment_intent_succeeded(self, event):
         """
         Handle the payment_intent.succeeded webhook from Stripe
         """
         intent = event.data.object
-        commission_id = intent.metadata.commission_id
+        commission_id = int(intent.metadata.commission_id)
 
         commission = Commission.objects.get(pk=commission_id)
 
