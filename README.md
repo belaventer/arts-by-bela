@@ -1,6 +1,6 @@
 # Arts by Bela
 
-![Arts by Bela Website](# "Arts by Bela")
+![Arts by Bela Website](screenshots/mockup.png "Arts by Bela")
 
 [Demo of Website](https://arts-by-bela.herokuapp.com/)
 
