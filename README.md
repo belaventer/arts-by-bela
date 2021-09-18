@@ -184,6 +184,7 @@ This project was developed using the Gitpod IDE, committed to git and pushed to 
   - SECRET_KEY: django secret key
   - STRIPE_SECRET_KEY: stripe secret key
   - STRIPE_PUBLIC_KEY: stripe client key
+  - STRIPE_WH_KEY: stripe webhook secret
   - USE_AWS: variable set to True when AWS is to be used
   - AWS_ACCESS_KEY_ID: AWS user access key id
   - AWS_SECRET_ACCESS_KEY: AWS user secret key 
