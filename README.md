@@ -123,8 +123,6 @@ The website is consistent of:
 
 **Booking System:** A booking system that would disable addition of new commissions, once there was a certain number of commissions open. New requests would be either queued or just denied.
 
-**Stripe Webhooks:** Webhook handling for a robust payment system was not implemented at the moment, but is desired for the next version.
-
 ## Technologies used
 
 ### Languages

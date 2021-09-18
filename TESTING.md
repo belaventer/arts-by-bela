@@ -93,7 +93,7 @@ The following templates and scenarios were tested:
     - From the commission details page, I can upload the images and submit them to the client.
 
 ## Python Testing
-Custom test cases were written for each application. A total of 65 test were completed. Coverage of 100% was achieved for each application.
+Custom test cases were written for each application. A total of 65 test were completed. Coverage of 100% was achieved for each application, except Payments. The Webhook Handling and Stripe integration was tested manually.
 
 ### Commissions
 ```
@@ -149,10 +149,12 @@ payments/__init__.py                  0      0   100%
 payments/apps.py                      4      0   100%
 payments/migrations/__init__.py       0      0   100%
 payments/tests.py                    53      0   100%
-payments/urls.py                      3      0   100%
-payments/views.py                    47      0   100%
+payments/urls.py                      4      0   100%
+payments/views.py                    47      8    83%
+payments/webhook_handler.py          49     35    29%
+payments/webhooks.py                 28     19    32%
 -----------------------------------------------------
-TOTAL                               107      0   100%
+TOTAL                               185     62    66%
 ```
 
 ### Profiles
@@ -274,6 +276,9 @@ d - The test is designed to follow the website workflow, ideally all test steps 
    | 6.3 | On the Client Account email provider, verify an email was received confirming the Commission Request. On the Artist Account, verify the same email was received. | Pass |
    | 6.4 | Return to the Profile page of the Client Account and verify the Commission status is In Progress. | Pass |
    | 6.5 | Login with the Artist Account and navigate to the Profile, verify the payed commission is now available to the Artist. | Pass |
+
+
+* Note: the valid payment was tested once again after the webhook implementation.
 
 
 7. **WIP Illustration**:
